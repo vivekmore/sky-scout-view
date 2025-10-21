@@ -4,11 +4,12 @@ import { WindChart } from "./WindChart";
 import { TimelineCard } from "./TimelineCard";
 import { WeatherMetric } from "./WeatherMetric";
 import { WeatherSettings } from "./WeatherSettings";
-import { Wind, Eye, Droplets, Gauge } from "lucide-react";
+import { Wind, Eye, Droplets, Gauge, Maximize2 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { weatherService } from "@/services/weatherService";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 
 // Mock data generator (replace with actual API calls)
 const generateMockData = () => {
@@ -134,7 +135,15 @@ export const WeatherDashboard = () => {
             <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               Weather Station
             </h1>
-            <WeatherSettings />
+            <div className="flex gap-2">
+              <Link to="/simple">
+                <Button variant="outline" size="sm">
+                  <Maximize2 className="h-4 w-4 mr-2" />
+                  Simple View
+                </Button>
+              </Link>
+              <WeatherSettings />
+            </div>
           </div>
           <p className="text-muted-foreground">
             {usingRealData ? "Live data from Ambient Weather" : "Real-time wind conditions & forecast"}
