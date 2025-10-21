@@ -28,7 +28,11 @@ export const weatherService = {
 
   getConfig(): AmbientWeatherConfig | null {
     const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : null;
+    return stored ? JSON.parse(stored) : {
+        apiKey: '0116a8e2bd0e41acb8df02b2821eedbbad89280a712f425b9b47809ee61bf5b2',
+        applicationKey: 'dd3dd1d0c9de43afb0a08324da83706dbe4fe8b4852349b88bddc2793ed14732',
+        macAddress: 'EC:64:C9:F1:82:EA'
+    };
   },
 
   clearConfig() {
