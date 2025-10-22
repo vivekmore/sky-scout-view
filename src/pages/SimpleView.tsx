@@ -155,39 +155,75 @@ export default function SimpleView() {
       {/* Bottom Section - 40% height, average speeds */}
       <div className="flex-1 p-4 md:p-6">
         <div className="h-full grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="flex items-center justify-center shadow-[var(--shadow-card)] hover:shadow-lg transition-all hover:scale-105 bg-gradient-to-br from-card to-muted/10">
-            <div className="text-center space-y-3 p-6">
-              <div className="text-xs md:text-sm font-semibold text-primary uppercase tracking-wider">
-                5 Minutes
+          <Card className="p-6 transition-all hover:shadow-md bg-gradient-to-br from-card to-card/80">
+            <div className="space-y-4">
+              <div className="text-center">
+                <div className="text-sm font-medium text-primary">Average</div>
+                <div className="text-xs text-muted-foreground">Last 5 Minutes</div>
               </div>
-              <div className="text-5xl md:text-6xl font-bold text-foreground">
-                {avgSpeed5.toFixed(1)}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1">
+                    <Wind className="h-4 w-4 text-primary" />
+                    <span className="text-xs text-muted-foreground">Speed</span>
+                  </div>
+                  <span className="text-3xl md:text-4xl font-bold text-foreground">
+                    {avgSpeed5.toFixed(1)}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-muted-foreground">Unit</span>
+                  <span className="font-medium text-foreground">mph</span>
+                </div>
               </div>
-              <div className="text-base md:text-lg text-muted-foreground">mph</div>
             </div>
           </Card>
 
-          <Card className="flex items-center justify-center shadow-[var(--shadow-card)] hover:shadow-lg transition-all hover:scale-105 bg-gradient-to-br from-card to-muted/10">
-            <div className="text-center space-y-3 p-6">
-              <div className="text-xs md:text-sm font-semibold text-primary uppercase tracking-wider">
-                10 Minutes
+          <Card className="p-6 transition-all hover:shadow-md ring-2 ring-primary shadow-xl scale-105 bg-gradient-to-br from-primary/5 to-accent/5">
+            <div className="space-y-4">
+              <div className="text-center">
+                <div className="text-sm font-medium text-primary">Average</div>
+                <div className="text-xs text-muted-foreground">Last 10 Minutes</div>
               </div>
-              <div className="text-5xl md:text-6xl font-bold text-foreground">
-                {avgSpeed10.toFixed(1)}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1">
+                    <Wind className="h-4 w-4 text-primary" />
+                    <span className="text-xs text-muted-foreground">Speed</span>
+                  </div>
+                  <span className="text-3xl md:text-4xl font-bold text-foreground">
+                    {avgSpeed10.toFixed(1)}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-muted-foreground">Unit</span>
+                  <span className="font-medium text-foreground">mph</span>
+                </div>
               </div>
-              <div className="text-base md:text-lg text-muted-foreground">mph</div>
             </div>
           </Card>
 
-          <Card className="flex items-center justify-center shadow-[var(--shadow-card)] hover:shadow-lg transition-all hover:scale-105 bg-gradient-to-br from-card to-muted/10">
-            <div className="text-center space-y-3 p-6">
-              <div className="text-xs md:text-sm font-semibold text-primary uppercase tracking-wider">
-                20 Minutes
+          <Card className="p-6 transition-all hover:shadow-md bg-gradient-to-br from-card to-card/80">
+            <div className="space-y-4">
+              <div className="text-center">
+                <div className="text-sm font-medium text-primary">Average</div>
+                <div className="text-xs text-muted-foreground">Last 20 Minutes</div>
               </div>
-              <div className="text-5xl md:text-6xl font-bold text-foreground">
-                {avgSpeed20.toFixed(1)}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1">
+                    <Wind className="h-4 w-4 text-primary" />
+                    <span className="text-xs text-muted-foreground">Speed</span>
+                  </div>
+                  <span className="text-3xl md:text-4xl font-bold text-foreground">
+                    {avgSpeed20.toFixed(1)}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-muted-foreground">Unit</span>
+                  <span className="font-medium text-foreground">mph</span>
+                </div>
               </div>
-              <div className="text-base md:text-lg text-muted-foreground">mph</div>
             </div>
           </Card>
         </div>
