@@ -25,7 +25,7 @@ export default function SimpleView() {
         return;
       }
 
-      const rawData = await weatherService.fetchDeviceData(config.macAddress, 288);
+      const rawData = await weatherService.fetchDeviceData(config.macAddress, 10);
       if (!rawData || rawData.length === 0) {
         setUsingRealData(false);
         return;
