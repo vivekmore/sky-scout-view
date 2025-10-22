@@ -109,8 +109,8 @@ export default function SimpleView() {
 
   return (
     <div className="h-screen flex flex-col bg-[var(--gradient-sky)] overflow-hidden">
-      {/* Header - Fixed height */}
-      <div className="flex items-center justify-between p-4 md:p-6 shrink-0">
+      {/* Header - Compact */}
+      <div className="flex items-center justify-between px-3 py-2 md:px-4 md:py-3 shrink-0">
         <Link to="/">
           <Button variant="ghost" size="sm" className="hover:bg-card/50">
             <ArrowLeft className="h-4 w-4 mr-2" />
@@ -126,37 +126,37 @@ export default function SimpleView() {
       </div>
 
       {/* Top Section - 60% height, divided into 2 columns */}
-      <div className="h-[60vh] grid grid-cols-1 md:grid-cols-2 gap-4 px-4 md:px-6">
+      <div className="h-[60vh] grid grid-cols-1 md:grid-cols-2 gap-2 px-3 md:px-4 pb-2">
         {/* Left: Compass */}
         <div className="flex items-center justify-center">
-          <div className="scale-125 md:scale-150">
+          <div className="scale-110 md:scale-125">
             <WindCompass direction={currentDirection} speed={currentSpeed} />
           </div>
         </div>
 
         {/* Right: Current Wind Speed */}
         <Card className="flex items-center justify-center shadow-[var(--shadow-card)] bg-gradient-to-br from-card to-card/80 backdrop-blur">
-          <div className="flex flex-col items-center justify-center space-y-4 p-6">
-            <div className="text-lg md:text-xl text-muted-foreground mt-2">Current Speed</div>
-            <Wind className="h-12 w-12 md:h-16 md:w-16 text-primary animate-pulse" />
-            <div className="text-center space-y-2">
-              <div className="text-7xl md:text-9xl font-bold bg-[var(--gradient-wind)] bg-clip-text leading-none">
+          <div className="flex flex-col items-center justify-center space-y-3 p-4">
+            <div className="text-base md:text-lg text-muted-foreground">Current Speed</div>
+            <Wind className="h-10 w-10 md:h-12 md:w-12 text-primary animate-pulse" />
+            <div className="text-center space-y-1">
+              <div className="text-6xl md:text-8xl font-bold bg-[var(--gradient-wind)] bg-clip-text leading-none">
                 {currentSpeed.toFixed(1)}
               </div>
-              <div className="text-3xl md:text-4xl text-muted-foreground font-medium">mph</div>
-              <div className="text-7xl md:text-9xl font-bold bg-[var(--gradient-wind)] bg-clip-text leading-none">
-                {getDirectionLabel(currentSpeed)}
+              <div className="text-2xl md:text-3xl text-muted-foreground font-medium">mph</div>
+              <div className="text-5xl md:text-7xl font-bold bg-[var(--gradient-wind)] bg-clip-text leading-none mt-2">
+                {getDirectionLabel(currentDirection)}
               </div>
             </div>
           </div>
         </Card>
       </div>
 
-      {/* Bottom Section - 40% height, average speeds */}
-      <div className="flex-1 p-4 md:p-6">
-        <div className="h-full grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="p-6 transition-all hover:shadow-md bg-gradient-to-br from-card to-card/80">
-            <div className="space-y-4">
+      {/* Bottom Section - Average speeds */}
+      <div className="flex-1 px-3 md:px-4 pb-3 md:pb-4">
+        <div className="h-full grid grid-cols-1 md:grid-cols-3 gap-2">
+          <Card className="p-4 md:p-5 transition-all hover:shadow-md bg-gradient-to-br from-card to-card/80">
+            <div className="space-y-3">
               <div className="text-center">
                 <div className="text-sm font-medium text-primary">Average</div>
                 <div className="text-xs text-muted-foreground">Last 5 Minutes</div>
@@ -179,8 +179,8 @@ export default function SimpleView() {
             </div>
           </Card>
 
-          <Card className="p-6 transition-all hover:shadow-md bg-gradient-to-br from-card to-card/80">
-            <div className="space-y-4">
+          <Card className="p-4 md:p-5 transition-all hover:shadow-md bg-gradient-to-br from-card to-card/80 ring-2 ring-primary scale-105">
+            <div className="space-y-3">
               <div className="text-center">
                 <div className="text-sm font-medium text-primary">Average</div>
                 <div className="text-xs text-muted-foreground">Last 10 Minutes</div>
@@ -203,8 +203,8 @@ export default function SimpleView() {
             </div>
           </Card>
 
-          <Card className="p-6 transition-all hover:shadow-md bg-gradient-to-br from-card to-card/80">
-            <div className="space-y-4">
+          <Card className="p-4 md:p-5 transition-all hover:shadow-md bg-gradient-to-br from-card to-card/80">
+            <div className="space-y-3">
               <div className="text-center">
                 <div className="text-sm font-medium text-primary">Average</div>
                 <div className="text-xs text-muted-foreground">Last 20 Minutes</div>
