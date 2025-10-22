@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { WindCompass } from "./WindCompass";
 import { WindChart } from "./WindChart";
 import { TimelineCard } from "./TimelineCard";
@@ -54,7 +54,7 @@ export const WeatherDashboard = () => {
   const [usingRealData, setUsingRealData] = useState(false);
   const { toast } = useToast();
 
-  const fetchRealWeatherData = async () => {
+  const fetchRealWeatherData = useCallback(async () => {
     const config = weatherService.getConfig();
     if (!config) return;
 
@@ -67,11 +67,13 @@ export const WeatherDashboard = () => {
       // Map to our UI format with timeline
       const mapped = processed.slice(0, 7).map((entry, idx) => {
         const isCurrentIdx = idx === Math.min(4, processed.length - 1);
-        const minutesOffset = idx < 4 ? (idx - 4) * 15 : (idx - 4) * 15;
-        
-        return {
+        const minutesOffset = (idx - 4) * 15;
+
+          const timeOffsetString = minutesOffset < 0 ? `${Math.abs(minutesOffset)}m ago` : `+${minutesOffset}m`;
+          const relativeTime = isCurrentIdx ? "Now" : timeOffsetString;
+          return {
           time: entry.time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
-          relativeTime: isCurrentIdx ? "Now" : minutesOffset < 0 ? `${Math.abs(minutesOffset)}m ago` : `+${minutesOffset}m`,
+          relativeTime: relativeTime,
           windSpeed: Math.round(entry.windSpeed),
           windDirection: entry.windDirection,
           gusts: Math.round(entry.gusts),
@@ -95,7 +97,7 @@ export const WeatherDashboard = () => {
     } finally {
       setIsLoadingReal(false);
     }
-  };
+  }, [toast]);
 
   useEffect(() => {
     const config = weatherService.getConfig();
@@ -103,7 +105,7 @@ export const WeatherDashboard = () => {
       fetchRealWeatherData();
     }
 
-    const interval = setInterval(() => {
+    const interval = globalThis.setInterval(() => {
       if (weatherService.getConfig()) {
         fetchRealWeatherData();
       } else {
@@ -111,8 +113,8 @@ export const WeatherDashboard = () => {
       }
     }, 30000);
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => globalThis.clearInterval(interval);
+  }, [fetchRealWeatherData]);
 
   const currentData = weatherData.find(d => d.isCurrent);
   const chartData = weatherData.map(d => ({
@@ -217,7 +219,7 @@ export const WeatherDashboard = () => {
           <div className="overflow-x-auto pb-4">
             <div className="flex gap-4 min-w-max">
               {weatherData.map((data, idx) => (
-                <TimelineCard key={idx} data={data} />
+                <TimelineCard key={data.time} data={data} />
               ))}
             </div>
           </div>
