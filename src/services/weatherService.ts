@@ -11,7 +11,24 @@ interface AmbientWeatherData {
   windgustmph: number;
   hourlyrainin?: number;
   dailyrainin?: number;
-  [key: string]: any;
+  [key: string]: unknown;
+}
+
+interface AmbientWeatherDevice {
+  macAddress: string;
+  info?: unknown;
+  lastData?: AmbientWeatherData;
+  name?: string;
+  [key: string]: unknown;
+}
+
+export interface ProcessedWeatherEntry {
+  time: Date;
+  windSpeed: number;
+  windDirection: number;
+  gusts: number;
+  rainHourly: number;
+  rainDaily: number;
 }
 
 const STORAGE_KEY = 'ambient_weather_config';
@@ -39,7 +56,7 @@ export const weatherService = {
     localStorage.removeItem(STORAGE_KEY);
   },
 
-  async fetchDevices(): Promise<any[]> {
+  async fetchDevices(): Promise<AmbientWeatherDevice[]> {
     const config = this.getConfig();
     if (!config?.apiKey || !config?.applicationKey) {
       throw new Error('API credentials not configured');
@@ -52,7 +69,7 @@ export const weatherService = {
       throw new Error(`Failed to fetch devices: ${response.statusText}`);
     }
 
-    return response.json();
+    return await response.json() as Promise<AmbientWeatherDevice[]>;
   },
 
   async fetchDeviceData(macAddress: string, limit: number = 288): Promise<AmbientWeatherData[]> {
@@ -68,10 +85,10 @@ export const weatherService = {
       throw new Error(`Failed to fetch device data: ${response.statusText}`);
     }
 
-    return response.json();
+    return await response.json() as Promise<AmbientWeatherData[]>;
   },
 
-  processWeatherData(data: AmbientWeatherData[]) {
+  processWeatherData(data: AmbientWeatherData[]): ProcessedWeatherEntry[] {
     if (!data || data.length === 0) return [];
     
     return data.map((entry) => ({
