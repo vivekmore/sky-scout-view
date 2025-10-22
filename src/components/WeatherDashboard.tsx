@@ -1,54 +1,18 @@
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { WindCompass } from "./WindCompass";
 import { WindChart } from "./WindChart";
 import { TimelineCard } from "./TimelineCard";
 import { WeatherMetric } from "./WeatherMetric";
 import { WeatherSettings } from "./WeatherSettings";
-import { Wind, Eye, Droplets, Gauge, Maximize2 } from "lucide-react";
+import { Droplets, Eye, Gauge, Maximize2, Wind } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { weatherService } from "@/services/weatherService";
+import { mockData, weatherService } from "@/services/weatherService";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 
-// Mock data generator (replace with actual API calls)
-const generateMockData = () => {
-  const now = new Date();
-  const baseSpeed = 12;
-
-  const timePoints = [
-    { offset: -120, label: "2h ago" },
-    { offset: -60, label: "1h ago" },
-    { offset: -30, label: "30m ago" },
-    { offset: -15, label: "15m ago" },
-    { offset: 0, label: "Now" },
-    { offset: 15, label: "+15m" },
-    { offset: 60, label: "+1h" },
-  ];
-
-  return timePoints.map(({ offset, label }) => {
-    const time = new Date(now.getTime() + offset * 60000);
-    const variance = Math.random() * 4 - 2;
-    const speed = Math.max(5, baseSpeed + variance);
-    const gust = speed + Math.random() * 5 + 3;
-
-    return {
-      time: time.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }),
-      relativeTime: label,
-      windSpeed: Math.round(speed),
-      windDirection: Math.round(180 + Math.random() * 60),
-      gusts: Math.round(gust),
-      rainChance: offset >= 0 ? Math.round(Math.random() * 30) : undefined,
-      isCurrent: offset === 0,
-      isForecast: offset > 0,
-      speed,
-      gust,
-    };
-  });
-};
-
 export const WeatherDashboard = () => {
-  const [weatherData, setWeatherData] = useState(generateMockData());
+  const [weatherData, setWeatherData] = useState(mockData());
   const [showApiInfo, setShowApiInfo] = useState(true);
   const [isLoadingReal, setIsLoadingReal] = useState(false);
   const [usingRealData, setUsingRealData] = useState(false);
@@ -110,7 +74,7 @@ export const WeatherDashboard = () => {
       if (weatherService.getConfig()) {
         fetchRealWeatherData();
       } else {
-        setWeatherData(generateMockData());
+        setWeatherData(mockData());
       }
     }, 30000);
 
@@ -208,7 +172,7 @@ export const WeatherDashboard = () => {
           <h2 className="text-2xl font-bold text-foreground">Timeline</h2>
           <div className="overflow-x-auto pb-4 pt-2">
             <div className="flex gap-4 min-w-max">
-              {weatherData.map((data, idx) => (
+              {weatherData.map((data) => (
                 <TimelineCard key={data.time} data={data} />
               ))}
             </div>
