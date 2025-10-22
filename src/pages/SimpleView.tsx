@@ -179,7 +179,7 @@ export default function SimpleView() {
             </div>
           </Card>
 
-          <Card className="p-6 transition-all hover:shadow-md ring-2 ring-primary shadow-xl scale-105 bg-gradient-to-br from-primary/5 to-accent/5">
+          <Card className="p-6 transition-all hover:shadow-md bg-gradient-to-br from-card to-card/80">
             <div className="space-y-4">
               <div className="text-center">
                 <div className="text-sm font-medium text-primary">Average</div>
