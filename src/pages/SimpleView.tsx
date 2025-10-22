@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 export default function SimpleView() {
   const [currentSpeed, setCurrentSpeed] = useState(0);
-  const [avgDirection20, setAvgDirection20] = useState(0);
+  const [currentDirection, setCurrentDirection] = useState(0);
   const [avgSpeed5, setAvgSpeed5] = useState(0);
   const [avgSpeed10, setAvgSpeed10] = useState(0);
   const [avgSpeed20, setAvgSpeed20] = useState(0);
@@ -36,15 +36,20 @@ export default function SimpleView() {
       const processed = weatherService.processWeatherData(rawData);
       const now = new Date();
 
-      // Current speed (use most recent reading; Ambient Weather API typically returns newest first)
+      // Current speed and direction (use most recent reading; Ambient Weather API typically returns newest first)
       if (processed.length > 0) {
         setCurrentSpeed(processed[0].windSpeed);
+        setCurrentDirection(processed[0].windDirection);
       }
 
       // Filter data by time ranges
-      const last5mins = processed.filter(d => (now.getTime() - d.time.getTime()) <= 5 * 60 * 1000);
-      const last10mins = processed.filter(d => (now.getTime() - d.time.getTime()) <= 10 * 60 * 1000);
-      const last20mins = processed.filter(d => (now.getTime() - d.time.getTime()) <= 20 * 60 * 1000);
+      const last5mins = processed.filter((d) => now.getTime() - d.time.getTime() <= 5 * 60 * 1000);
+      const last10mins = processed.filter(
+        (d) => now.getTime() - d.time.getTime() <= 10 * 60 * 1000
+      );
+      const last20mins = processed.filter(
+        (d) => now.getTime() - d.time.getTime() <= 20 * 60 * 1000
+      );
 
       // Calculate average speeds
       if (last5mins.length > 0) {
@@ -64,21 +69,16 @@ export default function SimpleView() {
       if (last20mins.length > 0) {
         const avg = last20mins.reduce((sum, d) => sum + d.windSpeed, 0) / last20mins.length;
         setAvgSpeed20(avg);
-
-        // Average direction (simple mean; could be improved with circular averaging if needed)
-        const avgDir = last20mins.reduce((sum, d) => sum + d.windDirection, 0) / last20mins.length;
-        setAvgDirection20(avgDir);
       } else {
         setAvgSpeed20(0);
-        setAvgDirection20(0);
       }
 
       setUsingRealData(true);
     } catch (error) {
-      console.error('Fetch error:', error);
+      console.error("Fetch error:", error);
       toast({
         title: "Data fetch error",
-        description: error instanceof Error ? error.message : 'Unable to retrieve weather data',
+        description: error instanceof Error ? error.message : "Unable to retrieve weather data",
         variant: "destructive",
       });
       setUsingRealData(false);
@@ -102,7 +102,7 @@ export default function SimpleView() {
   }, [fetchAndCalculate]);
 
   const getDirectionLabel = (degrees: number) => {
-    const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+    const directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
     const index = Math.round(degrees / 45) % 8;
     return directions[index];
   };
@@ -114,7 +114,7 @@ export default function SimpleView() {
         <Link to="/">
           <Button variant="ghost" size="sm" className="hover:bg-card/50">
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back
+            Full Dashboard
           </Button>
         </Link>
         <div className="flex items-center gap-4">
@@ -130,23 +130,23 @@ export default function SimpleView() {
         {/* Left: Compass */}
         <div className="flex items-center justify-center">
           <div className="scale-125 md:scale-150">
-            <WindCompass 
-              direction={avgDirection20} 
-              speed={avgSpeed20}
-            />
+            <WindCompass direction={currentDirection} speed={currentSpeed} />
           </div>
         </div>
 
         {/* Right: Current Wind Speed */}
         <Card className="flex items-center justify-center shadow-[var(--shadow-card)] bg-gradient-to-br from-card to-card/80 backdrop-blur">
           <div className="flex flex-col items-center justify-center space-y-4 p-6">
+            <div className="text-lg md:text-xl text-muted-foreground mt-2">Current Speed</div>
             <Wind className="h-12 w-12 md:h-16 md:w-16 text-primary animate-pulse" />
             <div className="text-center space-y-2">
-              <div className="text-7xl md:text-9xl font-bold bg-[var(--gradient-wind)] bg-clip-text text-transparent leading-none">
+              <div className="text-7xl md:text-9xl font-bold bg-[var(--gradient-wind)] bg-clip-text leading-none">
                 {currentSpeed.toFixed(1)}
               </div>
               <div className="text-3xl md:text-4xl text-muted-foreground font-medium">mph</div>
-              <div className="text-lg md:text-xl text-muted-foreground mt-2">Current Speed</div>
+              <div className="text-7xl md:text-9xl font-bold bg-[var(--gradient-wind)] bg-clip-text leading-none">
+                {getDirectionLabel(currentSpeed)}
+              </div>
             </div>
           </div>
         </Card>
@@ -157,31 +157,37 @@ export default function SimpleView() {
         <div className="h-full grid grid-cols-1 md:grid-cols-3 gap-4">
           <Card className="flex items-center justify-center shadow-[var(--shadow-card)] hover:shadow-lg transition-all hover:scale-105 bg-gradient-to-br from-card to-muted/10">
             <div className="text-center space-y-3 p-6">
-              <div className="text-xs md:text-sm font-semibold text-primary uppercase tracking-wider">5 Minutes</div>
+              <div className="text-xs md:text-sm font-semibold text-primary uppercase tracking-wider">
+                5 Minutes
+              </div>
               <div className="text-5xl md:text-6xl font-bold text-foreground">
                 {avgSpeed5.toFixed(1)}
               </div>
-              <div className="text-base md:text-lg text-muted-foreground">mph avg</div>
+              <div className="text-base md:text-lg text-muted-foreground">mph</div>
             </div>
           </Card>
 
           <Card className="flex items-center justify-center shadow-[var(--shadow-card)] hover:shadow-lg transition-all hover:scale-105 bg-gradient-to-br from-card to-muted/10">
             <div className="text-center space-y-3 p-6">
-              <div className="text-xs md:text-sm font-semibold text-primary uppercase tracking-wider">10 Minutes</div>
+              <div className="text-xs md:text-sm font-semibold text-primary uppercase tracking-wider">
+                10 Minutes
+              </div>
               <div className="text-5xl md:text-6xl font-bold text-foreground">
                 {avgSpeed10.toFixed(1)}
               </div>
-              <div className="text-base md:text-lg text-muted-foreground">mph avg</div>
+              <div className="text-base md:text-lg text-muted-foreground">mph</div>
             </div>
           </Card>
 
           <Card className="flex items-center justify-center shadow-[var(--shadow-card)] hover:shadow-lg transition-all hover:scale-105 bg-gradient-to-br from-card to-muted/10">
             <div className="text-center space-y-3 p-6">
-              <div className="text-xs md:text-sm font-semibold text-primary uppercase tracking-wider">20 Minutes</div>
+              <div className="text-xs md:text-sm font-semibold text-primary uppercase tracking-wider">
+                20 Minutes
+              </div>
               <div className="text-5xl md:text-6xl font-bold text-foreground">
                 {avgSpeed20.toFixed(1)}
               </div>
-              <div className="text-base md:text-lg text-muted-foreground">mph avg</div>
+              <div className="text-base md:text-lg text-muted-foreground">mph</div>
             </div>
           </Card>
         </div>
