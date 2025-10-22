@@ -17,28 +17,49 @@ interface TimelineCardProps {
 }
 
 const getWindDirection = (degrees: number): string => {
-  const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+  const directions = [
+    "N",
+    "NNE",
+    "NE",
+    "ENE",
+    "E",
+    "ESE",
+    "SE",
+    "SSE",
+    "S",
+    "SSW",
+    "SW",
+    "WSW",
+    "W",
+    "WNW",
+    "NW",
+    "NNW",
+  ];
   const index = Math.round(degrees / 22.5) % 16;
   return directions[index];
 };
 
 export const TimelineCard = ({ data }: TimelineCardProps) => {
   return (
-    <Card className={`p-4 min-w-[160px] transition-all ${
-      data.isCurrent 
-        ? 'ring-2 ring-primary shadow-xl scale-105 bg-gradient-to-br from-primary/5 to-accent/5' 
-        : data.isForecast 
-          ? 'opacity-75 hover:opacity-100' 
-          : 'hover:shadow-md'
-    }`}>
+    <Card
+      className={`p-4 min-w-[160px] transition-all ${
+        data.isCurrent
+          ? "ring-2 ring-primary shadow-xl scale-105 bg-gradient-to-br from-primary/5 to-accent/5"
+          : data.isForecast
+            ? "opacity-75 hover:opacity-100"
+            : "hover:shadow-md"
+      }`}
+    >
       <div className="space-y-3">
         <div className="text-center">
-          <div className={`text-sm font-medium ${data.isCurrent ? 'text-primary' : 'text-muted-foreground'}`}>
+          <div
+            className={`text-sm font-medium ${data.isCurrent ? "text-primary" : "text-muted-foreground"}`}
+          >
             {data.relativeTime}
           </div>
           <div className="text-xs text-muted-foreground">{data.time}</div>
         </div>
-        
+
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1">
@@ -47,17 +68,19 @@ export const TimelineCard = ({ data }: TimelineCardProps) => {
             </div>
             <span className="text-lg font-bold text-foreground">{data.windSpeed}</span>
           </div>
-          
+
           <div className="flex items-center justify-between text-xs">
             <span className="text-muted-foreground">Direction</span>
-            <span className="font-medium text-foreground">{getWindDirection(data.windDirection)}</span>
+            <span className="font-medium text-foreground">
+              {getWindDirection(data.windDirection)}
+            </span>
           </div>
-          
+
           <div className="flex items-center justify-between text-xs">
             <span className="text-muted-foreground">Gusts</span>
             <span className="font-medium text-accent">{data.gusts} mph</span>
           </div>
-          
+
           {data.rainChance !== undefined && (
             <div className="flex items-center justify-between text-xs pt-2 border-t border-border">
               <div className="flex items-center gap-1">

@@ -31,8 +31,8 @@ export interface ProcessedWeatherEntry {
   rainDaily: number;
 }
 
-const STORAGE_KEY = 'ambient_weather_config';
-const API_BASE_URL = 'https://rt.ambientweather.net/v1';
+const STORAGE_KEY = "ambient_weather_config";
+const API_BASE_URL = "https://rt.ambientweather.net/v1";
 
 export const weatherService = {
   ws: null as WebSocket | null,
@@ -44,11 +44,13 @@ export const weatherService = {
 
   getConfig(): AmbientWeatherConfig | null {
     const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : {
-        apiKey: '0116a8e2bd0e41acb8df02b2821eedbbad89280a712f425b9b47809ee61bf5b2',
-        applicationKey: 'dd3dd1d0c9de43afb0a08324da83706dbe4fe8b4852349b88bddc2793ed14732',
-        macAddress: 'EC:64:C9:F1:82:EA'
-    };
+    return stored
+      ? JSON.parse(stored)
+      : {
+          apiKey: "0116a8e2bd0e41acb8df02b2821eedbbad89280a712f425b9b47809ee61bf5b2",
+          applicationKey: "dd3dd1d0c9de43afb0a08324da83706dbe4fe8b4852349b88bddc2793ed14732",
+          macAddress: "EC:64:C9:F1:82:EA",
+        };
   },
 
   clearConfig() {
@@ -58,38 +60,38 @@ export const weatherService = {
   async fetchDevices(): Promise<AmbientWeatherDevice[]> {
     const config = this.getConfig();
     if (!config?.apiKey || !config?.applicationKey) {
-      throw new Error('API credentials not configured');
+      throw new Error("API credentials not configured");
     }
 
     const url = `${API_BASE_URL}/devices?applicationKey=${config.applicationKey}&apiKey=${config.apiKey}`;
     const response = await fetch(url);
-    
+
     if (!response.ok) {
       throw new Error(`Failed to fetch devices: ${response.statusText}`);
     }
 
-    return await response.json() as Promise<AmbientWeatherDevice[]>;
+    return (await response.json()) as Promise<AmbientWeatherDevice[]>;
   },
 
   async fetchDeviceData(macAddress: string, limit: number = 288): Promise<AmbientWeatherData[]> {
     const config = this.getConfig();
     if (!config?.apiKey || !config?.applicationKey) {
-      throw new Error('API credentials not configured');
+      throw new Error("API credentials not configured");
     }
 
     const url = `${API_BASE_URL}/devices/${macAddress}?applicationKey=${config.applicationKey}&apiKey=${config.apiKey}&limit=${limit}`;
     const response = await fetch(url);
-    
+
     if (!response.ok) {
       throw new Error(`Failed to fetch device data: ${response.statusText}`);
     }
 
-    return await response.json() as Promise<AmbientWeatherData[]>;
+    return (await response.json()) as Promise<AmbientWeatherData[]>;
   },
 
   processWeatherData(data: AmbientWeatherData[]): ProcessedWeatherEntry[] {
     if (!data || data.length === 0) return [];
-    
+
     return data.map((entry) => ({
       time: new Date(entry.dateutc),
       windSpeed: entry.windspeedmph || 0,
@@ -98,5 +100,5 @@ export const weatherService = {
       rainHourly: entry.hourlyrainin || 0,
       rainDaily: entry.dailyrainin || 0,
     }));
-  }
+  },
 };

@@ -1,0 +1,18 @@
+# Ignore build and dependency artifacts
+node_modules
+/dist
+/build
+bun.lockb
+.eslintcache
+{
+  "singleQuote": false,
+  "semi": true,
+  "trailingComma": "es5",
+  "printWidth": 100,
+  "tabWidth": 2,
+  "useTabs": false,
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "endOfLine": "lf"
+}
+

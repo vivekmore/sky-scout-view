@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -39,10 +46,10 @@ export const WeatherSettings = () => {
     setIsTesting(true);
     try {
       weatherService.saveConfig({ apiKey, applicationKey, macAddress: macAddress || undefined });
-      
+
       // Test the connection
       const devices = await weatherService.fetchDevices();
-      
+
       setIsConfigured(true);
       toast({
         title: "Settings saved!",
@@ -96,14 +103,24 @@ export const WeatherSettings = () => {
             Enter your Ambient Weather API credentials to fetch real-time weather data.
           </DialogDescription>
         </DialogHeader>
-        
+
         <div className="space-y-4 py-4">
           <div className="bg-primary/5 border border-primary/20 rounded-lg p-3 flex gap-2">
             <AlertCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
             <div className="text-sm text-muted-foreground">
               <p className="font-medium text-foreground mb-1">Get your API keys:</p>
               <ol className="list-decimal list-inside space-y-1">
-                <li>Visit <a href="https://ambientweather.net/account" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">ambientweather.net/account</a></li>
+                <li>
+                  Visit{" "}
+                  <a
+                    href="https://ambientweather.net/account"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    ambientweather.net/account
+                  </a>
+                </li>
                 <li>Log in to your account</li>
                 <li>Find your API Key and Application Key</li>
               </ol>

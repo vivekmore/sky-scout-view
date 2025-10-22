@@ -1,11 +1,14 @@
 # Lefthook configuration
-# Runs ESLint with autofix on staged JS/TS/React files before commit.
+# Runs Prettier and ESLint with autofix on staged JS/TS/React files before commit.
 pre-commit:
-  parallel: true
+  parallel: false
   commands:
+    prettier:
+      glob: "src/**/*.{js,jsx,ts,tsx,css}"
+      run: "npx prettier --write {staged_files}"
+      stage_fixed: true
     eslint:
       # Match staged source files recursively under src/
       glob: "src/**/*.{js,jsx,ts,tsx}"
       run: "npx eslint --cache --fix {staged_files}"
-      # Re-stage files that were auto-fixed.
       stage_fixed: true
