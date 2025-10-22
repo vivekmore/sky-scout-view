@@ -206,7 +206,7 @@ export const WeatherDashboard = () => {
         {/* Timeline */}
         <div className="space-y-4">
           <h2 className="text-2xl font-bold text-foreground">Timeline</h2>
-          <div className="overflow-x-auto pb-4">
+          <div className="overflow-x-auto pb-4 pt-2">
             <div className="flex gap-4 min-w-max">
               {weatherData.map((data, idx) => (
                 <TimelineCard key={data.time} data={data} />
