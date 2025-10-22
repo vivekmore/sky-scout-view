@@ -108,80 +108,80 @@ export default function SimpleView() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--gradient-sky)] p-4 md:p-8">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <Link to="/">
-            <Button variant="ghost" size="sm" className="hover:bg-card/50">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Full Dashboard
-            </Button>
-          </Link>
-          <div className="flex items-center gap-4">
-            <div className="text-sm text-muted-foreground hidden sm:block">
-              {usingRealData ? "🟢 Live data" : "⚪ Waiting for data..."}
-            </div>
-            <WeatherSettings />
+    <div className="h-screen flex flex-col bg-[var(--gradient-sky)] overflow-hidden">
+      {/* Header - Fixed height */}
+      <div className="flex items-center justify-between p-4 md:p-6 shrink-0">
+        <Link to="/">
+          <Button variant="ghost" size="sm" className="hover:bg-card/50">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back
+          </Button>
+        </Link>
+        <div className="flex items-center gap-4">
+          <div className="text-sm text-muted-foreground hidden sm:block">
+            {usingRealData ? "🟢 Live" : "⚪ Waiting..."}
+          </div>
+          <WeatherSettings />
+        </div>
+      </div>
+
+      {/* Top Section - 60% height, divided into 2 columns */}
+      <div className="h-[60vh] grid grid-cols-1 md:grid-cols-2 gap-4 px-4 md:px-6">
+        {/* Left: Compass */}
+        <div className="flex items-center justify-center">
+          <div className="scale-125 md:scale-150">
+            <WindCompass 
+              direction={avgDirection20} 
+              speed={avgSpeed20}
+            />
           </div>
         </div>
 
-        {/* Main Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Left Column - Compass */}
-          <div className="flex items-start">
-            <div className="w-full scale-150 origin-top-left lg:scale-[1.8] lg:ml-16 lg:mt-8">
-              <WindCompass 
-                direction={avgDirection20} 
-                speed={avgSpeed20}
-              />
-            </div>
-          </div>
-
-          {/* Right Column - Current Speed */}
-          <Card className="p-8 md:p-12 shadow-[var(--shadow-card)] bg-gradient-to-br from-card to-card/80 backdrop-blur">
-            <div className="flex flex-col items-center justify-center space-y-4">
-              <Wind className="h-12 w-12 text-primary animate-pulse" />
-              <div className="text-center space-y-2">
-                <div className="text-8xl md:text-9xl font-bold bg-[var(--gradient-wind)] bg-clip-text text-transparent">
-                  {currentSpeed.toFixed(1)}
-                </div>
-                <div className="text-3xl md:text-4xl text-muted-foreground font-medium">mph</div>
-                <div className="text-xl text-muted-foreground mt-4">Current Wind Speed</div>
+        {/* Right: Current Wind Speed */}
+        <Card className="flex items-center justify-center shadow-[var(--shadow-card)] bg-gradient-to-br from-card to-card/80 backdrop-blur">
+          <div className="flex flex-col items-center justify-center space-y-4 p-6">
+            <Wind className="h-12 w-12 md:h-16 md:w-16 text-primary animate-pulse" />
+            <div className="text-center space-y-2">
+              <div className="text-7xl md:text-9xl font-bold bg-[var(--gradient-wind)] bg-clip-text text-transparent leading-none">
+                {currentSpeed.toFixed(1)}
               </div>
+              <div className="text-3xl md:text-4xl text-muted-foreground font-medium">mph</div>
+              <div className="text-lg md:text-xl text-muted-foreground mt-2">Current Speed</div>
             </div>
-          </Card>
-        </div>
+          </div>
+        </Card>
+      </div>
 
-        {/* Average Speeds Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="p-6 shadow-[var(--shadow-card)] hover:shadow-lg transition-all hover:scale-105 bg-gradient-to-br from-card to-muted/10">
-            <div className="text-center space-y-3">
-              <div className="text-sm font-semibold text-primary uppercase tracking-wider">5 Minutes</div>
-              <div className="text-5xl font-bold text-foreground">
+      {/* Bottom Section - 40% height, average speeds */}
+      <div className="flex-1 p-4 md:p-6">
+        <div className="h-full grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Card className="flex items-center justify-center shadow-[var(--shadow-card)] hover:shadow-lg transition-all hover:scale-105 bg-gradient-to-br from-card to-muted/10">
+            <div className="text-center space-y-3 p-6">
+              <div className="text-xs md:text-sm font-semibold text-primary uppercase tracking-wider">5 Minutes</div>
+              <div className="text-5xl md:text-6xl font-bold text-foreground">
                 {avgSpeed5.toFixed(1)}
               </div>
-              <div className="text-lg text-muted-foreground">mph average</div>
+              <div className="text-base md:text-lg text-muted-foreground">mph avg</div>
             </div>
           </Card>
 
-          <Card className="p-6 shadow-[var(--shadow-card)] hover:shadow-lg transition-all hover:scale-105 bg-gradient-to-br from-card to-muted/10">
-            <div className="text-center space-y-3">
-              <div className="text-sm font-semibold text-primary uppercase tracking-wider">10 Minutes</div>
-              <div className="text-5xl font-bold text-foreground">
+          <Card className="flex items-center justify-center shadow-[var(--shadow-card)] hover:shadow-lg transition-all hover:scale-105 bg-gradient-to-br from-card to-muted/10">
+            <div className="text-center space-y-3 p-6">
+              <div className="text-xs md:text-sm font-semibold text-primary uppercase tracking-wider">10 Minutes</div>
+              <div className="text-5xl md:text-6xl font-bold text-foreground">
                 {avgSpeed10.toFixed(1)}
               </div>
-              <div className="text-lg text-muted-foreground">mph average</div>
+              <div className="text-base md:text-lg text-muted-foreground">mph avg</div>
             </div>
           </Card>
 
-          <Card className="p-6 shadow-[var(--shadow-card)] hover:shadow-lg transition-all hover:scale-105 bg-gradient-to-br from-card to-muted/10">
-            <div className="text-center space-y-3">
-              <div className="text-sm font-semibold text-primary uppercase tracking-wider">20 Minutes</div>
-              <div className="text-5xl font-bold text-foreground">
+          <Card className="flex items-center justify-center shadow-[var(--shadow-card)] hover:shadow-lg transition-all hover:scale-105 bg-gradient-to-br from-card to-muted/10">
+            <div className="text-center space-y-3 p-6">
+              <div className="text-xs md:text-sm font-semibold text-primary uppercase tracking-wider">20 Minutes</div>
+              <div className="text-5xl md:text-6xl font-bold text-foreground">
                 {avgSpeed20.toFixed(1)}
               </div>
-              <div className="text-lg text-muted-foreground">mph average</div>
+              <div className="text-base md:text-lg text-muted-foreground">mph avg</div>
             </div>
           </Card>
         </div>
