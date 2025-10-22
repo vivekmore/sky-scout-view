@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { weatherService } from "@/services/weatherService";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -14,78 +14,90 @@ export default function SimpleView() {
   const [avgSpeed20, setAvgSpeed20] = useState(0);
   const [usingRealData, setUsingRealData] = useState(false);
   const { toast } = useToast();
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const calculateAverages = () => {
-    const buffered = weatherService.getBufferedData();
-    if (buffered.length === 0) return;
+  // Fetch data from API and calculate averages (memoized)
+  const fetchAndCalculate = useCallback(async () => {
+    try {
+      const config = weatherService.getConfig();
+      if (!config?.macAddress) {
+        setUsingRealData(false);
+        return;
+      }
 
-    const processed = weatherService.processWeatherData(buffered);
-    const now = new Date();
+      const rawData = await weatherService.fetchDeviceData(config.macAddress, 288);
+      if (!rawData || rawData.length === 0) {
+        setUsingRealData(false);
+        return;
+      }
 
-    // Current speed
-    if (processed.length > 0) {
-      setCurrentSpeed(processed[0].windSpeed);
+      const processed = weatherService.processWeatherData(rawData);
+      const now = new Date();
+
+      // Current speed (use most recent reading; Ambient Weather API typically returns newest first)
+      if (processed.length > 0) {
+        setCurrentSpeed(processed[0].windSpeed);
+      }
+
+      // Filter data by time ranges
+      const last5mins = processed.filter(d => (now.getTime() - d.time.getTime()) <= 5 * 60 * 1000);
+      const last10mins = processed.filter(d => (now.getTime() - d.time.getTime()) <= 10 * 60 * 1000);
+      const last20mins = processed.filter(d => (now.getTime() - d.time.getTime()) <= 20 * 60 * 1000);
+
+      // Calculate average speeds
+      if (last5mins.length > 0) {
+        const avg = last5mins.reduce((sum, d) => sum + d.windSpeed, 0) / last5mins.length;
+        setAvgSpeed5(avg);
+      } else {
+        setAvgSpeed5(0);
+      }
+
+      if (last10mins.length > 0) {
+        const avg = last10mins.reduce((sum, d) => sum + d.windSpeed, 0) / last10mins.length;
+        setAvgSpeed10(avg);
+      } else {
+        setAvgSpeed10(0);
+      }
+
+      if (last20mins.length > 0) {
+        const avg = last20mins.reduce((sum, d) => sum + d.windSpeed, 0) / last20mins.length;
+        setAvgSpeed20(avg);
+
+        // Average direction (simple mean; could be improved with circular averaging if needed)
+        const avgDir = last20mins.reduce((sum, d) => sum + d.windDirection, 0) / last20mins.length;
+        setAvgDirection20(avgDir);
+      } else {
+        setAvgSpeed20(0);
+        setAvgDirection20(0);
+      }
+
+      setUsingRealData(true);
+    } catch (error) {
+      console.error('Fetch error:', error);
+      toast({
+        title: "Data fetch error",
+        description: error instanceof Error ? error.message : 'Unable to retrieve weather data',
+        variant: "destructive",
+      });
+      setUsingRealData(false);
     }
-
-    // Filter data by time ranges
-    const last5mins = processed.filter(d => (now.getTime() - d.time.getTime()) <= 5 * 60 * 1000);
-    const last10mins = processed.filter(d => (now.getTime() - d.time.getTime()) <= 10 * 60 * 1000);
-    const last20mins = processed.filter(d => (now.getTime() - d.time.getTime()) <= 20 * 60 * 1000);
-
-    // Calculate average speeds
-    if (last5mins.length > 0) {
-      const avg = last5mins.reduce((sum, d) => sum + d.windSpeed, 0) / last5mins.length;
-      setAvgSpeed5(avg);
-    }
-
-    if (last10mins.length > 0) {
-      const avg = last10mins.reduce((sum, d) => sum + d.windSpeed, 0) / last10mins.length;
-      setAvgSpeed10(avg);
-    }
-
-    if (last20mins.length > 0) {
-      const avg = last20mins.reduce((sum, d) => sum + d.windSpeed, 0) / last20mins.length;
-      setAvgSpeed20(avg);
-      
-      // Calculate average direction
-      const avgDir = last20mins.reduce((sum, d) => sum + d.windDirection, 0) / last20mins.length;
-      setAvgDirection20(avgDir);
-    }
-  };
+  }, [toast]);
 
   useEffect(() => {
-    const config = weatherService.getConfig();
-    
-    if (config) {
-      try {
-        weatherService.connectWebSocket(
-          () => {
-            calculateAverages();
-            setUsingRealData(true);
-          },
-          (error) => {
-            console.error('WebSocket error:', error);
-            toast({
-              title: "WebSocket connection error",
-              description: "Unable to connect to weather station",
-              variant: "destructive",
-            });
-            setUsingRealData(false);
-          }
-        );
-      } catch (error) {
-        toast({
-          title: "Failed to connect",
-          description: error instanceof Error ? error.message : "Please check your settings",
-          variant: "destructive",
-        });
-      }
-    }
+    // Initial fetch
+    fetchAndCalculate();
+
+    // Poll every 60 seconds
+    pollRef.current = globalThis.setInterval(() => {
+      fetchAndCalculate();
+    }, 60 * 1000);
 
     return () => {
-      weatherService.disconnectWebSocket();
+      if (pollRef.current) {
+        globalThis.clearInterval(pollRef.current);
+      }
     };
-  }, []);
+  }, [fetchAndCalculate]);
 
   const getDirectionLabel = (degrees: number) => {
     const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
@@ -109,7 +121,7 @@ export default function SimpleView() {
 
         {/* Status */}
         <div className="text-center text-sm text-muted-foreground">
-          {usingRealData ? "Live data from Ambient Weather" : "Waiting for data..."}
+          {usingRealData ? "Live data (polled) from Ambient Weather" : "Waiting for data..."}
         </div>
 
         {/* Current Wind Speed - Large Display */}
@@ -138,7 +150,7 @@ export default function SimpleView() {
             <div className="text-sm text-muted-foreground">mph</div>
             <div className="text-base text-muted-foreground">Avg Speed (5 min)</div>
           </div>
-          
+
           <div className="text-center space-y-2">
             <div className="text-3xl md:text-4xl font-bold text-foreground">
               {avgSpeed10.toFixed(1)}
@@ -146,7 +158,7 @@ export default function SimpleView() {
             <div className="text-sm text-muted-foreground">mph</div>
             <div className="text-base text-muted-foreground">Avg Speed (10 min)</div>
           </div>
-          
+
           <div className="text-center space-y-2">
             <div className="text-3xl md:text-4xl font-bold text-foreground">
               {avgSpeed20.toFixed(1)}
