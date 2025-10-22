@@ -54,69 +54,64 @@ export const WeatherDashboard = () => {
   const [usingRealData, setUsingRealData] = useState(false);
   const { toast } = useToast();
 
-  const updateWeatherFromBuffer = () => {
-    const buffered = weatherService.getBufferedData();
-    if (buffered.length === 0) return;
+  const fetchRealWeatherData = async () => {
+    const config = weatherService.getConfig();
+    if (!config) return;
 
-    const processed = weatherService.processWeatherData(buffered);
-    const mapped = processed.slice(0, 7).map((entry, idx) => {
-      const isCurrentIdx = 0;
-      const minutesOffset = -idx * 15;
+    setIsLoadingReal(true);
+    try {
+      const macAddress = config.macAddress;
+      const rawData = await weatherService.fetchDeviceData(macAddress, 50);
+      const processed = weatherService.processWeatherData(rawData);
       
-      return {
-        time: entry.time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
-        relativeTime: idx === 0 ? "Now" : `${Math.abs(minutesOffset)}m ago`,
-        windSpeed: Math.round(entry.windSpeed),
-        windDirection: entry.windDirection,
-        gusts: Math.round(entry.gusts),
-        rainChance: entry.rainHourly > 0 ? Math.round(entry.rainHourly * 100) : undefined,
-        isCurrent: idx === 0,
-        isForecast: false,
-        speed: entry.windSpeed,
-        gust: entry.gusts,
-      };
-    });
+      // Map to our UI format with timeline
+      const mapped = processed.slice(0, 7).map((entry, idx) => {
+        const isCurrentIdx = idx === Math.min(4, processed.length - 1);
+        const minutesOffset = idx < 4 ? (idx - 4) * 15 : (idx - 4) * 15;
+        
+        return {
+          time: entry.time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+          relativeTime: isCurrentIdx ? "Now" : minutesOffset < 0 ? `${Math.abs(minutesOffset)}m ago` : `+${minutesOffset}m`,
+          windSpeed: Math.round(entry.windSpeed),
+          windDirection: entry.windDirection,
+          gusts: Math.round(entry.gusts),
+          rainChance: entry.rainHourly > 0 ? Math.round(entry.rainHourly * 100) : undefined,
+          isCurrent: isCurrentIdx,
+          isForecast: idx > 4,
+          speed: entry.windSpeed,
+          gust: entry.gusts,
+        };
+      });
 
-    setWeatherData(mapped);
+      setWeatherData(mapped);
+      setUsingRealData(true);
+    } catch (error) {
+      toast({
+        title: "Failed to fetch weather data",
+        description: error instanceof Error ? error.message : "Please check your settings",
+        variant: "destructive",
+      });
+      setUsingRealData(false);
+    } finally {
+      setIsLoadingReal(false);
+    }
   };
 
   useEffect(() => {
     const config = weatherService.getConfig();
-    
     if (config) {
-      try {
-        weatherService.connectWebSocket(
-          (data) => {
-            console.log('New weather data received via WebSocket');
-            updateWeatherFromBuffer();
-            setUsingRealData(true);
-          },
-          (error) => {
-            console.error('WebSocket error:', error);
-            toast({
-              title: "WebSocket connection error",
-              description: "Falling back to mock data",
-              variant: "destructive",
-            });
-            setUsingRealData(false);
-            setWeatherData(generateMockData());
-          }
-        );
-      } catch (error) {
-        toast({
-          title: "Failed to connect",
-          description: error instanceof Error ? error.message : "Please check your settings",
-          variant: "destructive",
-        });
-        setWeatherData(generateMockData());
-      }
-    } else {
-      setWeatherData(generateMockData());
+      fetchRealWeatherData();
     }
 
-    return () => {
-      weatherService.disconnectWebSocket();
-    };
+    const interval = setInterval(() => {
+      if (weatherService.getConfig()) {
+        fetchRealWeatherData();
+      } else {
+        setWeatherData(generateMockData());
+      }
+    }, 30000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const currentData = weatherData.find(d => d.isCurrent);
