@@ -2,8 +2,10 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { weatherService } from "@/services/weatherService";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { WeatherSettings } from "@/components/WeatherSettings";
-import { ArrowLeft } from "lucide-react";
+import { WindCompass } from "@/components/WindCompass";
+import { ArrowLeft, Wind } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function SimpleView() {
@@ -106,66 +108,82 @@ export default function SimpleView() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 p-4 md:p-8">
-      <div className="max-w-4xl mx-auto space-y-8">
+    <div className="min-h-screen bg-[var(--gradient-sky)] p-4 md:p-8">
+      <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
           <Link to="/">
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="sm" className="hover:bg-card/50">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Full Dashboard
             </Button>
           </Link>
-          <WeatherSettings />
-        </div>
-
-        {/* Status */}
-        <div className="text-center text-sm text-muted-foreground">
-          {usingRealData ? "Live data (polled) from Ambient Weather" : "Waiting for data..."}
-        </div>
-
-        {/* Current Wind Speed - Large Display */}
-        <div className="text-center space-y-2">
-          <div className="text-6xl md:text-9xl font-bold text-primary">
-            {currentSpeed.toFixed(1)}
-          </div>
-          <div className="text-2xl md:text-3xl text-muted-foreground">mph</div>
-          <div className="text-lg text-muted-foreground">Current Wind Speed</div>
-        </div>
-
-        {/* Average Direction - Medium */}
-        <div className="text-center space-y-2 border-t border-border pt-8">
-          <div className="text-4xl md:text-6xl font-bold text-foreground">
-            {getDirectionLabel(avgDirection20)} ({Math.round(avgDirection20)}°)
-          </div>
-          <div className="text-lg text-muted-foreground">Average Direction (20 min)</div>
-        </div>
-
-        {/* Average Speeds */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 border-t border-border pt-8">
-          <div className="text-center space-y-2">
-            <div className="text-3xl md:text-4xl font-bold text-foreground">
-              {avgSpeed5.toFixed(1)}
+          <div className="flex items-center gap-4">
+            <div className="text-sm text-muted-foreground hidden sm:block">
+              {usingRealData ? "🟢 Live data" : "⚪ Waiting for data..."}
             </div>
-            <div className="text-sm text-muted-foreground">mph</div>
-            <div className="text-base text-muted-foreground">Avg Speed (5 min)</div>
+            <WeatherSettings />
+          </div>
+        </div>
+
+        {/* Main Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Left Column - Compass */}
+          <div className="flex items-start">
+            <div className="w-full scale-150 origin-top-left lg:scale-[1.8] lg:ml-16 lg:mt-8">
+              <WindCompass 
+                direction={avgDirection20} 
+                speed={avgSpeed20}
+              />
+            </div>
           </div>
 
-          <div className="text-center space-y-2">
-            <div className="text-3xl md:text-4xl font-bold text-foreground">
-              {avgSpeed10.toFixed(1)}
+          {/* Right Column - Current Speed */}
+          <Card className="p-8 md:p-12 shadow-[var(--shadow-card)] bg-gradient-to-br from-card to-card/80 backdrop-blur">
+            <div className="flex flex-col items-center justify-center space-y-4">
+              <Wind className="h-12 w-12 text-primary animate-pulse" />
+              <div className="text-center space-y-2">
+                <div className="text-8xl md:text-9xl font-bold bg-[var(--gradient-wind)] bg-clip-text text-transparent">
+                  {currentSpeed.toFixed(1)}
+                </div>
+                <div className="text-3xl md:text-4xl text-muted-foreground font-medium">mph</div>
+                <div className="text-xl text-muted-foreground mt-4">Current Wind Speed</div>
+              </div>
             </div>
-            <div className="text-sm text-muted-foreground">mph</div>
-            <div className="text-base text-muted-foreground">Avg Speed (10 min)</div>
-          </div>
+          </Card>
+        </div>
 
-          <div className="text-center space-y-2">
-            <div className="text-3xl md:text-4xl font-bold text-foreground">
-              {avgSpeed20.toFixed(1)}
+        {/* Average Speeds Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Card className="p-6 shadow-[var(--shadow-card)] hover:shadow-lg transition-all hover:scale-105 bg-gradient-to-br from-card to-muted/10">
+            <div className="text-center space-y-3">
+              <div className="text-sm font-semibold text-primary uppercase tracking-wider">5 Minutes</div>
+              <div className="text-5xl font-bold text-foreground">
+                {avgSpeed5.toFixed(1)}
+              </div>
+              <div className="text-lg text-muted-foreground">mph average</div>
             </div>
-            <div className="text-sm text-muted-foreground">mph</div>
-            <div className="text-base text-muted-foreground">Avg Speed (20 min)</div>
-          </div>
+          </Card>
+
+          <Card className="p-6 shadow-[var(--shadow-card)] hover:shadow-lg transition-all hover:scale-105 bg-gradient-to-br from-card to-muted/10">
+            <div className="text-center space-y-3">
+              <div className="text-sm font-semibold text-primary uppercase tracking-wider">10 Minutes</div>
+              <div className="text-5xl font-bold text-foreground">
+                {avgSpeed10.toFixed(1)}
+              </div>
+              <div className="text-lg text-muted-foreground">mph average</div>
+            </div>
+          </Card>
+
+          <Card className="p-6 shadow-[var(--shadow-card)] hover:shadow-lg transition-all hover:scale-105 bg-gradient-to-br from-card to-muted/10">
+            <div className="text-center space-y-3">
+              <div className="text-sm font-semibold text-primary uppercase tracking-wider">20 Minutes</div>
+              <div className="text-5xl font-bold text-foreground">
+                {avgSpeed20.toFixed(1)}
+              </div>
+              <div className="text-lg text-muted-foreground">mph average</div>
+            </div>
+          </Card>
         </div>
       </div>
     </div>
