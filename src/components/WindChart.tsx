@@ -23,8 +23,8 @@ interface WindChartProps {
 
 export const WindChart = ({ data }: WindChartProps) => {
   return (
-    <Card className="p-6">
-      <h3 className="text-lg font-semibold mb-4 text-foreground">Wind Speed Timeline</h3>
+    <Card className="p-6 h-[480px] flex flex-col">
+      <h3 className="text-lg font-semibold text-foreground mb-4">Wind Speed Timeline</h3>
       <ResponsiveContainer width="100%" height={300}>
         <AreaChart data={data}>
           <defs>

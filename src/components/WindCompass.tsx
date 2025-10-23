@@ -7,9 +7,9 @@ interface WindCompassProps {
 
 export const WindCompass = ({ direction, speed }: WindCompassProps) => {
   return (
-    <Card className="p-6">
-      <div className="flex flex-col items-center gap-4">
-        <h3 className="text-sm font-medium text-muted-foreground">Wind Direction</h3>
+    <Card className="p-6 h-[480px] flex flex-col">
+      <h3 className="text-lg font-semibold text-foreground mb-4">Wind Direction</h3>
+      <div className="flex flex-col items-center gap-4 flex-1 justify-center">
         <div className="relative w-40 h-40">
           {/* Outer ring with shadow */}
           <div className="absolute inset-0 rounded-full bg-gradient-to-br from-muted/40 to-muted/10 shadow-[0_8px_16px_rgba(0,0,0,0.15)]" />
