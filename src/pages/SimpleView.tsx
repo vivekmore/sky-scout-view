@@ -5,9 +5,8 @@ import { useWindData } from "@/hooks/useWindData";
 import { Button } from "@/components/ui/button";
 import { WeatherSettings } from "@/components/WeatherSettings";
 import { WindCompass } from "@/components/WindCompass";
-import { CurrentWindPanel, WindAverageStat, WindStatusIndicator } from "@/components/wind";
+import { CurrentWindPanel, WindStatusIndicator } from "@/components/wind";
 import { ArrowLeft } from "lucide-react";
-import { Card } from "@/components/ui/card.tsx";
 
 export default function SimpleView() {
   // Centralized wind data hook (future Redux adapter could replace this)
@@ -17,6 +16,7 @@ export default function SimpleView() {
     avgSpeed5,
     avgSpeed10,
     avgSpeed20,
+    avgDirection20,
     usingRealData,
     error,
     isLoading,
@@ -36,12 +36,6 @@ export default function SimpleView() {
       });
     }
   }, [error, toast]);
-
-  const averages = [
-    { minutes: 5, value: avgSpeed5 },
-    { minutes: 10, value: avgSpeed10 },
-    { minutes: 20, value: avgSpeed20 },
-  ];
 
   return (
     <div className="h-screen flex flex-col bg-[var(--gradient-sky)] overflow-hidden">
@@ -76,22 +70,15 @@ export default function SimpleView() {
           </div>
         </div>
         {/* Current Wind */}
-        <CurrentWindPanel speed={currentSpeed} direction={currentDirection} />
+        <CurrentWindPanel 
+          speed={currentSpeed} 
+          direction={currentDirection}
+          avgSpeed5={avgSpeed5}
+          avgSpeed10={avgSpeed10}
+          avgSpeed20={avgSpeed20}
+          avgDirection20={avgDirection20}
+        />
       </div>
-
-      {/* Averages */}
-      <Card className="p-4 md:p-5 transition-all hover:shadow-md bg-gradient-to-br from-card to-card/80">
-        <div className="px-3 md:px-4 pb-3 md:pb-4">
-          <div className="text-center">
-            <div className="text-lg font-medium text-primary">Average</div>
-          </div>
-          <div className="h-full grid gap-2">
-            {averages.map(({ minutes, value }) => (
-              <WindAverageStat key={minutes} minutes={minutes} value={value} />
-            ))}
-          </div>
-        </div>
-      </Card>
     </div>
   );
 }
