@@ -85,7 +85,7 @@ export const WindCompass = ({ direction, speed }: WindCompassProps) => {
         <div className="text-center">
           <div className="text-3xl font-bold text-foreground">{direction}°</div>
           <div className="text-sm text-muted-foreground mt-1">
-            {speed} <span className="text-xs">mph</span>
+            {speed.toFixed(0)} <span className="text-xs">mph</span>
           </div>
         </div>
       </div>
