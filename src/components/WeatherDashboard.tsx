@@ -27,11 +27,12 @@ export const WeatherDashboard = () => {
 
       // Map to our UI format with timeline
       const mapped = processed.slice(0, 7).map((entry, idx) => {
-        const isCurrentIdx = idx === Math.min(4, processed.length - 1);
-        const minutesOffset = (idx - 4) * 15;
+        const latestIndex = 0;
+        const isCurrentIdx = idx === Math.min(latestIndex, processed.length - 1);
+        const minutesOffset = (idx - latestIndex) * 5;
 
         const timeOffsetString =
-          minutesOffset < 0 ? `${Math.abs(minutesOffset)}m ago` : `+${minutesOffset}m`;
+          minutesOffset > 0 ? `${Math.abs(minutesOffset)}m ago` : `+${minutesOffset}m`;
         const relativeTime = isCurrentIdx ? "Now" : timeOffsetString;
         return {
           time: entry.time.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }),
@@ -41,7 +42,7 @@ export const WeatherDashboard = () => {
           gusts: Math.round(entry.gusts),
           rainChance: entry.rainHourly > 0 ? Math.round(entry.rainHourly * 100) : undefined,
           isCurrent: isCurrentIdx,
-          isForecast: idx > 4,
+          isForecast: idx > latestIndex,
           speed: entry.windSpeed,
           gust: entry.gusts,
         };

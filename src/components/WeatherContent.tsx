@@ -70,7 +70,7 @@ export const WeatherContent = ({ weatherData, currentData, chartData }: WeatherC
       <div className="space-y-4">
         <h2 className="text-lg font-semibold text-foreground">Timeline</h2>
         <div className="overflow-x-auto pb-4 pt-2">
-          <div className="flex gap-4 min-w-max">
+          <div className="ml-2 flex gap-4 min-w-max">
             {weatherData.map((data) => (
               <TimelineCard key={data.time} data={data} />
             ))}

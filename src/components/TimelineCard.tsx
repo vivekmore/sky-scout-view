@@ -40,16 +40,12 @@ const getWindDirection = (degrees: number): string => {
 };
 
 export const TimelineCard = ({ data }: TimelineCardProps) => {
+  const forecastStyle = data.isForecast ? "opacity-75 hover:opacity-100" : "hover:shadow-md";
+  const currentCardStyles =
+    "ring-2 ring-primary shadow-xl scale-105 bg-gradient-to-br from-primary/5 to-accent/5";
+  const cardStyle = data.isCurrent ? currentCardStyles : forecastStyle;
   return (
-    <Card
-      className={`p-4 min-w-[160px] transition-all ${
-        data.isCurrent
-          ? "ring-2 ring-primary shadow-xl scale-105 bg-gradient-to-br from-primary/5 to-accent/5"
-          : data.isForecast
-            ? "opacity-75 hover:opacity-100"
-            : "hover:shadow-md"
-      }`}
-    >
+    <Card className={`p-4 min-w-[160px] transition-all ${cardStyle}`}>
       <div className="space-y-3">
         <div className="text-center">
           <div
@@ -57,7 +53,11 @@ export const TimelineCard = ({ data }: TimelineCardProps) => {
           >
             {data.relativeTime}
           </div>
-          <div className="text-xs text-muted-foreground">{data.time}</div>
+          {data.isCurrent ? (
+            <div className="text-xs text-muted-foreground">{data.time}</div>
+          ) : (
+            <div className="text-xs text-muted-foreground">&nbsp;</div>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -66,7 +66,10 @@ export const TimelineCard = ({ data }: TimelineCardProps) => {
               <Wind className="h-4 w-4 text-primary" />
               <span className="text-xs text-muted-foreground">Wind</span>
             </div>
-            <span className="text-lg font-bold text-foreground">{data.windSpeed}</span>
+            <span className="text-lg font-bold text-foreground">
+              {data.windSpeed}
+              <span className="text-sm font-light text-muted-foreground"> mph</span>
+            </span>
           </div>
 
           <div className="flex items-center justify-between text-xs">
