@@ -22,11 +22,26 @@ export const WindCompass = ({
 }: WindCompassProps) => {
   const effectiveVariant = variant;
 
+  // Constants tied to current sizing (w-80 h-80 + inset-3). If size changes, recompute.
+  const OUTER_SIZE = 320; // w-80
+  const INSET = 12; // inset-3 => 0.75rem default = 12px
+  const INNER_DIAMETER = OUTER_SIZE - INSET * 2; // 296
+  const RADIUS = INNER_DIAMETER / 2; // 148
+  const GAP = 6; // gap from outer edge so ticks sit well inside circle
+
   const content = (
     <div className="flex flex-col items-center gap-4 flex-1 justify-center">
-      <div className="relative w-60 h-60">
-        {/* Outer ring with shadow */}
-        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-muted/40 to-muted/10 shadow-[0_8px_16px_rgba(0,0,0,0.15)]" />
+      {/* Enlarged compass (previously w-60 h-60) */}
+      <div className="relative w-80 h-80 max-w-full">
+        {/* Outer ring with realistic dark red border */}
+        <div
+          className="absolute inset-0 rounded-full bg-gradient-to-br from-muted/40 to-muted/10 shadow-[0_10px_24px_rgba(0,0,0,0.3)] border-[6px] border-[#551010]"
+          style={{
+            boxShadow: "inset 0 2px 4px rgba(255,255,255,0.05), 0 8px 18px rgba(0,0,0,0.35)",
+            background:
+              "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.08), transparent 60%), linear-gradient(135deg, rgba(120,0,0,0.15), rgba(0,0,0,0.25))",
+          }}
+        />
 
         {/* Inner compass circle */}
         <div className="absolute inset-3 rounded-full border-[6px] border-border bg-gradient-to-br from-card via-card to-muted/30 shadow-inner">
@@ -34,48 +49,51 @@ export const WindCompass = ({
           {Array.from({ length: 36 }).map((_, i) => {
             const angle = i * 10;
             const isMajor = angle % 30 === 0;
-            const length = isMajor ? 12 : 6;
-            const width = isMajor ? 3 : 1.5;
+            const length = isMajor ? 16 : 8; // radial length of tick
+            const width = isMajor ? 3 : 1.5; // thickness
+            // Position tick so it ends "GAP" inside the circumference.
+            const translateX = RADIUS - GAP - length; // start point from center
             return (
               <div
                 key={angle}
                 className="absolute top-1/2 left-1/2 origin-left"
                 style={{
-                  transform: `translate(-50%, -50%) rotate(${angle}deg) translateX(102px)`,
+                  transform: `translate(-50%, -50%) rotate(${angle}deg) translateX(${translateX}px)`,
                   width: `${length}px`,
                   height: `${width}px`,
                   backgroundColor: "hsl(var(--muted-foreground))",
-                  opacity: isMajor ? 0.6 : 0.3,
+                  opacity: isMajor ? 0.65 : 0.35,
+                  borderRadius: 2,
                 }}
               />
             );
           })}
 
           {/* Cardinal directions */}
-          <div className="absolute top-1.5 left-1/2 -translate-x-1/2 text-lg font-bold text-foreground">
+          <div className="absolute top-2 left-1/2 -translate-x-1/2 text-xl font-bold text-foreground tracking-wide">
             N
           </div>
-          <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 text-lg font-bold text-muted-foreground">
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-xl font-bold text-muted-foreground tracking-wide">
             S
           </div>
-          <div className="absolute left-1.5 top-1/2 -translate-y-1/2 text-lg font-bold text-muted-foreground">
+          <div className="absolute left-2 top-1/2 -translate-y-1/2 text-xl font-bold text-muted-foreground tracking-wide">
             W
           </div>
-          <div className="absolute right-1.5 top-1/2 -translate-y-1/2 text-lg font-bold text-muted-foreground">
+          <div className="absolute right-2 top-1/2 -translate-y-1/2 text-xl font-bold text-muted-foreground tracking-wide">
             E
           </div>
 
           {/* Intercardinal directions */}
-          <div className="absolute top-9 left-9 text-sm font-medium text-muted-foreground/70">
+          <div className="absolute top-11 left-11 text-sm font-medium text-muted-foreground/70">
             NW
           </div>
-          <div className="absolute top-9 right-9 text-sm font-medium text-muted-foreground/70">
+          <div className="absolute top-11 right-11 text-sm font-medium text-muted-foreground/70">
             NE
           </div>
-          <div className="absolute bottom-9 left-9 text-sm font-medium text-muted-foreground/70">
+          <div className="absolute bottom-11 left-11 text-sm font-medium text-muted-foreground/70">
             SW
           </div>
-          <div className="absolute bottom-9 right-9 text-sm font-medium text-muted-foreground/70">
+          <div className="absolute bottom-11 right-11 text-sm font-medium text-muted-foreground/70">
             SE
           </div>
         </div>
@@ -86,15 +104,15 @@ export const WindCompass = ({
           style={{ transform: `rotate(${direction}deg)` }}
         >
           {/* North pointer (red) */}
-          <div className="absolute top-[calc(50%-75px)] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[9px] border-r-[9px] border-b-[75px] border-l-transparent border-r-transparent border-b-primary drop-shadow-md" />
+          <div className="absolute top-[calc(50%-104px)] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-r-[12px] border-b-[104px] border-l-transparent border-r-transparent border-b-primary drop-shadow-[0_4px_6px_rgba(0,0,0,0.4)]" />
 
           {/* South pointer (white/muted) */}
-          <div className="absolute bottom-[calc(50%-75px)] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[9px] border-r-[9px] border-t-[75px] border-l-transparent border-r-transparent border-t-muted-foreground/40 drop-shadow-md" />
+          <div className="absolute bottom-[calc(50%-104px)] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-r-[12px] border-t-[104px] border-l-transparent border-r-transparent border-t-muted-foreground/40 drop-shadow-[0_4px_6px_rgba(0,0,0,0.35)]" />
         </div>
 
         {/* Center pivot */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-gradient-to-br from-primary to-primary/80 shadow-lg border-[3px] border-background" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-background/80" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary/80 shadow-xl border-[4px] border-background" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-background/80" />
       </div>
 
       <div className="text-center">
