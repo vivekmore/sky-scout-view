@@ -69,21 +69,9 @@ export const WindCompass = ({
             );
           })}
 
-          {/* Cardinal directions */}
-          <div className="absolute top-2 left-1/2 -translate-x-1/2 text-xl font-bold text-foreground tracking-wide">
-            N
-          </div>
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-xl font-bold text-muted-foreground tracking-wide">
-            S
-          </div>
-          <div className="absolute left-2 top-1/2 -translate-y-1/2 text-xl font-bold text-muted-foreground tracking-wide">
-            W
-          </div>
-          <div className="absolute right-2 top-1/2 -translate-y-1/2 text-xl font-bold text-muted-foreground tracking-wide">
-            E
-          </div>
+          {/* Cardinal directions (removed from inside to move outside) */}
 
-          {/* Intercardinal directions */}
+          {/* Intercardinal directions (remain inside) */}
           <div className="absolute top-11 left-11 text-sm font-medium text-muted-foreground/70">
             NW
           </div>
@@ -98,13 +86,29 @@ export const WindCompass = ({
           </div>
         </div>
 
+        {/* External cardinal direction labels (map style) */}
+        <div className="absolute inset-0 pointer-events-none select-none font-extrabold tracking-wider text-foreground/90">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-[120%] text-3xl drop-shadow-sm">
+            N
+          </div>
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-[120%] text-3xl text-muted-foreground drop-shadow-sm">
+            S
+          </div>
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-[120%] text-3xl text-muted-foreground drop-shadow-sm">
+            W
+          </div>
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-[120%] text-3xl text-muted-foreground drop-shadow-sm">
+            E
+          </div>
+        </div>
+
         {/* Wind needle */}
         <div
           className="absolute inset-0 flex items-center justify-center transition-transform duration-1000 ease-out"
           style={{ transform: `rotate(${direction}deg)` }}
         >
           {/* North pointer (red) */}
-          <div className="absolute top-[calc(50%-104px)] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-r-[12px] border-b-[104px] border-l-transparent border-r-transparent border-b-primary drop-shadow-[0_4px_6px_rgba(0,0,0,0.4)]" />
+          <div className="absolute top-[calc(50%-104px)] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-r-[12px] border-b-[104px] border-l-transparent border-r-transparent border-b-primary drop-shadow-[0_4px_6px_rgba(0.9,0,0,0)]" />
 
           {/* South pointer (white/muted) */}
           <div className="absolute bottom-[calc(50%-104px)] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-r-[12px] border-t-[104px] border-l-transparent border-r-transparent border-t-muted-foreground/40 drop-shadow-[0_4px_6px_rgba(0,0,0,0.35)]" />
@@ -115,7 +119,7 @@ export const WindCompass = ({
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-background/80" />
       </div>
 
-      <div className="text-center">
+      <div className="text-center mt-12">
         <div className="text-7xl font-bold text-foreground">
           <span className={"text-transparent"}>°</span>
           {direction}°
