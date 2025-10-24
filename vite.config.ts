@@ -5,17 +5,23 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
+  const isDev = mode === "development";
   const repoName = process.env.GITHUB_REPOSITORY?.split("/")[1] || "sky-scout-view";
-  const isProd = mode === "production";
-  const isGitHub = !!process.env.GITHUB_REPOSITORY || !!process.env.GITHUB_ACTIONS;
+  const isGhCI = !!process.env.GITHUB_ACTIONS || !!process.env.FOR_GH_PAGES;
+  // Strategy:
+  //  - Dev: base "/" (Vite dev server)
+  //  - Local production build (no GH env): relative "./" so `npx serve -s dist` works
+  //  - GitHub Pages CI: absolute subpath so deep-links resolve properly
+  const prodBase = isGhCI ? `/${repoName}/` : "./";
+  const devBase = "/";
+  const base = isDev ? devBase : prodBase;
   return {
-    // Use subpath only in GitHub CI production builds; keep "/" locally for easier preview.
-    base: isProd && isGitHub ? `/${repoName}/` : "/",
+    base,
     server: {
       host: "::",
       port: 8080,
     },
-    plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
+    plugins: [react(), isDev && componentTagger()].filter(Boolean),
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
