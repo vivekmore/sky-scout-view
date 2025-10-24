@@ -4,10 +4,8 @@ import { PanelContainer } from "@/components/ui/panel-container";
 interface WindCompassProps {
   direction: number;
   speed: number;
-  // Legacy support: if provided, acts like variant="unstyled" (kept for backward compatibility)
-  unstyled?: boolean;
   className?: string;
-  variant?: "default" | "unstyled" | "panel";
+  variant?: "default" | "unstyled" | "panel"; // keep 'unstyled' variant string for API flexibility if needed
 }
 
 function directionLabel(deg: number) {
@@ -19,12 +17,10 @@ function directionLabel(deg: number) {
 export const WindCompass = ({
   direction,
   speed,
-  unstyled: legacyUnstyled,
   className = "",
-  variant,
+  variant = "default",
 }: WindCompassProps) => {
-  const effectiveVariant: "default" | "unstyled" | "panel" =
-    variant ?? (legacyUnstyled ? "unstyled" : "default");
+  const effectiveVariant = variant;
 
   const content = (
     <div className="flex flex-col items-center gap-4 flex-1 justify-center">
