@@ -54,7 +54,7 @@ export function computeAverages(
   // Vector averaging for wind direction (handles circular nature of angles)
   const avgDirection = (arr: { time: Date; windDirection: number }[]) => {
     if (arr.length === 0) return 0;
-    
+
     // Convert to radians and calculate x/y components
     let sumX = 0;
     let sumY = 0;
@@ -63,14 +63,14 @@ export function computeAverages(
       sumX += Math.cos(rad);
       sumY += Math.sin(rad);
     });
-    
+
     const avgX = sumX / arr.length;
     const avgY = sumY / arr.length;
-    
+
     // Convert back to degrees
     let angle = (Math.atan2(avgY, avgX) * 180) / Math.PI;
     if (angle < 0) angle += 360;
-    
+
     return angle;
   };
 
@@ -109,7 +109,8 @@ export function useWindData(options: UseWindDataOptions = {}): WindDataHook {
       const processed = weatherService.processWeatherData(raw);
       const now = new Date();
 
-      const { avgSpeed5, avgSpeed10, avgSpeed20, avgDirection5, avgDirection10, avgDirection20 } = computeAverages(processed, now);
+      const { avgSpeed5, avgSpeed10, avgSpeed20, avgDirection5, avgDirection10, avgDirection20 } =
+        computeAverages(processed, now);
 
       dispatch({
         type: "SUCCESS",
