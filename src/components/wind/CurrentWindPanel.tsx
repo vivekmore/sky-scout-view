@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 interface CurrentWindPanelProps {
   speed: number;
   direction: number;
-  live: boolean;
+  live?: boolean;
   className?: string;
 }
 
@@ -30,7 +30,6 @@ export const CurrentWindPanel: React.FC<CurrentWindPanelProps> = ({
     >
       <div className="flex flex-col items-center justify-center space-y-3 p-4">
         <div className="flex items-center gap-2 text-sm md:text-base text-muted-foreground">
-          <span>{live ? "🟢 Live" : "⚪ Waiting"}</span>
           <span className="hidden md:inline">Current Speed</span>
         </div>
         <Wind className="h-10 w-10 md:h-12 md:w-12 text-primary animate-pulse" />

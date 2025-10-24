@@ -7,6 +7,7 @@ import { WeatherSettings } from "@/components/WeatherSettings";
 import { WindCompass } from "@/components/WindCompass";
 import { CurrentWindPanel, WindAverageStat, WindStatusIndicator } from "@/components/wind";
 import { ArrowLeft } from "lucide-react";
+import { Card } from "@/components/ui/card.tsx";
 
 export default function SimpleView() {
   // Centralized wind data hook (future Redux adapter could replace this)
@@ -38,7 +39,7 @@ export default function SimpleView() {
 
   const averages = [
     { minutes: 5, value: avgSpeed5 },
-    { minutes: 10, value: avgSpeed10, highlight: true },
+    { minutes: 10, value: avgSpeed10 },
     { minutes: 20, value: avgSpeed20 },
   ];
 
@@ -67,7 +68,7 @@ export default function SimpleView() {
       </div>
 
       {/* Main Content */}
-      <div className="h-[60vh] grid grid-cols-1 md:grid-cols-2 gap-2 px-3 md:px-4 pb-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 px-3 md:px-4 pb-2">
         {/* Compass */}
         <div className="flex items-center justify-center">
           <div className="scale-110 md:scale-125">
@@ -79,19 +80,18 @@ export default function SimpleView() {
       </div>
 
       {/* Averages */}
-      <div className="flex-1 px-3 md:px-4 pb-3 md:pb-4">
-        <div className="h-full grid grid-cols-1 md:grid-cols-3 gap-2">
-          {averages.map(({ minutes, value, highlight }) => (
-            <WindAverageStat
-              key={minutes}
-              label="Average"
-              minutes={minutes}
-              value={value}
-              highlight={highlight}
-            />
-          ))}
+      <Card className="p-4 md:p-5 transition-all hover:shadow-md bg-gradient-to-br from-card to-card/80">
+        <div className="px-3 md:px-4 pb-3 md:pb-4">
+          <div className="text-center">
+            <div className="text-lg font-medium text-primary">Average</div>
+          </div>
+          <div className="h-full grid gap-2">
+            {averages.map(({ minutes, value }) => (
+              <WindAverageStat key={minutes} minutes={minutes} value={value} />
+            ))}
+          </div>
         </div>
-      </div>
+      </Card>
     </div>
   );
 }
