@@ -30,13 +30,13 @@ export function AppLayout({
           <div className="flex items-center gap-4 flex-wrap">
             <Link
               to="/"
-              className="font-bold text-xl md:text-2xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent tracking-tight"
+              className="font-bold text-lg sm:text-xl md:text-2xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent tracking-tight"
             >
               Weather Station
             </Link>
             <nav className="flex gap-2">&nbsp;</nav>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-end">
             {(usingRealData !== undefined || isLoading !== undefined || lastUpdated) && (
               <WindStatusIndicator
                 className="hidden md:block text-xs md:text-sm text-muted-foreground"
@@ -46,7 +46,13 @@ export function AppLayout({
               />
             )}
             {onRefresh && (
-              <Button variant="outline" size="sm" onClick={onRefresh} disabled={isLoading}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onRefresh}
+                disabled={isLoading}
+                className="order-2 md:order-none"
+              >
                 {isLoading ? "Refreshing..." : "Refresh"}
               </Button>
             )}
@@ -54,11 +60,11 @@ export function AppLayout({
           </div>
         </div>
       </header>
-      <main className="flex-1 min-h-0 p-2 flex flex-col">{children}</main>
-      {/* New footer */}
-      <footer className="shrink-0 py-3 px-6 text-sm text-muted-foreground border-t border-border/40 bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/40 flex flex-col sm:flex-row gap-2 items-center justify-center">
-        <div className="flex items-center gap-1.5">
-          <span className="font-medium text-center text-foreground/80">Made with ❤️ by</span>
+      <main className="flex-1 min-h-0 p-2 sm:p-3 md:p-4 flex flex-col">{children}</main>
+      {/* Footer */}
+      <footer className="shrink-0 py-3 px-3 sm:px-6 text-xs sm:text-sm text-muted-foreground border-t border-border/40 bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/40 flex flex-col sm:flex-row gap-1.5 sm:gap-2 items-center justify-center pb-[calc(env(safe-area-inset-bottom)+0.5rem)]">
+        <div className="flex items-center gap-1.5 flex-wrap justify-center text-center">
+          <span className="font-medium text-foreground/80">Made with love by</span>
           <a
             href="https://instagram.com/maverick_skysurfer"
             target="_blank"

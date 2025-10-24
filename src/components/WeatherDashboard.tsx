@@ -89,17 +89,24 @@ export const WeatherDashboard = () => {
       onRefresh={fetchRealWeatherData}
       className="bg-[var(--gradient-sky)]"
     >
-      <div className="max-w-7xl mx-auto w-full space-y-6">
+      <div className="max-w-7xl mx-auto w-full space-y-5 md:space-y-6 px-1 sm:px-0">
         {!usingRealData && showApiInfo && (
           <Alert className="border-primary/50 bg-primary/5">
-            <AlertDescription className="flex items-center justify-between gap-4">
-              <div className="text-sm">
-                <strong>Demo Mode:</strong> Currently showing simulated data. Use Settings to
-                connect your station.
+            <AlertDescription className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-3 sm:gap-4">
+              <div className="text-sm leading-relaxed">
+                <strong className="font-semibold">Demo Mode:</strong> Currently showing simulated
+                data. Use <span className="font-medium">Settings</span> to connect your station.
               </div>
-              <Button variant="ghost" size="sm" onClick={() => setShowApiInfo(false)}>
-                Dismiss
-              </Button>
+              <div className="flex w-full sm:w-auto justify-end">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowApiInfo(false)}
+                  className="self-end"
+                >
+                  Dismiss
+                </Button>
+              </div>
             </AlertDescription>
           </Alert>
         )}

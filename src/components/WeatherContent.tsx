@@ -33,7 +33,7 @@ export const WeatherContent = ({ weatherData, currentData, chartData }: WeatherC
   return (
     <>
       {/* Current Conditions Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <WeatherMetric
           icon={Wind}
           label="Wind Speed"
@@ -54,23 +54,23 @@ export const WeatherContent = ({ weatherData, currentData, chartData }: WeatherC
       </div>
 
       {/* Main Display Area */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6">
+        <div className="xl:col-span-1 order-2 xl:order-1">
           <WindCompass
             direction={currentData?.windDirection || 0}
             speed={currentData?.windSpeed || 0}
           />
         </div>
-        <div className="lg:col-span-2">
+        <div className="xl:col-span-2 order-1 xl:order-2">
           <WindChart data={chartData} />
         </div>
       </div>
 
       {/* Timeline */}
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         <h2 className="text-lg font-semibold text-foreground">Timeline</h2>
-        <div className="overflow-x-auto pb-4 pt-2">
-          <div className="ml-2 flex gap-4 min-w-max">
+        <div className="overflow-x-auto pb-3 sm:pb-4 pt-1 sm:pt-2 -mx-2 sm:mx-0">
+          <div className="px-2 flex gap-3 sm:gap-4 min-w-max">
             {weatherData.map((data) => (
               <TimelineCard key={data.time} data={data} />
             ))}
