@@ -1,5 +1,5 @@
 import { Wind } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import { PanelContainer } from "@/components/ui/panel-container";
 import { cn } from "@/lib/utils";
 
 interface CurrentWindPanelProps {
@@ -32,9 +32,11 @@ export const CurrentWindPanel: React.FC<CurrentWindPanelProps> = ({
   className,
 }) => {
   return (
-    <Card
+    <PanelContainer
+      center
+      noPadding
       className={cn(
-        "flex items-center justify-center shadow-[var(--shadow-card)] bg-gradient-to-br from-card to-card/80 backdrop-blur",
+        // original classes (now mostly provided by PanelContainer but keep for future extension)
         className
       )}
     >
@@ -84,6 +86,6 @@ export const CurrentWindPanel: React.FC<CurrentWindPanelProps> = ({
           </div>
         </div>
       </div>
-    </Card>
+    </PanelContainer>
   );
 };

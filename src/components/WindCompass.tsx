@@ -1,19 +1,12 @@
 import { Card } from "@/components/ui/card";
+import { PanelContainer } from "@/components/ui/panel-container";
 
 interface WindCompassProps {
   direction: number;
   speed: number;
-  /**
-   * @deprecated use variant="unstyled" instead
-   */
-  unstyled?: boolean; // when true, do not wrap in Card (deprecated in favor of variant)
-  className?: string; // optional extra classes for outer wrapper
-  /**
-   * Visual style variant
-   * - default: original card with padding
-   * - unstyled: no card wrapper (content only container)
-   * - panel: styled like CurrentWindPanel (shared look)
-   */
+  // Legacy support: if provided, acts like variant="unstyled" (kept for backward compatibility)
+  unstyled?: boolean;
+  className?: string;
   variant?: "default" | "unstyled" | "panel";
 }
 
@@ -26,13 +19,12 @@ function directionLabel(deg: number) {
 export const WindCompass = ({
   direction,
   speed,
-  unstyled = false,
+  unstyled: legacyUnstyled,
   className = "",
   variant,
 }: WindCompassProps) => {
-  // Resolve effective variant (support deprecated unstyled prop)
   const effectiveVariant: "default" | "unstyled" | "panel" =
-    variant || (unstyled ? "unstyled" : "default");
+    variant ?? (legacyUnstyled ? "unstyled" : "default");
 
   const content = (
     <div className="flex flex-col items-center gap-4 flex-1 justify-center">
@@ -125,16 +117,10 @@ export const WindCompass = ({
   }
 
   if (effectiveVariant === "panel") {
-    // Match CurrentWindPanel styling
     return (
-      <Card
-        className={
-          "flex items-center justify-center shadow-[var(--shadow-card)] bg-gradient-to-br from-card to-card/80 backdrop-blur h-full w-full " +
-          className
-        }
-      >
+      <PanelContainer center noPadding className={className}>
         <div className="p-6 h-full w-full flex">{content}</div>
-      </Card>
+      </PanelContainer>
     );
   }
 
