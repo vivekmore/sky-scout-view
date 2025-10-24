@@ -16,6 +16,8 @@ export default function SimpleView() {
     avgSpeed5,
     avgSpeed10,
     avgSpeed20,
+    avgDirection5,
+    avgDirection10,
     avgDirection20,
     usingRealData,
     error,
@@ -76,6 +78,8 @@ export default function SimpleView() {
           avgSpeed5={avgSpeed5}
           avgSpeed10={avgSpeed10}
           avgSpeed20={avgSpeed20}
+          avgDirection5={avgDirection5}
+          avgDirection10={avgDirection10}
           avgDirection20={avgDirection20}
         />
       </div>

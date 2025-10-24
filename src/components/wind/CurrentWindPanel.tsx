@@ -8,6 +8,8 @@ interface CurrentWindPanelProps {
   avgSpeed5: number;
   avgSpeed10: number;
   avgSpeed20: number;
+  avgDirection5: number;
+  avgDirection10: number;
   avgDirection20: number;
   className?: string;
 }
@@ -24,6 +26,8 @@ export const CurrentWindPanel: React.FC<CurrentWindPanelProps> = ({
   avgSpeed5,
   avgSpeed10,
   avgSpeed20,
+  avgDirection5,
+  avgDirection10,
   avgDirection20,
   className,
 }) => {
@@ -56,20 +60,23 @@ export const CurrentWindPanel: React.FC<CurrentWindPanelProps> = ({
             <div>
               <div className="text-xs text-muted-foreground">5 min</div>
               <div className="text-lg font-bold text-foreground">{avgSpeed5.toFixed(1)}</div>
+              <div className="text-sm font-bold bg-[var(--gradient-wind)] bg-clip-text">
+                {directionLabel(avgDirection5)}
+              </div>
             </div>
             <div>
               <div className="text-xs text-muted-foreground">10 min</div>
               <div className="text-lg font-bold text-foreground">{avgSpeed10.toFixed(1)}</div>
+              <div className="text-sm font-bold bg-[var(--gradient-wind)] bg-clip-text">
+                {directionLabel(avgDirection10)}
+              </div>
             </div>
             <div>
               <div className="text-xs text-muted-foreground">20 min</div>
               <div className="text-lg font-bold text-foreground">{avgSpeed20.toFixed(1)}</div>
-            </div>
-          </div>
-          <div className="mt-3 text-center">
-            <div className="text-xs text-muted-foreground">20 min avg direction</div>
-            <div className="text-2xl font-bold bg-[var(--gradient-wind)] bg-clip-text">
-              {directionLabel(avgDirection20)}
+              <div className="text-sm font-bold bg-[var(--gradient-wind)] bg-clip-text">
+                {directionLabel(avgDirection20)}
+              </div>
             </div>
           </div>
         </div>
