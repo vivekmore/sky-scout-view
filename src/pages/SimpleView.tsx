@@ -64,24 +64,32 @@ export default function SimpleView() {
       </div>
 
       {/* Main Content */}
-      <div className="h-full grid grid-cols-2 gap-2 px-4 pb-2">
-        {/* Compass */}
-        <div className="flex items-center justify-center p-4">
-          <div className="scale-125">
-            <WindCompass direction={currentDirection} speed={currentSpeed} />
+      {/* Make two columns that each fill remaining vertical space; each box fills its column */}
+      <div className="flex-1 h-full grid grid-cols-2 gap-4 px-4 pb-4 min-h-0 auto-rows-fr">
+        {/* Compass Column */}
+        <div className="h-full flex">
+          <div className="w-full h-full flex items-center justify-center rounded-lg bg-card/80 backdrop-blur shadow-[var(--shadow-card)]">
+            <div className="w-full h-full flex items-center justify-center">
+              <div className="scale-110 md:scale-125">
+                <WindCompass direction={currentDirection} speed={currentSpeed} />
+              </div>
+            </div>
           </div>
         </div>
-        {/* Current Wind */}
-        <CurrentWindPanel
-          speed={currentSpeed}
-          direction={currentDirection}
-          avgSpeed5={avgSpeed5}
-          avgSpeed10={avgSpeed10}
-          avgSpeed20={avgSpeed20}
-          avgDirection5={avgDirection5}
-          avgDirection10={avgDirection10}
-          avgDirection20={avgDirection20}
-        />
+        {/* Current Wind Column */}
+        <div className="h-full flex">
+          <CurrentWindPanel
+            className="w-full h-full"
+            speed={currentSpeed}
+            direction={currentDirection}
+            avgSpeed5={avgSpeed5}
+            avgSpeed10={avgSpeed10}
+            avgSpeed20={avgSpeed20}
+            avgDirection5={avgDirection5}
+            avgDirection10={avgDirection10}
+            avgDirection20={avgDirection20}
+          />
+        </div>
       </div>
     </div>
   );
