@@ -68,13 +68,12 @@ export default function SimpleView() {
       <div className="flex-1 h-full grid grid-cols-2 gap-4 px-4 pb-4 min-h-0 auto-rows-fr">
         {/* Compass Column */}
         <div className="h-full flex">
-          <div className="w-full h-full flex items-center justify-center rounded-lg border border-border shadow-[var(--shadow-card)] bg-gradient-to-br from-card to-card/80 backdrop-blur [&_.card]:bg-transparent [&_.card]:border-none [&_.card]:shadow-none [&_.card]:p-0 [&_.card]:h-full [&_.card]:w-full [&_.card]:rounded-none">
-            <div className="w-full h-full flex items-center justify-center">
-              <div className="scale-110 md:scale-125">
-                <WindCompass direction={currentDirection} speed={currentSpeed} />
-              </div>
-            </div>
-          </div>
+          <WindCompass
+            variant="panel"
+            direction={currentDirection}
+            speed={currentSpeed}
+            className=""
+          />
         </div>
         {/* Current Wind Column */}
         <div className="h-full flex">
