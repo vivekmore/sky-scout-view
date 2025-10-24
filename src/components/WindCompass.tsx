@@ -5,9 +5,15 @@ interface WindCompassProps {
   speed: number;
 }
 
+function directionLabel(deg: number) {
+  const dirs = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+  const i = Math.round(deg / 45) % 8;
+  return dirs[i];
+}
+
 export const WindCompass = ({ direction, speed }: WindCompassProps) => {
   return (
-    <Card className="p-6">
+    <Card className="p-6 h-full w-full">
       <div className="flex flex-col items-center gap-4 flex-1 justify-center">
         <div className="relative w-40 h-40">
           {/* Outer ring with shadow */}
@@ -83,9 +89,11 @@ export const WindCompass = ({ direction, speed }: WindCompassProps) => {
         </div>
 
         <div className="text-center">
-          <div className="text-3xl font-bold text-foreground">{direction}°</div>
-          <div className="text-sm text-muted-foreground mt-1">
-            {speed.toFixed(0)} <span className="text-xs">mph</span>
+          <div className="text-7xl font-bold text-foreground">{direction}°</div>
+          <div className="text-5xl font-bold text-accent">{directionLabel(direction)}</div>
+          <div className="text-3xl text-muted-foreground mt-1">
+            {speed.toFixed(0)}
+            <span className="text-xl"> mph</span>
           </div>
         </div>
       </div>

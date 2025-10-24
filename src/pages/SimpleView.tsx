@@ -64,10 +64,10 @@ export default function SimpleView() {
       </div>
 
       {/* Main Content */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 px-3 md:px-4 pb-2">
+      <div className="h-full grid grid-cols-2 gap-2 px-4 pb-2">
         {/* Compass */}
-        <div className="flex items-center justify-center">
-          <div className="scale-110 md:scale-125">
+        <div className="flex items-center justify-center p-4">
+          <div className="scale-125">
             <WindCompass direction={currentDirection} speed={currentSpeed} />
           </div>
         </div>
