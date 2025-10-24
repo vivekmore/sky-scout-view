@@ -58,27 +58,42 @@ export const CurrentWindPanel: React.FC<CurrentWindPanelProps> = ({
 
         {/* Average Wind Speeds */}
         <div className="w-full mt-4 pt-4 border-t border-border/50">
-          <div className="text-2xl text-center font-medium text-muted-foreground mb-2">
+          <div className="text-2xl text-center font-medium text-muted-foreground my-8">
             Averages
           </div>
-          <div className="grid grid-cols-3 gap-2 text-center">
+          <div className="grid grid-cols-3 gap-20 text-center">
             <div>
-              <div className="text-xl text-muted-foreground">5 min</div>
-              <div className="text-5xl font-bold text-foreground">{avgSpeed5.toFixed(0)}</div>
+              <div className="text-xl text-muted-foreground">&nbsp; last 5 min</div>
+
+              <div className="text-5xl font-bold text-foreground">
+                <span className="text-xl text-transparent font-medium"> mph</span>
+                {avgSpeed5.toFixed(0)}
+                <span className="text-xl text-muted-foreground font-medium"> mph</span>
+              </div>
               <div className="text-4xl text-accent font-bold bg-[var(--gradient-wind)] bg-clip-text">
                 {directionLabel(avgDirection5)}
               </div>
             </div>
             <div>
-              <div className="text-xl text-muted-foreground">10 min</div>
-              <div className="text-5xl font-bold text-foreground">{avgSpeed10.toFixed(0)}</div>
+              <div className="text-xl text-muted-foreground">&nbsp; last 10 min</div>
+
+              <div className="text-5xl font-bold text-foreground">
+                <span className="text-xl text-transparent font-medium"> mph</span>
+                {avgSpeed10.toFixed(0)}
+                <span className="text-xl text-muted-foreground font-medium"> mph</span>
+              </div>
               <div className="text-4xl text-accent font-bold bg-[var(--gradient-wind)] bg-clip-text">
                 {directionLabel(avgDirection10)}
               </div>
             </div>
             <div>
-              <div className="text-xl text-muted-foreground">20 min</div>
-              <div className="text-5xl font-bold text-foreground">{avgSpeed20.toFixed(0)}</div>
+              <div className="text-xl text-muted-foreground">&nbsp; last 20 min</div>
+
+              <div className="text-5xl font-bold text-foreground">
+                <span className="text-xl text-transparent font-medium"> mph</span>
+                {avgSpeed20.toFixed(0)}
+                <span className="text-xl text-muted-foreground font-medium"> mph</span>
+              </div>
               <div className="text-4xl text-accent font-bold bg-[var(--gradient-wind)] bg-clip-text">
                 {directionLabel(avgDirection20)}
               </div>
