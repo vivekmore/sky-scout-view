@@ -98,7 +98,10 @@ export const WindCompass = ({
       </div>
 
       <div className="text-center">
-        <div className="text-7xl font-bold text-foreground">{direction}°</div>
+        <div className="text-7xl font-bold text-foreground">
+          <span className={"text-transparent"}>°</span>
+          {direction}°
+        </div>
         <div className="text-5xl font-bold text-accent">{directionLabel(direction)}</div>
         <div className="text-3xl text-muted-foreground mt-1">
           {speed.toFixed(0)}
