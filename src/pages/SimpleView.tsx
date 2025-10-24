@@ -42,7 +42,7 @@ export default function SimpleView() {
       onRefresh={refresh}
       className="bg-[var(--gradient-sky)]"
     >
-      <div className="h-full grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr">
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr min-h-0">
         <div className="flex h-full">
           <WindCompass variant="panel" direction={currentDirection} speed={currentSpeed} />
         </div>
