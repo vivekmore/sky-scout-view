@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 interface CurrentWindPanelProps {
   speed: number;
   direction: number;
-  live?: boolean;
   className?: string;
 }
 
@@ -18,7 +17,6 @@ function directionLabel(deg: number) {
 export const CurrentWindPanel: React.FC<CurrentWindPanelProps> = ({
   speed,
   direction,
-  live,
   className,
 }) => {
   return (
