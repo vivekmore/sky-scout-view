@@ -15,6 +15,9 @@ const initialState: WindState = {
   avgSpeed5: 0,
   avgSpeed10: 0,
   avgSpeed20: 0,
+  avgDirection5: 0,
+  avgDirection10: 0,
+  avgDirection20: 0,
   usingRealData: false,
   lastUpdated: null,
   isLoading: false,
@@ -38,7 +41,7 @@ function reducer(state: WindState, action: Action): WindState {
 
 // Exported for potential unit tests
 export function computeAverages(
-  processed: { time: Date; windSpeed: number }[],
+  processed: { time: Date; windSpeed: number; windDirection: number }[],
   now: Date
 ): WindAverages {
   const windowMs = (m: number) => m * 60 * 1000;
@@ -48,10 +51,36 @@ export function computeAverages(
   const avg = (arr: { time: Date; windSpeed: number }[]) =>
     arr.length > 0 ? arr.reduce((s, d) => s + d.windSpeed, 0) / arr.length : 0;
 
+  // Vector averaging for wind direction (handles circular nature of angles)
+  const avgDirection = (arr: { time: Date; windDirection: number }[]) => {
+    if (arr.length === 0) return 0;
+    
+    // Convert to radians and calculate x/y components
+    let sumX = 0;
+    let sumY = 0;
+    arr.forEach((d) => {
+      const rad = (d.windDirection * Math.PI) / 180;
+      sumX += Math.cos(rad);
+      sumY += Math.sin(rad);
+    });
+    
+    const avgX = sumX / arr.length;
+    const avgY = sumY / arr.length;
+    
+    // Convert back to degrees
+    let angle = (Math.atan2(avgY, avgX) * 180) / Math.PI;
+    if (angle < 0) angle += 360;
+    
+    return angle;
+  };
+
   return {
     avgSpeed5: avg(byMinutes(5)),
     avgSpeed10: avg(byMinutes(10)),
     avgSpeed20: avg(byMinutes(20)),
+    avgDirection5: avgDirection(byMinutes(5)),
+    avgDirection10: avgDirection(byMinutes(10)),
+    avgDirection20: avgDirection(byMinutes(20)),
   };
 }
 
@@ -80,7 +109,7 @@ export function useWindData(options: UseWindDataOptions = {}): WindDataHook {
       const processed = weatherService.processWeatherData(raw);
       const now = new Date();
 
-      const { avgSpeed5, avgSpeed10, avgSpeed20 } = computeAverages(processed, now);
+      const { avgSpeed5, avgSpeed10, avgSpeed20, avgDirection5, avgDirection10, avgDirection20 } = computeAverages(processed, now);
 
       dispatch({
         type: "SUCCESS",
@@ -90,6 +119,9 @@ export function useWindData(options: UseWindDataOptions = {}): WindDataHook {
           avgSpeed5,
           avgSpeed10,
           avgSpeed20,
+          avgDirection5,
+          avgDirection10,
+          avgDirection20,
           usingRealData: true,
           lastUpdated: now,
         },

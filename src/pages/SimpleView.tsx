@@ -76,7 +76,7 @@ export default function SimpleView() {
           </div>
         </div>
         {/* Current Wind */}
-        <CurrentWindPanel speed={currentSpeed} direction={currentDirection} live={usingRealData} />
+        <CurrentWindPanel speed={currentSpeed} direction={currentDirection} />
       </div>
 
       {/* Averages */}
