@@ -9,12 +9,16 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
+// Remove trailing slash from Vite base for React Router basename
+const basename = import.meta.env.BASE_URL.replace(/\/+$/, "");
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      {/* Use Vite's BASE_URL so routing works when served from /<repo-name> on GitHub Pages */}
+      <BrowserRouter basename={basename}>
         <Routes>
           <Route path="/" element={<SimpleView />} />
           <Route path="/dashboard" element={<Index />} />

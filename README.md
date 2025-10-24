@@ -71,3 +71,59 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+
+## Local Development
+
+Follow these steps:
+
+```sh
+git clone <YOUR_GIT_URL>
+cd <YOUR_PROJECT_NAME>
+npm install
+npm run dev
+```
+
+## Deployment
+
+### GitHub Pages
+
+This project is configured for automatic deployment to GitHub Pages using GitHub Actions.
+
+1. Ensure your repository is named the same as the folder (default assumed: `sky-scout-view`). If different, update the fallback repo name in `vite.config.ts`.
+2. Push changes to `main` (or `master`). The workflow at `.github/workflows/deploy.yml` will:
+   - Install dependencies
+   - Run `npm run build:pages` (which also creates `dist/404.html` for SPA fallback)
+   - Publish the `dist` folder to GitHub Pages
+3. In your repo Settings > Pages, make sure Source is set to GitHub Actions (it will be automatic after first successful deploy).
+
+Your site will be available at:
+
+```
+https://<your-username>.github.io/<repo-name>/
+```
+
+### How Routing Works
+
+- Vite `base` is set dynamically in `vite.config.ts` using `GITHUB_REPOSITORY` during CI.
+- React Router `BrowserRouter` uses `import.meta.env.BASE_URL` (normalized) as `basename`.
+- A copy of `index.html` is saved as `404.html` to ensure deep links work on GitHub Pages.
+
+### Manual Build Test
+
+```sh
+npm run build:pages
+npx serve -s dist  # or any static server to preview locally
+```
+
+## Technologies
+
+- Vite
+- TypeScript
+- React
+- shadcn-ui
+- Tailwind CSS
+- React Query
+
+## Notes
+
+If you rename the repository later, deployments will still work (CI injects `GITHUB_REPOSITORY`). For local development the base remains `/`.
