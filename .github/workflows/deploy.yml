@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -30,6 +30,8 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Build
+        env:
+          FOR_GH_PAGES: "1"
         run: npm run build:pages
       - name: Add .nojekyll
         run: echo > dist/.nojekyll

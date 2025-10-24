@@ -10,13 +10,10 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 function computeBasename(): string {
-  if (import.meta.env.DEV) return "";
-  const host = globalThis.location?.hostname || "";
-  if (host.endsWith(".github.io")) {
-    const parts = (globalThis.location?.pathname || "").split("/").filter(Boolean);
-    if (parts.length > 0) return `/${parts[0]}`;
-  }
-  return "";
+  const raw = import.meta.env.BASE_URL || "/"; // e.g. '/', './', '/repo/'
+  if (raw === "/" || raw === "./") return ""; // root or relative build => no basename
+  // Strip trailing slashes but keep a single leading slash for subpath (e.g. /repo)
+  return raw.replace(/\/+$/, "").replace(/^(?!\/)/, "/");
 }
 
 const basename = computeBasename();

@@ -87,14 +87,11 @@ npm run dev
 
 ### GitHub Pages
 
-This project is configured for automatic deployment to GitHub Pages using GitHub Actions.
+This project is configured for automatic deployment to GitHub Pages using GitHub Actions (`.github/workflows/deploy.yml`).
 
-1. Ensure your repository is named the same as the folder (default assumed: `sky-scout-view`). If different, update the fallback repo name in `vite.config.ts`.
-2. Push changes to `main` (or `master`). The workflow at `.github/workflows/deploy.yml` will:
-   - Install dependencies
-   - Run `npm run build:pages` (which also creates `dist/404.html` for SPA fallback)
-   - Publish the `dist` folder to GitHub Pages
-3. In your repo Settings > Pages, make sure Source is set to GitHub Actions (it will be automatic after first successful deploy).
+1. Push to `main` (or `master`).
+2. The workflow installs dependencies, builds with `FOR_GH_PAGES=1` (triggering the correct Vite base), and publishes `dist` to Pages.
+3. Ensure in Repo Settings > Pages the Source is set to GitHub Actions (after first successful run it's automatic).
 
 Your site will be available at:
 
@@ -104,16 +101,40 @@ https://<your-username>.github.io/<repo-name>/
 
 ### How Routing Works
 
-- Vite `base` is set dynamically in `vite.config.ts` using `GITHUB_REPOSITORY` during CI.
-- React Router `BrowserRouter` uses `import.meta.env.BASE_URL` (normalized) as `basename`.
-- A copy of `index.html` is saved as `404.html` to ensure deep links work on GitHub Pages.
+- `vite.config.ts` sets `base` dynamically:
+  - Dev: `/`
+  - Local prod build: `./` (so you can open `dist` or serve it locally)
+  - GitHub Pages / CI: `/<repoName>/` (derived from `GITHUB_REPOSITORY` or fallback)
+  - Root site repo `<user>.github.io`: `/`
+- `src/App.tsx` uses `computeBasename()` which normalizes `import.meta.env.BASE_URL`:
+  - Treats `/` and `./` as an empty basename (so local `npx serve -s dist` works without a leading dot)
+  - For subpaths like `/my-repo/` it trims the trailing slash and keeps a single leading slash (basename becomes `/my-repo`)
+- `npm run build:pages` copies `dist/index.html` to `dist/404.html` to support deep links on GitHub Pages.
+
+### Favicon
+
+`index.html` uses a relative favicon path: `favicon.png`. This ensures it resolves correctly under the sub-path (`/<repo-name>/favicon.png`) on GitHub Pages and still works locally.
 
 ### Manual Build Test
 
 ```sh
-npm run build:pages
-npx serve -s dist  # or any static server to preview locally
+# Standard local production build (relative asset paths, no subpath)
+npm run build
+npx serve -s dist
+
+# Simulate GitHub Pages project subpath locally
+FOR_GH_PAGES=1 npm run build:pages
+npx serve -s dist
 ```
+
+If simulating the GH Pages build, remember assets expect to live under `/<repo-name>/`. When served from root by a simple server they will still load because absolute URLs are generated with that subpath. To truly test routing under the subpath locally you can use a proxy server or temporarily move `dist` under a matching directory name.
+
+### Troubleshooting
+
+- Blank page locally after `npx serve -s dist`: Ensure you rebuilt after pulling the latest changes that include the updated `computeBasename()` logic. The previous implementation could set a basename of `.` causing no route match.
+- Wrong paths / 404s: Confirm `base` inside the built `dist/index.html` points to the expected value.
+- Favicon missing: Ensure `public/favicon.png` exists (Vite copies it automatically).
+- Router not matching on Pages: Make sure `404.html` was published (use `build:pages` or the CI workflow).
 
 ## Technologies
 
@@ -126,4 +147,4 @@ npx serve -s dist  # or any static server to preview locally
 
 ## Notes
 
-If you rename the repository later, deployments will still work (CI injects `GITHUB_REPOSITORY`). For local development the base remains `/`.
+If you rename the repository later, the next deploy will pick up the new name automatically (detected from `GITHUB_REPOSITORY`). For local production previews (without GH env vars) the base stays relative (`./`) so assets still load when opened from filesystem or a simple static server.

@@ -8,11 +8,14 @@ export default defineConfig(({ mode }) => {
   const isDev = mode === "development";
   const repoName = process.env.GITHUB_REPOSITORY?.split("/")[1] || "sky-scout-view";
   const isGhCI = !!process.env.GITHUB_ACTIONS || !!process.env.FOR_GH_PAGES;
+  const isRootGhPages = /.+\.github\.io$/i.test(repoName);
   // Strategy:
   //  - Dev: base "/" (Vite dev server)
   //  - Local production build (no GH env): relative "./" so `npx serve -s dist` works
-  //  - GitHub Pages CI: absolute subpath so deep-links resolve properly
-  const prodBase = isGhCI ? `/${repoName}/` : "./";
+  //  - GitHub Pages CI project site: absolute subpath so deep-links resolve properly
+  //  - GitHub Pages root site (<user>.github.io): base "/"
+  const basePath = isRootGhPages ? "/" : `/${repoName}/`;
+  const prodBase = isGhCI ? basePath : "./";
   const devBase = "/";
   const base = isDev ? devBase : prodBase;
   return {
