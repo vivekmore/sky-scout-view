@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { WeatherSettings } from "@/components/WeatherSettings";
 import { WindStatusIndicator } from "@/components/wind";
@@ -22,20 +22,6 @@ export function AppLayout({
   onRefresh,
   className,
 }: AppLayoutProps) {
-  const location = useLocation();
-  const path = location.pathname;
-  const navButton = (label: string, to: string) => (
-    <Link to={to}>
-      <Button
-        variant={path === to ? "default" : "outline"}
-        size="sm"
-        className={cn("min-w-[110px]", path === to && "pointer-events-none")}
-      >
-        {label}
-      </Button>
-    </Link>
-  );
-
   return (
     <div className={cn("min-h-screen flex flex-col bg-[var(--gradient-sky)]", className)}>
       <header className="shrink-0 px-3 py-2 md:px-6 md:py-4 border-b border-border/40 bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/40">
@@ -47,10 +33,7 @@ export function AppLayout({
             >
               Weather Station
             </Link>
-            <nav className="flex gap-2">
-              {navButton("Simple View", "/")}
-              {navButton("Full Dashboard", "/dashboard")}
-            </nav>
+            <nav className="flex gap-2">&nbsp;</nav>
           </div>
           <div className="flex items-center gap-3">
             {(usingRealData !== undefined || isLoading !== undefined || lastUpdated) && (
