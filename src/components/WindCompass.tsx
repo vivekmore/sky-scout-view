@@ -190,10 +190,16 @@ export const WindCompass = ({
       <div className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl 3xl:text-9xl 4xl:text-[10rem] 5xl:text-[13rem] font-bold text-foreground mb-2 sm:mb-3 3xl:mb-4 4xl:mb-6 5xl:mb-8">
         <span className={"text-transparent"}>°</span>
         {direction}°
+        {/* text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl 3xl:text-8xl 4xl:text-9xl 5xl:text-[10rem] font-bold text-accent mb-2 sm:mb-3 lg:mb-4 3xl:mb-6 4xl:mb-8 5xl:mb-10 */}
+        <span className="text-accent"> {directionLabel(direction)}</span>
       </div>
-      <div className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl 3xl:text-8xl 4xl:text-9xl 5xl:text-[10rem] font-bold text-accent mb-2 sm:mb-3 lg:mb-4 3xl:mb-6 4xl:mb-8 5xl:mb-10">
-        {directionLabel(direction)}
+
+      {/*
+      <div className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl 3xl:text-7xl 4xl:text-8xl 5xl:text-9xl font-bold text-success mb-2 sm:mb-3 lg:mb-4 3xl:mb-6 4xl:mb-8 5xl:mb-10">
+        Jump Run: {direction}° <span className="text-accent"> {directionLabel(direction)}</span>
       </div>
+ */}
+
       <div className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl 3xl:text-7xl 4xl:text-8xl 5xl:text-9xl text-muted-foreground">
         {speed.toFixed(0)}
         <span className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl 5xl:text-6xl">
