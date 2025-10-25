@@ -76,17 +76,17 @@ export const WindCompass = ({
           );
         })}
 
-        {/* Intercardinal directions (remain inside) - responsive text */}
-        <div className="absolute top-3 left-3 xs:top-3.5 xs:left-3.5 sm:top-4 sm:left-4 md:top-5 md:left-5 lg:top-6 lg:left-6 xl:top-7 xl:left-7 2xl:top-[34px] 2xl:left-[34px] 3xl:top-11 3xl:left-11 4xl:top-[54px] 4xl:left-[54px] 5xl:top-[72px] 5xl:left-[72px] text-xs sm:text-sm lg:text-base 3xl:text-xl 4xl:text-2xl 5xl:text-3xl font-medium text-muted-foreground/70">
+        {/* Intercardinal directions (positioned close to inner dial edge, inside and non-overlapping with markers) - responsive text */}
+        <div className="absolute top-[35px] left-[35px] xs:top-[42px] xs:left-[42px] sm:top-[49px] sm:left-[49px] md:top-[60px] md:left-[60px] lg:top-[70px] lg:left-[70px] xl:top-[84px] xl:left-[84px] 2xl:top-[98px] 2xl:left-[98px] 3xl:top-[126px] 3xl:left-[126px] 4xl:top-[158px] 4xl:left-[158px] 5xl:top-[210px] 5xl:left-[210px] text-xs sm:text-sm lg:text-base 3xl:text-xl 4xl:text-2xl 5xl:text-3xl font-medium text-muted-foreground/70">
           NW
         </div>
-        <div className="absolute top-3 right-3 xs:top-3.5 xs:right-3.5 sm:top-4 sm:right-4 md:top-5 md:right-5 lg:top-6 lg:right-6 xl:top-7 xl:right-7 2xl:top-[34px] 2xl:right-[34px] 3xl:top-11 3xl:right-11 4xl:top-[54px] 4xl:right-[54px] 5xl:top-[72px] 5xl:right-[72px] text-xs sm:text-sm lg:text-base 3xl:text-xl 4xl:text-2xl 5xl:text-3xl font-medium text-muted-foreground/70">
+        <div className="absolute top-[35px] right-[35px] xs:top-[42px] xs:right-[42px] sm:top-[49px] sm:right-[49px] md:top-[60px] md:right-[60px] lg:top-[70px] lg:right-[70px] xl:top-[84px] xl:right-[84px] 2xl:top-[98px] 2xl:right-[98px] 3xl:top-[126px] 3xl:right-[126px] 4xl:top-[158px] 4xl:right-[158px] 5xl:top-[210px] 5xl:right-[210px] text-xs sm:text-sm lg:text-base 3xl:text-xl 4xl:text-2xl 5xl:text-3xl font-medium text-muted-foreground/70">
           NE
         </div>
-        <div className="absolute bottom-3 left-3 xs:bottom-3.5 xs:left-3.5 sm:bottom-4 sm:left-4 md:bottom-5 md:left-5 lg:bottom-6 lg:left-6 xl:bottom-7 xl:left-7 2xl:bottom-[34px] 2xl:left-[34px] 3xl:bottom-11 3xl:left-11 4xl:bottom-[54px] 4xl:left-[54px] 5xl:bottom-[72px] 5xl:left-[72px] text-xs sm:text-sm lg:text-base 3xl:text-xl 4xl:text-2xl 5xl:text-3xl font-medium text-muted-foreground/70">
+        <div className="absolute bottom-[35px] left-[35px] xs:bottom-[42px] xs:left-[42px] sm:bottom-[49px] sm:left-[49px] md:bottom-[60px] md:left-[60px] lg:bottom-[70px] lg:left-[70px] xl:bottom-[84px] xl:left-[84px] 2xl:bottom-[98px] 2xl:left-[98px] 3xl:bottom-[126px] 3xl:left-[126px] 4xl:bottom-[158px] 4xl:left-[158px] 5xl:bottom-[210px] 5xl:left-[210px] text-xs sm:text-sm lg:text-base 3xl:text-xl 4xl:text-2xl 5xl:text-3xl font-medium text-muted-foreground/70">
           SW
         </div>
-        <div className="absolute bottom-3 right-3 xs:bottom-3.5 xs:right-3.5 sm:bottom-4 sm:right-4 md:bottom-5 md:right-5 lg:bottom-6 lg:right-6 xl:bottom-7 xl:right-7 2xl:bottom-[34px] 2xl:right-[34px] 3xl:bottom-11 3xl:right-11 4xl:bottom-[54px] 4xl:right-[54px] 5xl:bottom-[72px] 5xl:right-[72px] text-xs sm:text-sm lg:text-base 3xl:text-xl 4xl:text-2xl 5xl:text-3xl font-medium text-muted-foreground/70">
+        <div className="absolute bottom-[35px] right-[35px] xs:bottom-[42px] xs:right-[42px] sm:bottom-[49px] sm:right-[49px] md:bottom-[60px] md:right-[60px] lg:bottom-[70px] lg:right-[70px] xl:bottom-[84px] xl:right-[84px] 2xl:bottom-[98px] 2xl:right-[98px] 3xl:bottom-[126px] 3xl:right-[126px] 4xl:bottom-[158px] 4xl:right-[158px] 5xl:bottom-[210px] 5xl:right-[210px] text-xs sm:text-sm lg:text-base 3xl:text-xl 4xl:text-2xl 5xl:text-3xl font-medium text-muted-foreground/70">
           SE
         </div>
       </div>
