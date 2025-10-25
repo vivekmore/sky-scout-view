@@ -107,17 +107,44 @@ export const WindCompass = ({
         </div>
       </div>
 
-      {/* Wind needle - scale with compass */}
+      {/* Wind needle - realistic compass needle design */}
       <div
         className="absolute inset-0 flex items-center justify-center transition-transform duration-1000 ease-out"
         style={{ transform: `rotate(${direction}deg)` }}
         aria-hidden
       >
-        {/* North pointer (red) - responsive sizing - extends to touch major markers */}
-        <div className="absolute top-[calc(50%-76px)] xs:top-[calc(50%-93px)] sm:top-[calc(50%-108px)] md:top-[calc(50%-133px)] lg:top-[calc(50%-156px)] xl:top-[calc(50%-190px)] 2xl:top-[calc(50%-223px)] 3xl:top-[calc(50%-286px)] 4xl:top-[calc(50%-358px)] 5xl:top-[calc(50%-480px)] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] xs:border-l-[7px] sm:border-l-[9px] md:border-l-[10px] lg:border-l-[12px] xl:border-l-[14px] 2xl:border-l-[16px] 3xl:border-l-[20px] 4xl:border-l-[25px] 5xl:border-l-[33px] border-r-[6px] xs:border-r-[7px] sm:border-r-[9px] md:border-r-[10px] lg:border-r-[12px] xl:border-r-[14px] 2xl:border-r-[16px] 3xl:border-r-[20px] 4xl:border-r-[25px] 5xl:border-r-[33px] border-b-[76px] xs:border-b-[93px] sm:border-b-[108px] md:border-b-[133px] lg:border-b-[156px] xl:border-b-[190px] 2xl:border-b-[223px] 3xl:border-b-[286px] 4xl:border-b-[358px] 5xl:border-b-[480px] border-l-transparent border-r-transparent border-b-primary drop-shadow-[0_4px_6px_rgba(0.9,0,0,0)]" />
+        {/* Needle body - elongated diamond shape with metallic look */}
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[6px] xs:w-[7px] sm:w-[8px] md:w-[10px] lg:w-[12px] xl:w-[14px] 2xl:w-[16px] 3xl:w-[20px] 4xl:w-[25px] 5xl:w-[33px] h-[152px] xs:h-[186px] sm:h-[216px] md:h-[266px] lg:h-[312px] xl:h-[380px] 2xl:h-[446px] 3xl:h-[572px] 4xl:h-[716px] 5xl:h-[960px] rounded-full opacity-20 bg-gradient-to-b from-foreground/30 via-foreground/20 to-foreground/30"
+          style={{
+            boxShadow: "inset 2px 0 4px rgba(255,255,255,0.3), inset -2px 0 4px rgba(0,0,0,0.3)",
+          }}
+        />
 
-        {/* South pointer (white/muted) - responsive sizing - extends to touch major markers */}
-        <div className="absolute bottom-[calc(50%-76px)] xs:bottom-[calc(50%-93px)] sm:bottom-[calc(50%-108px)] md:bottom-[calc(50%-133px)] lg:bottom-[calc(50%-156px)] xl:bottom-[calc(50%-190px)] 2xl:bottom-[calc(50%-223px)] 3xl:bottom-[calc(50%-286px)] 4xl:bottom-[calc(50%-358px)] 5xl:bottom-[calc(50%-480px)] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] xs:border-l-[7px] sm:border-l-[9px] md:border-l-[10px] lg:border-l-[12px] xl:border-l-[14px] 2xl:border-l-[16px] 3xl:border-l-[20px] 4xl:border-l-[25px] 5xl:border-l-[33px] border-r-[6px] xs:border-r-[7px] sm:border-r-[9px] md:border-r-[10px] lg:border-r-[12px] xl:border-r-[14px] 2xl:border-r-[16px] 3xl:border-r-[20px] 4xl:border-r-[25px] 5xl:border-r-[33px] border-t-[76px] xs:border-t-[93px] sm:border-t-[108px] md:border-t-[133px] lg:border-t-[156px] xl:border-t-[190px] 2xl:border-t-[223px] 3xl:border-t-[286px] 4xl:border-t-[358px] 5xl:border-t-[480px] border-l-transparent border-r-transparent border-t-muted-foreground/40 drop-shadow-[0_4px_6px_rgba(0,0,0,0.35)]" />
+        {/* North pointer (red) - sharp needle tip with metallic gradient */}
+        <div
+          className="absolute top-[calc(50%-76px)] xs:top-[calc(50%-93px)] sm:top-[calc(50%-108px)] md:top-[calc(50%-133px)] lg:top-[calc(50%-156px)] xl:top-[calc(50%-190px)] 2xl:top-[calc(50%-223px)] 3xl:top-[calc(50%-286px)] 4xl:top-[calc(50%-358px)] 5xl:top-[calc(50%-480px)] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[4px] xs:border-l-[5px] sm:border-l-[6px] md:border-l-[7px] lg:border-l-[8px] xl:border-l-[10px] 2xl:border-l-[11px] 3xl:border-l-[14px] 4xl:border-l-[18px] 5xl:border-l-[23px] border-r-[4px] xs:border-r-[5px] sm:border-r-[6px] md:border-r-[7px] lg:border-r-[8px] xl:border-r-[10px] 2xl:border-r-[11px] 3xl:border-r-[14px] 4xl:border-r-[18px] 5xl:border-r-[23px] border-b-[76px] xs:border-b-[93px] sm:border-b-[108px] md:border-b-[133px] lg:border-b-[156px] xl:border-b-[190px] 2xl:border-b-[223px] 3xl:border-b-[286px] 4xl:border-b-[358px] 5xl:border-b-[480px] border-l-transparent border-r-transparent border-b-[#dc2626]"
+          style={{
+            filter:
+              "drop-shadow(0 2px 4px rgba(220, 38, 38, 0.5)) drop-shadow(0 0 8px rgba(220, 38, 38, 0.3))",
+            background: "linear-gradient(to bottom, #ef4444, #dc2626, #991b1b)",
+          }}
+        />
+
+        {/* North pointer highlight for metallic effect */}
+        <div className="absolute top-[calc(50%-70px)] xs:top-[calc(50%-86px)] sm:top-[calc(50%-100px)] md:top-[calc(50%-123px)] lg:top-[calc(50%-144px)] xl:top-[calc(50%-175px)] 2xl:top-[calc(50%-206px)] 3xl:top-[calc(50%-264px)] 4xl:top-[calc(50%-330px)] 5xl:top-[calc(50%-442px)] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[2px] xs:border-l-[2.5px] sm:border-l-[3px] md:border-l-[3.5px] lg:border-l-[4px] xl:border-l-[5px] 2xl:border-l-[5.5px] 3xl:border-l-[7px] 4xl:border-l-[9px] 5xl:border-l-[11.5px] border-r-[2px] xs:border-r-[2.5px] sm:border-r-[3px] md:border-r-[3.5px] lg:border-r-[4px] xl:border-r-[5px] 2xl:border-r-[5.5px] 3xl:border-r-[7px] 4xl:border-r-[9px] 5xl:border-r-[11.5px] border-b-[30px] xs:border-b-[37px] sm:border-b-[43px] md:border-b-[53px] lg:border-b-[62px] xl:border-b-[76px] 2xl:border-b-[89px] 3xl:border-b-[114px] 4xl:border-b-[143px] 5xl:border-b-[192px] border-l-transparent border-r-transparent border-b-red-400/40" />
+
+        {/* South pointer (silver/metallic) - realistic tail */}
+        <div
+          className="absolute bottom-[calc(50%-76px)] xs:bottom-[calc(50%-93px)] sm:bottom-[calc(50%-108px)] md:bottom-[calc(50%-133px)] lg:bottom-[calc(50%-156px)] xl:bottom-[calc(50%-190px)] 2xl:bottom-[calc(50%-223px)] 3xl:bottom-[calc(50%-286px)] 4xl:bottom-[calc(50%-358px)] 5xl:bottom-[calc(50%-480px)] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[4px] xs:border-l-[5px] sm:border-l-[6px] md:border-l-[7px] lg:border-l-[8px] xl:border-l-[10px] 2xl:border-l-[11px] 3xl:border-l-[14px] 4xl:border-l-[18px] 5xl:border-l-[23px] border-r-[4px] xs:border-r-[5px] sm:border-r-[6px] md:border-r-[7px] lg:border-r-[8px] xl:border-r-[10px] 2xl:border-r-[11px] 3xl:border-r-[14px] 4xl:border-r-[18px] 5xl:border-r-[23px] border-t-[76px] xs:border-t-[93px] sm:border-t-[108px] md:border-t-[133px] lg:border-t-[156px] xl:border-t-[190px] 2xl:border-t-[223px] 3xl:border-t-[286px] 4xl:border-t-[358px] 5xl:border-t-[480px] border-l-transparent border-r-transparent border-t-[#71717a]"
+          style={{
+            filter: "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4))",
+            background: "linear-gradient(to top, #a1a1aa, #71717a, #52525b)",
+          }}
+        />
+
+        {/* South pointer highlight for metallic effect */}
+        <div className="absolute bottom-[calc(50%-70px)] xs:bottom-[calc(50%-86px)] sm:bottom-[calc(50%-100px)] md:bottom-[calc(50%-123px)] lg:bottom-[calc(50%-144px)] xl:bottom-[calc(50%-175px)] 2xl:bottom-[calc(50%-206px)] 3xl:bottom-[calc(50%-264px)] 4xl:bottom-[calc(50%-330px)] 5xl:bottom-[calc(50%-442px)] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[2px] xs:border-l-[2.5px] sm:border-l-[3px] md:border-l-[3.5px] lg:border-l-[4px] xl:border-l-[5px] 2xl:border-l-[5.5px] 3xl:border-l-[7px] 4xl:border-l-[9px] 5xl:border-l-[11.5px] border-r-[2px] xs:border-r-[2.5px] sm:border-r-[3px] md:border-r-[3.5px] lg:border-r-[4px] xl:border-r-[5px] 2xl:border-r-[5.5px] 3xl:border-r-[7px] 4xl:border-r-[9px] 5xl:border-r-[11.5px] border-t-[30px] xs:border-t-[37px] sm:border-t-[43px] md:border-t-[53px] lg:border-t-[62px] xl:border-t-[76px] 2xl:border-t-[89px] 3xl:border-t-[114px] 4xl:border-t-[143px] 5xl:border-t-[192px] border-l-transparent border-r-transparent border-t-zinc-400/60" />
       </div>
 
       {/* Center pivot - responsive sizing */}
