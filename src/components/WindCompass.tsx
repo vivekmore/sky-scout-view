@@ -191,13 +191,14 @@ export const WindCompass = ({
     >
       <div className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl 3xl:text-9xl 4xl:text-[10rem] 5xl:text-[13rem] font-bold text-foreground mb-2 sm:mb-3 3xl:mb-4 4xl:mb-6 5xl:mb-8">
         <span className={"text-transparent"}>°</span>
-        {direction}°<span className="text-accent"> {directionLabel(direction)}</span>
+        {direction}°
+        <span className="text-accent"> {directionLabel(direction)}</span>
       </div>
 
       {jumpRun !== null && jumpRun !== undefined && (
-        <Card className="p-2 text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl 3xl:text-6xl 4xl:text-7xl 5xl:text-8xl font-semibold mb-2 sm:mb-3 3xl:mb-4 4xl:mb-6 5xl:mb-8">
+        <div className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl 3xl:text-6xl 4xl:text-7xl 5xl:text-8xl font-semibold text-primary mb-2 sm:mb-3 3xl:mb-4 4xl:mb-6 5xl:mb-8">
           Jump Run: {jumpRun}° <span className="text-accent">{directionLabel(jumpRun)}</span>
-        </Card>
+        </div>
       )}
 
       <div className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl 3xl:text-7xl 4xl:text-8xl 5xl:text-9xl text-muted-foreground">
