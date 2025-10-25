@@ -18,7 +18,7 @@ Run the Electron app in development mode (opens with dev tools):
 npm run electron:dev
 ```
 
-**Note:** Make sure to run `npm run dev` in a separate terminal first to start the Vite dev server on port 5173, then run `npm run electron:dev` to launch the Electron window.
+**Note:** Make sure to run `npm run dev` in a separate terminal first to start the Vite dev server on port 8080, then run `npm run electron:dev` to launch the Electron window.
 
 ### Building for Production
 
