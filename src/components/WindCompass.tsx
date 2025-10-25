@@ -34,14 +34,14 @@ export const WindCompass = ({
     <div
       className={cn(
         // Responsive sizing: smaller on mobile, larger on desktop/TV
-        "relative w-[200px] h-[200px] xs:w-[240px] xs:h-[240px] sm:w-[280px] sm:h-[280px] md:w-[340px] md:h-[340px] lg:w-[400px] lg:h-[400px] xl:w-[480px] xl:h-[480px] 2xl:w-[560px] 2xl:h-[560px]",
+        "relative w-[200px] h-[200px] xs:w-[240px] xs:h-[240px] sm:w-[280px] sm:h-[280px] md:w-[340px] md:h-[340px] lg:w-[400px] lg:h-[400px] xl:w-[480px] xl:h-[480px] 2xl:w-[560px] 2xl:h-[560px] 3xl:w-[720px] 3xl:h-[720px] 4xl:w-[900px] 4xl:h-[900px] 5xl:w-[1200px] 5xl:h-[1200px]",
         "transition-all duration-300"
       )}
       aria-label="Wind direction compass"
     >
       {/* Outer ring with realistic dark red border */}
       <div
-        className="absolute inset-0 rounded-full bg-gradient-to-br from-muted/40 to-muted/10 shadow-[0_10px_24px_rgba(0,0,0,0.3)] border-[4px] sm:border-[5px] lg:border-[6px] border-[#551010]"
+        className="absolute inset-0 rounded-full bg-gradient-to-br from-muted/40 to-muted/10 shadow-[0_10px_24px_rgba(0,0,0,0.3)] border-[4px] sm:border-[5px] lg:border-[6px] 3xl:border-[8px] 4xl:border-[10px] 5xl:border-[12px] border-[#551010]"
         style={{
           boxShadow: "inset 0 2px 4px rgba(255,255,255,0.05), 0 8px 18px rgba(0,0,0,0.35)",
           background:
@@ -50,7 +50,7 @@ export const WindCompass = ({
       />
 
       {/* Inner compass circle */}
-      <div className="absolute inset-2 sm:inset-2.5 lg:inset-3 rounded-full border-[4px] sm:border-[5px] lg:border-[6px] border-border bg-gradient-to-br from-card via-card to-muted/30 shadow-inner">
+      <div className="absolute inset-2 sm:inset-2.5 lg:inset-3 3xl:inset-4 4xl:inset-5 5xl:inset-6 rounded-full border-[4px] sm:border-[5px] lg:border-[6px] 3xl:border-[8px] 4xl:border-[10px] 5xl:border-[12px] border-border bg-gradient-to-br from-card via-card to-muted/30 shadow-inner">
         {/* Degree markings - scale with compass size */}
         {Array.from({ length: 36 }).map((_, i) => {
           const angle = i * 10;
@@ -63,7 +63,10 @@ export const WindCompass = ({
              window.innerWidth < 768 ? 280 :
              window.innerWidth < 1024 ? 340 :
              window.innerWidth < 1280 ? 400 :
-             window.innerWidth < 1536 ? 480 : 560) : 200;
+             window.innerWidth < 1536 ? 480 :
+             window.innerWidth < 1920 ? 560 :
+             window.innerWidth < 2560 ? 720 :
+             window.innerWidth < 3840 ? 900 : 1200) : 200;
           const scale = currentSize / 200;
           const length = (isMajor ? 16 : 8) * scale;
           const width = (isMajor ? 3 : 1.5) * scale;
@@ -88,32 +91,32 @@ export const WindCompass = ({
         })}
 
         {/* Intercardinal directions (remain inside) - responsive text */}
-        <div className="absolute top-6 left-6 sm:top-8 sm:left-8 lg:top-11 lg:left-11 text-xs sm:text-sm lg:text-base font-medium text-muted-foreground/70">
+        <div className="absolute top-6 left-6 sm:top-8 sm:left-8 lg:top-11 lg:left-11 3xl:top-14 3xl:left-14 4xl:top-18 4xl:left-18 5xl:top-24 5xl:left-24 text-xs sm:text-sm lg:text-base 3xl:text-xl 4xl:text-2xl 5xl:text-3xl font-medium text-muted-foreground/70">
           NW
         </div>
-        <div className="absolute top-6 right-6 sm:top-8 sm:right-8 lg:top-11 lg:right-11 text-xs sm:text-sm lg:text-base font-medium text-muted-foreground/70">
+        <div className="absolute top-6 right-6 sm:top-8 sm:right-8 lg:top-11 lg:right-11 3xl:top-14 3xl:right-14 4xl:top-18 4xl:right-18 5xl:top-24 5xl:right-24 text-xs sm:text-sm lg:text-base 3xl:text-xl 4xl:text-2xl 5xl:text-3xl font-medium text-muted-foreground/70">
           NE
         </div>
-        <div className="absolute bottom-6 left-6 sm:bottom-8 sm:left-8 lg:bottom-11 lg:left-11 text-xs sm:text-sm lg:text-base font-medium text-muted-foreground/70">
+        <div className="absolute bottom-6 left-6 sm:bottom-8 sm:left-8 lg:bottom-11 lg:left-11 3xl:bottom-14 3xl:left-14 4xl:bottom-18 4xl:left-18 5xl:bottom-24 5xl:left-24 text-xs sm:text-sm lg:text-base 3xl:text-xl 4xl:text-2xl 5xl:text-3xl font-medium text-muted-foreground/70">
           SW
         </div>
-        <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-8 lg:bottom-11 lg:right-11 text-xs sm:text-sm lg:text-base font-medium text-muted-foreground/70">
+        <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-8 lg:bottom-11 lg:right-11 3xl:bottom-14 3xl:right-14 4xl:bottom-18 4xl:right-18 5xl:bottom-24 5xl:right-24 text-xs sm:text-sm lg:text-base 3xl:text-xl 4xl:text-2xl 5xl:text-3xl font-medium text-muted-foreground/70">
           SE
         </div>
       </div>
 
       {/* External cardinal direction labels (map style) - increased spacing */}
       <div className="absolute inset-0 pointer-events-none select-none font-extrabold tracking-wider text-foreground/90">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-[140%] sm:-translate-y-[150%] lg:-translate-y-[160%] text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl drop-shadow-sm">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-[120%] md:-translate-y-[130%] xl:-translate-y-[140%] 3xl:-translate-y-[150%] text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 3xl:text-5xl 4xl:text-6xl 5xl:text-7xl drop-shadow-sm">
           N
         </div>
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-[140%] sm:translate-y-[150%] lg:translate-y-[160%] text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-muted-foreground drop-shadow-sm">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-[120%] md:translate-y-[130%] xl:translate-y-[140%] 3xl:translate-y-[150%] text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 3xl:text-5xl 4xl:text-6xl 5xl:text-7xl text-muted-foreground drop-shadow-sm">
           S
         </div>
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-[140%] sm:-translate-x-[150%] lg:-translate-x-[160%] text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-muted-foreground drop-shadow-sm">
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-[120%] md:-translate-x-[130%] xl:-translate-x-[140%] 3xl:-translate-x-[150%] text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 3xl:text-5xl 4xl:text-6xl 5xl:text-7xl text-muted-foreground drop-shadow-sm">
           W
         </div>
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-[140%] sm:translate-x-[150%] lg:translate-x-[160%] text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-muted-foreground drop-shadow-sm">
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-[120%] md:translate-x-[130%] xl:translate-x-[140%] 3xl:translate-x-[150%] text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 3xl:text-5xl 4xl:text-6xl 5xl:text-7xl text-muted-foreground drop-shadow-sm">
           E
         </div>
       </div>
@@ -125,36 +128,36 @@ export const WindCompass = ({
         aria-hidden
       >
         {/* North pointer (red) - responsive sizing */}
-        <div className="absolute top-[calc(50%-52px)] xs:top-[calc(50%-62px)] sm:top-[calc(50%-73px)] md:top-[calc(50%-88px)] lg:top-[calc(50%-104px)] xl:top-[calc(50%-125px)] 2xl:top-[calc(50%-145px)] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] xs:border-l-[7px] sm:border-l-[9px] md:border-l-[10px] lg:border-l-[12px] xl:border-l-[14px] 2xl:border-l-[16px] border-r-[6px] xs:border-r-[7px] sm:border-r-[9px] md:border-r-[10px] lg:border-r-[12px] xl:border-r-[14px] 2xl:border-r-[16px] border-b-[52px] xs:border-b-[62px] sm:border-b-[73px] md:border-b-[88px] lg:border-b-[104px] xl:border-b-[125px] 2xl:border-b-[145px] border-l-transparent border-r-transparent border-b-primary drop-shadow-[0_4px_6px_rgba(0.9,0,0,0)]" />
+        <div className="absolute top-[calc(50%-52px)] xs:top-[calc(50%-62px)] sm:top-[calc(50%-73px)] md:top-[calc(50%-88px)] lg:top-[calc(50%-104px)] xl:top-[calc(50%-125px)] 2xl:top-[calc(50%-145px)] 3xl:top-[calc(50%-186px)] 4xl:top-[calc(50%-232px)] 5xl:top-[calc(50%-310px)] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] xs:border-l-[7px] sm:border-l-[9px] md:border-l-[10px] lg:border-l-[12px] xl:border-l-[14px] 2xl:border-l-[16px] 3xl:border-l-[20px] 4xl:border-l-[25px] 5xl:border-l-[33px] border-r-[6px] xs:border-r-[7px] sm:border-r-[9px] md:border-r-[10px] lg:border-r-[12px] xl:border-r-[14px] 2xl:border-r-[16px] 3xl:border-r-[20px] 4xl:border-r-[25px] 5xl:border-r-[33px] border-b-[52px] xs:border-b-[62px] sm:border-b-[73px] md:border-b-[88px] lg:border-b-[104px] xl:border-b-[125px] 2xl:border-b-[145px] 3xl:border-b-[186px] 4xl:border-b-[232px] 5xl:border-b-[310px] border-l-transparent border-r-transparent border-b-primary drop-shadow-[0_4px_6px_rgba(0.9,0,0,0)]" />
 
         {/* South pointer (white/muted) - responsive sizing */}
-        <div className="absolute bottom-[calc(50%-52px)] xs:bottom-[calc(50%-62px)] sm:bottom-[calc(50%-73px)] md:bottom-[calc(50%-88px)] lg:bottom-[calc(50%-104px)] xl:bottom-[calc(50%-125px)] 2xl:bottom-[calc(50%-145px)] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] xs:border-l-[7px] sm:border-l-[9px] md:border-l-[10px] lg:border-l-[12px] xl:border-l-[14px] 2xl:border-l-[16px] border-r-[6px] xs:border-r-[7px] sm:border-r-[9px] md:border-r-[10px] lg:border-r-[12px] xl:border-r-[14px] 2xl:border-r-[16px] border-t-[52px] xs:border-t-[62px] sm:border-t-[73px] md:border-t-[88px] lg:border-t-[104px] xl:border-t-[125px] 2xl:border-t-[145px] border-l-transparent border-r-transparent border-t-muted-foreground/40 drop-shadow-[0_4px_6px_rgba(0,0,0,0.35)]" />
+        <div className="absolute bottom-[calc(50%-52px)] xs:bottom-[calc(50%-62px)] sm:bottom-[calc(50%-73px)] md:bottom-[calc(50%-88px)] lg:bottom-[calc(50%-104px)] xl:bottom-[calc(50%-125px)] 2xl:bottom-[calc(50%-145px)] 3xl:bottom-[calc(50%-186px)] 4xl:bottom-[calc(50%-232px)] 5xl:bottom-[calc(50%-310px)] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] xs:border-l-[7px] sm:border-l-[9px] md:border-l-[10px] lg:border-l-[12px] xl:border-l-[14px] 2xl:border-l-[16px] 3xl:border-l-[20px] 4xl:border-l-[25px] 5xl:border-l-[33px] border-r-[6px] xs:border-r-[7px] sm:border-r-[9px] md:border-r-[10px] lg:border-r-[12px] xl:border-r-[14px] 2xl:border-r-[16px] 3xl:border-r-[20px] 4xl:border-r-[25px] 5xl:border-r-[33px] border-t-[52px] xs:border-t-[62px] sm:border-t-[73px] md:border-t-[88px] lg:border-t-[104px] xl:border-t-[125px] 2xl:border-t-[145px] 3xl:border-t-[186px] 4xl:border-t-[232px] 5xl:border-t-[310px] border-l-transparent border-r-transparent border-t-muted-foreground/40 drop-shadow-[0_4px_6px_rgba(0,0,0,0.35)]" />
       </div>
 
       {/* Center pivot - responsive sizing */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 xl:w-10 xl:h-10 rounded-full bg-gradient-to-br from-primary to-primary/80 shadow-xl border-[2px] sm:border-[3px] lg:border-[4px] border-background" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-3.5 md:h-3.5 lg:w-4 lg:h-4 xl:w-5 xl:h-5 rounded-full bg-background/80" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 xl:w-10 xl:h-10 3xl:w-12 3xl:h-12 4xl:w-16 4xl:h-16 5xl:w-20 5xl:h-20 rounded-full bg-gradient-to-br from-primary to-primary/80 shadow-xl border-[2px] sm:border-[3px] lg:border-[4px] 3xl:border-[5px] 4xl:border-[6px] 5xl:border-[8px] border-background" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-3.5 md:h-3.5 lg:w-4 lg:h-4 xl:w-5 xl:h-5 3xl:w-6 3xl:h-6 4xl:w-8 4xl:h-8 5xl:w-10 5xl:h-10 rounded-full bg-background/80" />
     </div>
   );
 
   const infoPanel = (
-    <div className="text-center mt-8 sm:mt-10 md:mt-12 lg:mt-16 xl:mt-20" aria-live="polite">
-      <div className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-foreground mb-2 sm:mb-3">
+    <div className="text-center mt-8 sm:mt-10 md:mt-12 lg:mt-16 xl:mt-20 3xl:mt-24 4xl:mt-32 5xl:mt-40" aria-live="polite">
+      <div className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl 3xl:text-9xl 4xl:text-[10rem] 5xl:text-[13rem] font-bold text-foreground mb-2 sm:mb-3 3xl:mb-4 4xl:mb-6 5xl:mb-8">
         <span className={"text-transparent"}>°</span>
         {direction}°
       </div>
-      <div className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-accent mb-2 sm:mb-3 lg:mb-4">
+      <div className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl 3xl:text-8xl 4xl:text-9xl 5xl:text-[10rem] font-bold text-accent mb-2 sm:mb-3 lg:mb-4 3xl:mb-6 4xl:mb-8 5xl:mb-10">
         {directionLabel(direction)}
       </div>
-      <div className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-muted-foreground">
+      <div className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl 3xl:text-7xl 4xl:text-8xl 5xl:text-9xl text-muted-foreground">
         {speed.toFixed(0)}
-        <span className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl"> mph</span>
+        <span className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl 5xl:text-6xl"> mph</span>
       </div>
     </div>
   );
 
   const content = (
-    <div className="flex flex-col items-center justify-center flex-1 w-full px-2 py-4 sm:px-4 sm:py-6 md:px-6 md:py-8 lg:px-8 lg:py-10">
+    <div className="flex flex-col items-center justify-center flex-1 w-full px-2 py-4 sm:px-4 sm:py-6 md:px-6 md:py-8 lg:px-8 lg:py-10 3xl:px-12 3xl:py-16 4xl:px-16 4xl:py-20 5xl:px-20 5xl:py-24">
       {compass}
       {infoPanel}
     </div>
