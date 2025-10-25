@@ -91,16 +91,16 @@ export const WindCompass = ({
         })}
 
         {/* Intercardinal directions (remain inside) - responsive text */}
-        <div className="absolute top-6 left-6 sm:top-8 sm:left-8 lg:top-11 lg:left-11 3xl:top-14 3xl:left-14 4xl:top-18 4xl:left-18 5xl:top-24 5xl:left-24 text-xs sm:text-sm lg:text-base 3xl:text-xl 4xl:text-2xl 5xl:text-3xl font-medium text-muted-foreground/70">
+        <div className="absolute top-3 left-3 xs:top-3.5 xs:left-3.5 sm:top-4 sm:left-4 md:top-5 md:left-5 lg:top-6 lg:left-6 xl:top-7 xl:left-7 2xl:top-[34px] 2xl:left-[34px] 3xl:top-11 3xl:left-11 4xl:top-[54px] 4xl:left-[54px] 5xl:top-[72px] 5xl:left-[72px] text-xs sm:text-sm lg:text-base 3xl:text-xl 4xl:text-2xl 5xl:text-3xl font-medium text-muted-foreground/70">
           NW
         </div>
-        <div className="absolute top-6 right-6 sm:top-8 sm:right-8 lg:top-11 lg:right-11 3xl:top-14 3xl:right-14 4xl:top-18 4xl:right-18 5xl:top-24 5xl:right-24 text-xs sm:text-sm lg:text-base 3xl:text-xl 4xl:text-2xl 5xl:text-3xl font-medium text-muted-foreground/70">
+        <div className="absolute top-3 right-3 xs:top-3.5 xs:right-3.5 sm:top-4 sm:right-4 md:top-5 md:right-5 lg:top-6 lg:right-6 xl:top-7 xl:right-7 2xl:top-[34px] 2xl:right-[34px] 3xl:top-11 3xl:right-11 4xl:top-[54px] 4xl:right-[54px] 5xl:top-[72px] 5xl:right-[72px] text-xs sm:text-sm lg:text-base 3xl:text-xl 4xl:text-2xl 5xl:text-3xl font-medium text-muted-foreground/70">
           NE
         </div>
-        <div className="absolute bottom-6 left-6 sm:bottom-8 sm:left-8 lg:bottom-11 lg:left-11 3xl:bottom-14 3xl:left-14 4xl:bottom-18 4xl:left-18 5xl:bottom-24 5xl:left-24 text-xs sm:text-sm lg:text-base 3xl:text-xl 4xl:text-2xl 5xl:text-3xl font-medium text-muted-foreground/70">
+        <div className="absolute bottom-3 left-3 xs:bottom-3.5 xs:left-3.5 sm:bottom-4 sm:left-4 md:bottom-5 md:left-5 lg:bottom-6 lg:left-6 xl:bottom-7 xl:left-7 2xl:bottom-[34px] 2xl:left-[34px] 3xl:bottom-11 3xl:left-11 4xl:bottom-[54px] 4xl:left-[54px] 5xl:bottom-[72px] 5xl:left-[72px] text-xs sm:text-sm lg:text-base 3xl:text-xl 4xl:text-2xl 5xl:text-3xl font-medium text-muted-foreground/70">
           SW
         </div>
-        <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-8 lg:bottom-11 lg:right-11 3xl:bottom-14 3xl:right-14 4xl:bottom-18 4xl:right-18 5xl:bottom-24 5xl:right-24 text-xs sm:text-sm lg:text-base 3xl:text-xl 4xl:text-2xl 5xl:text-3xl font-medium text-muted-foreground/70">
+        <div className="absolute bottom-3 right-3 xs:bottom-3.5 xs:right-3.5 sm:bottom-4 sm:right-4 md:bottom-5 md:right-5 lg:bottom-6 lg:right-6 xl:bottom-7 xl:right-7 2xl:bottom-[34px] 2xl:right-[34px] 3xl:bottom-11 3xl:right-11 4xl:bottom-[54px] 4xl:right-[54px] 5xl:bottom-[72px] 5xl:right-[72px] text-xs sm:text-sm lg:text-base 3xl:text-xl 4xl:text-2xl 5xl:text-3xl font-medium text-muted-foreground/70">
           SE
         </div>
       </div>
