@@ -21,6 +21,9 @@ export default {
     extend: {
       screens: {
         xs: "400px", // custom small breakpoint used for fine-grained compass scaling
+        "3xl": "1920px", // Full HD
+        "4xl": "2560px", // 2K/QHD
+        "5xl": "3840px", // 4K UHD
       },
       colors: {
         border: "hsl(var(--border))",
