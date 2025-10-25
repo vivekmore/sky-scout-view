@@ -13,6 +13,17 @@ dist-ssr
 *.local
 .eslintcache
 
+# Electron build output
+release
+out
+*.dmg
+*.zip
+*.exe
+*.AppImage
+*.deb
+*.rpm
+*.snap
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

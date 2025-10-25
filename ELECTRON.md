@@ -13,7 +13,9 @@ npm install
 ## Available Electron Scripts
 
 ### Development
+
 Run the Electron app in development mode (opens with dev tools):
+
 ```bash
 npm run electron:dev
 ```
@@ -23,6 +25,7 @@ npm run electron:dev
 ### Building for Production
 
 #### Build for all platforms
+
 ```bash
 npm run electron:build
 ```
@@ -30,21 +33,27 @@ npm run electron:build
 #### Build for specific platforms
 
 **macOS:**
+
 ```bash
 npm run electron:build:mac
 ```
+
 Output: Creates DMG and ZIP files in the `release` directory
 
 **Windows:**
+
 ```bash
 npm run electron:build:win
 ```
+
 Output: Creates NSIS installer and portable executable in the `release` directory
 
 **Linux:**
+
 ```bash
 npm run electron:build:linux
 ```
+
 Output: Creates AppImage and DEB package in the `release` directory
 
 ## Build Configuration
@@ -76,10 +85,31 @@ The Electron build is configured in `package.json` under the `build` section:
 
 4. **Auto-update:** To add auto-update functionality, integrate `electron-updater` and configure your update server.
 
+## Recent Fixes (v0.0.1)
+
+### Fixed 404 Page Issue in Production Builds
+
+**Problem:** The production Electron build was showing a 404 page instead of the app.
+
+**Solution:**
+
+1. Changed from `BrowserRouter` to `HashRouter` in `src/App.tsx` - HashRouter works better with Electron's `file://` protocol
+2. Updated `vite.config.ts` to detect Electron builds and use relative paths
+3. Updated build scripts to set `ELECTRON_BUILD=true` environment variable
+
+**What Changed:**
+
+- URLs now use hash-based routing (e.g., `#/` and `#/dashboard`)
+- The app will work correctly in both development and production Electron builds
+- This change also maintains compatibility with web deployments
+
 ## Troubleshooting
 
 **Issue:** "Cannot find module 'electron'"
 **Solution:** Run `npm install` to install all dependencies
+
+**Issue:** Build shows 404 page
+**Solution:** This has been fixed! Make sure you're using the latest version of the code with HashRouter.
 
 **Issue:** Build fails on macOS
 **Solution:** Make sure you have Xcode Command Line Tools installed: `xcode-select --install`
