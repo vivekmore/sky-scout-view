@@ -39,18 +39,47 @@ export const WindCompass = ({
       )}
       aria-label="Wind direction compass"
     >
-      {/* Outer ring with realistic dark red border */}
+      {/* Outer bezel ring - brushed metal with realistic lighting */}
       <div
-        className="absolute inset-0 rounded-full bg-gradient-to-br from-muted/40 to-muted/10 shadow-[0_10px_24px_rgba(0,0,0,0.3)] border-[4px] sm:border-[5px] lg:border-[6px] 3xl:border-[8px] 4xl:border-[10px] 5xl:border-[12px] border-[#551010]"
+        className="absolute inset-0 rounded-full border-[4px] sm:border-[5px] lg:border-[6px] 3xl:border-[8px] 4xl:border-[10px] 5xl:border-[12px] border-[#8b4513]"
         style={{
-          boxShadow: "inset 0 2px 4px rgba(255,255,255,0.05), 0 8px 18px rgba(0,0,0,0.35)",
+          boxShadow:
+            "0 8px 32px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.3), inset 0 2px 8px rgba(255,255,255,0.15), inset 0 -2px 8px rgba(0,0,0,0.4)",
           background:
-            "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.08), transparent 60%), linear-gradient(135deg, rgba(120,0,0,0.15), rgba(0,0,0,0.25))",
+            "conic-gradient(from 0deg, #6b4423, #8b5a3c, #7a4a2e, #6b4423, #8b5a3c, #7a4a2e, #6b4423), radial-gradient(circle at 35% 35%, rgba(255,255,255,0.2), transparent 50%)",
         }}
       />
 
-      {/* Inner compass circle */}
-      <div className="absolute inset-2 sm:inset-2.5 lg:inset-3 3xl:inset-4 4xl:inset-5 5xl:inset-6 rounded-full border-[4px] sm:border-[5px] lg:border-[6px] 3xl:border-[8px] 4xl:border-[10px] 5xl:border-[12px] border-border bg-gradient-to-br from-card via-card to-muted/30 shadow-inner">
+      {/* Middle brass ring - decorative bezel detail */}
+      <div
+        className="absolute inset-[6px] xs:inset-[7px] sm:inset-[8px] md:inset-[10px] lg:inset-[12px] xl:inset-[14px] 2xl:inset-[16px] 3xl:inset-[20px] 4xl:inset-[25px] 5xl:inset-[33px] rounded-full border-[2px] sm:border-[2.5px] lg:border-[3px] 3xl:border-[4px] 4xl:border-[5px] 5xl:border-[6px]"
+        style={{
+          borderColor: "#cd853f",
+          boxShadow:
+            "0 2px 8px rgba(0,0,0,0.3), inset 0 1px 2px rgba(255,255,255,0.3), inset 0 -1px 2px rgba(0,0,0,0.3)",
+          background: "linear-gradient(135deg, #b8860b 0%, #daa520 50%, #b8860b 100%)",
+        }}
+      />
+
+      {/* Inner compass circle - glass-covered dial face */}
+      <div
+        className="absolute inset-2 sm:inset-2.5 lg:inset-3 3xl:inset-4 4xl:inset-5 5xl:inset-6 rounded-full border-[4px] sm:border-[5px] lg:border-[6px] 3xl:border-[8px] 4xl:border-[10px] 5xl:border-[12px]"
+        style={{
+          borderColor: "#4a0e0e",
+          boxShadow:
+            "inset 0 4px 12px rgba(0,0,0,0.3), inset 0 -2px 8px rgba(0,0,0,0.2), 0 2px 8px rgba(0,0,0,0.2)",
+          background:
+            "radial-gradient(circle at 35% 35%, rgba(255,255,255,0.03), transparent 70%), linear-gradient(145deg, rgba(250,250,250,0.95) 0%, rgba(245,245,245,0.92) 50%, rgba(235,235,235,0.9) 100%)",
+        }}
+      >
+        {/* Glass reflection effect overlay */}
+        <div
+          className="absolute inset-0 rounded-full pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 800px 400px at 30% 20%, rgba(255,255,255,0.15), transparent 40%)",
+          }}
+        />
         {/* Degree markings - positioned using Tailwind for consistency */}
         {Array.from({ length: 36 }).map((_, i) => {
           const angle = i * 10;
