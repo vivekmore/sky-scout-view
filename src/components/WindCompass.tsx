@@ -51,42 +51,28 @@ export const WindCompass = ({
 
       {/* Inner compass circle */}
       <div className="absolute inset-2 sm:inset-2.5 lg:inset-3 3xl:inset-4 4xl:inset-5 5xl:inset-6 rounded-full border-[4px] sm:border-[5px] lg:border-[6px] 3xl:border-[8px] 4xl:border-[10px] 5xl:border-[12px] border-border bg-gradient-to-br from-card via-card to-muted/30 shadow-inner">
-        {/* Degree markings - scale with compass size */}
+        {/* Degree markings - positioned using Tailwind for consistency */}
         {Array.from({ length: 36 }).map((_, i) => {
           const angle = i * 10;
           const isMajor = angle % 30 === 0;
-          // Scale markings based on compass size
-          const baseRadius = 100; // base for 200px compass
-          const currentSize = typeof window !== 'undefined' ? 
-            (window.innerWidth < 400 ? 200 : 
-             window.innerWidth < 640 ? 240 :
-             window.innerWidth < 768 ? 280 :
-             window.innerWidth < 1024 ? 340 :
-             window.innerWidth < 1280 ? 400 :
-             window.innerWidth < 1536 ? 480 :
-             window.innerWidth < 1920 ? 560 :
-             window.innerWidth < 2560 ? 720 :
-             window.innerWidth < 3840 ? 900 : 1200) : 200;
-          const scale = currentSize / 200;
-          const length = (isMajor ? 16 : 8) * scale;
-          const width = (isMajor ? 3 : 1.5) * scale;
-          const radius = (currentSize - (scale > 1.4 ? 24 : scale > 1 ? 20 : 16)) / 2;
-          const gap = 6 * scale;
-          const translateX = radius - gap - length;
           
           return (
             <div
               key={angle}
-              className="absolute top-1/2 left-1/2 origin-left"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
               style={{
-                transform: `translate(-50%, -50%) rotate(${angle}deg) translateX(${translateX}px)`,
-                width: `${length}px`,
-                height: `${width}px`,
-                backgroundColor: "hsl(var(--muted-foreground))",
-                opacity: isMajor ? 0.65 : 0.35,
-                borderRadius: 2,
+                transform: `translate(-50%, -50%) rotate(${angle}deg)`,
               }}
-            />
+            >
+              <div
+                className={`absolute left-1/2 -translate-x-1/2 bg-muted-foreground rounded-sm
+                  top-[8px] xs:top-[10px] sm:top-[11px] md:top-[14px] lg:top-[16px] xl:top-[19px] 2xl:top-[22px] 3xl:top-[29px] 4xl:top-[36px] 5xl:top-[48px]
+                  ${isMajor 
+                    ? 'w-[3px] h-[16px] xs:w-[3px] xs:h-[19px] sm:w-[3.5px] sm:h-[22px] md:w-[4px] md:h-[27px] lg:w-[4.5px] lg:h-[32px] xl:w-[5px] xl:h-[38px] 2xl:w-[5.5px] 2xl:h-[45px] 3xl:w-[7px] 3xl:h-[58px] 4xl:w-[8.5px] 4xl:h-[72px] 5xl:w-[11px] 5xl:h-[96px] opacity-65' 
+                    : 'w-[1.5px] h-[8px] xs:w-[1.5px] xs:h-[10px] sm:w-[2px] sm:h-[11px] md:w-[2px] md:h-[13px] lg:w-[2.5px] lg:h-[16px] xl:w-[2.5px] xl:h-[19px] 2xl:w-[3px] 2xl:h-[22px] 3xl:w-[3.5px] 3xl:h-[29px] 4xl:w-[4.5px] 4xl:h-[36px] 5xl:w-[5.5px] 5xl:h-[48px] opacity-35'
+                  }`}
+              />
+            </div>
           );
         })}
 
