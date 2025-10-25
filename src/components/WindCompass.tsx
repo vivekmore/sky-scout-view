@@ -55,7 +55,7 @@ export const WindCompass = ({
         {Array.from({ length: 36 }).map((_, i) => {
           const angle = i * 10;
           const isMajor = angle % 30 === 0;
-          
+
           return (
             <div
               key={angle}
@@ -66,10 +66,10 @@ export const WindCompass = ({
             >
               <div
                 className={`absolute left-1/2 -translate-x-1/2 bg-muted-foreground rounded-sm
-                  top-[8px] xs:top-[10px] sm:top-[11px] md:top-[14px] lg:top-[16px] xl:top-[19px] 2xl:top-[22px] 3xl:top-[29px] 4xl:top-[36px] 5xl:top-[48px]
-                  ${isMajor 
-                    ? 'w-[3px] h-[16px] xs:w-[3px] xs:h-[19px] sm:w-[3.5px] sm:h-[22px] md:w-[4px] md:h-[27px] lg:w-[4.5px] lg:h-[32px] xl:w-[5px] xl:h-[38px] 2xl:w-[5.5px] 2xl:h-[45px] 3xl:w-[7px] 3xl:h-[58px] 4xl:w-[8.5px] 4xl:h-[72px] 5xl:w-[11px] 5xl:h-[96px] opacity-65' 
-                    : 'w-[1.5px] h-[8px] xs:w-[1.5px] xs:h-[10px] sm:w-[2px] sm:h-[11px] md:w-[2px] md:h-[13px] lg:w-[2.5px] lg:h-[16px] xl:w-[2.5px] xl:h-[19px] 2xl:w-[3px] 2xl:h-[22px] 3xl:w-[3.5px] 3xl:h-[29px] 4xl:w-[4.5px] 4xl:h-[36px] 5xl:w-[5.5px] 5xl:h-[48px] opacity-35'
+                  ${
+                    isMajor
+                      ? "w-[3px] h-[16px] xs:w-[3px] xs:h-[19px] sm:w-[3.5px] sm:h-[22px] md:w-[4px] md:h-[27px] lg:w-[4.5px] lg:h-[32px] xl:w-[5px] xl:h-[38px] 2xl:w-[5.5px] 2xl:h-[45px] 3xl:w-[7px] 3xl:h-[58px] 4xl:w-[8.5px] 4xl:h-[72px] 5xl:w-[11px] 5xl:h-[96px] opacity-65 top-[76px] xs:top-[93px] sm:top-[108px] md:top-[133px] lg:top-[156px] xl:top-[190px] 2xl:top-[223px] 3xl:top-[286px] 4xl:top-[358px] 5xl:top-[480px]"
+                      : "w-[1.5px] h-[8px] xs:w-[1.5px] xs:h-[10px] sm:w-[2px] sm:h-[11px] md:w-[2px] md:h-[13px] lg:w-[2.5px] lg:h-[16px] xl:w-[2.5px] xl:h-[19px] 2xl:w-[3px] 2xl:h-[22px] 3xl:w-[3.5px] 3xl:h-[29px] 4xl:w-[4.5px] 4xl:h-[36px] 5xl:w-[5.5px] 5xl:h-[48px] opacity-35 top-[84px] xs:top-[102px] sm:top-[119px] md:top-[147px] lg:top-[172px] xl:top-[209px] 2xl:top-[246px] 3xl:top-[315px] 4xl:top-[394px] 5xl:top-[528px]"
                   }`}
               />
             </div>
@@ -127,7 +127,10 @@ export const WindCompass = ({
   );
 
   const infoPanel = (
-    <div className="text-center mt-8 sm:mt-10 md:mt-12 lg:mt-16 xl:mt-20 3xl:mt-24 4xl:mt-32 5xl:mt-40" aria-live="polite">
+    <div
+      className="text-center mt-8 sm:mt-10 md:mt-12 lg:mt-16 xl:mt-20 3xl:mt-24 4xl:mt-32 5xl:mt-40"
+      aria-live="polite"
+    >
       <div className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl 3xl:text-9xl 4xl:text-[10rem] 5xl:text-[13rem] font-bold text-foreground mb-2 sm:mb-3 3xl:mb-4 4xl:mb-6 5xl:mb-8">
         <span className={"text-transparent"}>°</span>
         {direction}°
@@ -137,7 +140,10 @@ export const WindCompass = ({
       </div>
       <div className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl 3xl:text-7xl 4xl:text-8xl 5xl:text-9xl text-muted-foreground">
         {speed.toFixed(0)}
-        <span className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl 5xl:text-6xl"> mph</span>
+        <span className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl 5xl:text-6xl">
+          {" "}
+          mph
+        </span>
       </div>
     </div>
   );
@@ -150,9 +156,7 @@ export const WindCompass = ({
   );
 
   if (effectiveVariant === "unstyled") {
-    return (
-      <div className={cn("h-full w-full flex justify-center", className)}>{content}</div>
-    );
+    return <div className={cn("h-full w-full flex justify-center", className)}>{content}</div>;
   }
 
   if (effectiveVariant === "panel") {
@@ -164,7 +168,5 @@ export const WindCompass = ({
   }
 
   // default
-  return (
-    <Card className={cn("h-full w-full flex justify-center", className)}>{content}</Card>
-  );
+  return <Card className={cn("h-full w-full flex justify-center", className)}>{content}</Card>;
 };
