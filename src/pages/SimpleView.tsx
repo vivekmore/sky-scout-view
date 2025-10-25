@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useWindData } from "@/hooks/useWindData";
 import { WindCompass } from "@/components/WindCompass";
@@ -6,7 +6,6 @@ import { CurrentWindPanel } from "@/components/wind";
 import { AppLayout } from "@/components/layout/AppLayout";
 
 export default function SimpleView() {
-  const [jumpRun, setJumpRun] = useState<number | null>(null);
   const {
     currentSpeed,
     currentDirection,
@@ -41,13 +40,11 @@ export default function SimpleView() {
       isLoading={isLoading}
       lastUpdated={lastUpdated || null}
       onRefresh={refresh}
-      jumpRun={jumpRun}
-      onJumpRunChange={setJumpRun}
       className="bg-[var(--gradient-sky)]"
     >
       <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr min-h-0">
         <div className="flex h-full">
-          <WindCompass variant="panel" direction={currentDirection} speed={currentSpeed} jumpRun={jumpRun} />
+          <WindCompass variant="panel" direction={currentDirection} speed={currentSpeed} />
         </div>
         <div className="flex h-full">
           <CurrentWindPanel
