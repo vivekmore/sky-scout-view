@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { WeatherWebSocketProvider } from "@/contexts/WeatherWebSocketContext";
 import Index from "./pages/Index";
 import SimpleView from "./pages/SimpleView";
 import NotFound from "./pages/NotFound";
@@ -20,17 +21,19 @@ const basename = computeBasename();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter basename={basename}>
-        <Routes>
-          <Route path="/" element={<SimpleView />} />
-          <Route path="/dashboard" element={<Index />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <WeatherWebSocketProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter basename={basename}>
+          <Routes>
+            <Route path="/" element={<SimpleView />} />
+            <Route path="/dashboard" element={<Index />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </WeatherWebSocketProvider>
   </QueryClientProvider>
 );
 
