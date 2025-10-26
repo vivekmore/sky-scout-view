@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { useWindData } from "@/hooks/useWindData";
+import { useWebSocketWindData } from "@/hooks/useWebSocketWindData";
 import { WindCompass } from "@/components/WindCompass";
 import { CurrentWindPanel } from "@/components/wind";
 import { AppLayout } from "@/components/layout/AppLayout";
@@ -20,7 +20,7 @@ export default function SimpleView() {
     isLoading,
     lastUpdated,
     refresh,
-  } = useWindData();
+  } = useWebSocketWindData();
 
   const { toast } = useToast();
 
