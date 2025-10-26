@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { WeatherSettings } from "@/components/WeatherSettings";
 import { WindStatusIndicator } from "@/components/wind";
-import { WebSocketMonitor } from "@/components/WebSocketMonitor";
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 import { Instagram } from "lucide-react"; // added
@@ -61,10 +60,7 @@ export function AppLayout({
           </div>
         </div>
       </header>
-      <main className="flex-1 min-h-0 p-2 sm:p-3 md:p-4 flex flex-col">
-        <WebSocketMonitor />
-        {children}
-      </main>
+      <main className="flex-1 min-h-0 p-2 sm:p-3 md:p-4 flex flex-col">{children}</main>
       {/* Footer */}
       <footer className="shrink-0 py-3 px-3 sm:px-6 text-xs sm:text-sm text-muted-foreground border-t border-border/40 bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/40 flex flex-col sm:flex-row gap-1.5 sm:gap-2 items-center justify-center pb-[calc(env(safe-area-inset-bottom)+0.5rem)]">
         <div className="flex items-center gap-1.5 flex-wrap justify-center text-center">
