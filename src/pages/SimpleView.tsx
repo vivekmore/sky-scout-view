@@ -1,22 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useWebSocketWindData } from "@/hooks/useWebSocketWindData";
-import { useWindData } from "@/hooks/useWindData";
 import { WindCompass } from "@/components/WindCompass";
 import { CurrentWindPanel } from "@/components/wind";
 import { AppLayout } from "@/components/layout/AppLayout";
-import { DataSource } from "@/components/DataSourceSelector";
 
 export default function SimpleView() {
-  const [dataSource, setDataSource] = useState<DataSource>("websocket");
-
-  // WebSocket data
-  const wsData = useWebSocketWindData();
-
-  // REST API data
-  const restData = useWindData({ pollIntervalMs: 10_000 });
-
-  // Use the selected data source
   const {
     currentSpeed,
     currentDirection,
@@ -31,7 +20,7 @@ export default function SimpleView() {
     isLoading,
     lastUpdated,
     refresh,
-  } = dataSource === "websocket" ? wsData : restData;
+  } = useWebSocketWindData();
 
   const { toast } = useToast();
 
@@ -51,8 +40,6 @@ export default function SimpleView() {
       isLoading={isLoading}
       lastUpdated={lastUpdated || null}
       onRefresh={refresh}
-      dataSource={dataSource}
-      onDataSourceChange={setDataSource}
       className="bg-[var(--gradient-sky)]"
     >
       <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr min-h-0">

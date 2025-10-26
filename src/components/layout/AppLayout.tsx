@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { WeatherSettings } from "@/components/WeatherSettings";
-import { DataSourceSelector, DataSource } from "@/components/DataSourceSelector";
 import { WindStatusIndicator } from "@/components/wind";
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
@@ -13,8 +12,6 @@ interface AppLayoutProps {
   isLoading?: boolean;
   lastUpdated?: Date | null; // restrict to Date|null for WindStatusIndicator compatibility
   onRefresh?: () => void;
-  dataSource?: DataSource;
-  onDataSourceChange?: (source: DataSource) => void;
   className?: string;
 }
 
@@ -24,8 +21,6 @@ export function AppLayout({
   isLoading,
   lastUpdated,
   onRefresh,
-  dataSource = "websocket",
-  onDataSourceChange,
   className,
 }: AppLayoutProps) {
   return (
@@ -50,7 +45,7 @@ export function AppLayout({
                 lastUpdated={lastUpdated ?? null}
               />
             )}
-            {onRefresh && dataSource === "rest" && (
+            {onRefresh && (
               <Button
                 variant="outline"
                 size="sm"
@@ -60,9 +55,6 @@ export function AppLayout({
               >
                 {isLoading ? "Refreshing..." : "Refresh"}
               </Button>
-            )}
-            {onDataSourceChange && (
-              <DataSourceSelector value={dataSource} onChange={onDataSourceChange} />
             )}
             <WeatherSettings />
           </div>
