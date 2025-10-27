@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from "react";
+import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
 import { useAmbientWeatherWebSocket, WebSocketMessage } from "@/services/ambientWeatherWebSocket";
 
 interface WeatherData {
@@ -35,15 +35,14 @@ export const WeatherWebSocketProvider = ({ children }: WeatherWebSocketProviderP
         windDirection: Number(data.winddir) || 0,
         windGust: Number(data.windgustmph) || 0,
         timestamp: data.dateutc ? new Date(data.dateutc) : new Date(),
-        macAddress: data.macAddress as string | undefined,
+        macAddress: data.macAddress,
       };
 
       setLatestData(weatherData);
 
-      // Keep last 100 weather data points for averaging
+      // Keep the last 100 weather data points for averaging
       setMessageHistory((prev) => {
-        const updated = [weatherData, ...prev].slice(0, 100);
-        return updated;
+        return [weatherData, ...prev].slice(0, 100);
       });
     }
   }, []);
