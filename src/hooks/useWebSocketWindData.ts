@@ -18,6 +18,9 @@ const initialState: WindState = {
   avgDirection5: 0,
   avgDirection10: 0,
   avgDirection20: 0,
+  highSpeed5: 0,
+  highSpeed10: 0,
+  highSpeed20: 0,
   usingRealData: false,
   lastUpdated: null,
   isLoading: false,
@@ -74,6 +77,9 @@ function computeAverages(
     return angle;
   };
 
+  const high = (arr: { timestamp: Date; windSpeed: number }[]) =>
+    arr.length > 0 ? Math.max(...arr.map((d) => d.windSpeed)) : 0;
+
   return {
     avgSpeed5: avg(byMinutes(5)),
     avgSpeed10: avg(byMinutes(10)),
@@ -81,6 +87,9 @@ function computeAverages(
     avgDirection5: avgDirection(byMinutes(5)),
     avgDirection10: avgDirection(byMinutes(10)),
     avgDirection20: avgDirection(byMinutes(20)),
+    highSpeed5: high(byMinutes(5)),
+    highSpeed10: high(byMinutes(10)),
+    highSpeed20: high(byMinutes(20)),
   };
 }
 
@@ -115,6 +124,9 @@ export function useWebSocketWindData(): WindDataHook {
               avgDirection5: 0,
               avgDirection10: 0,
               avgDirection20: 0,
+              highSpeed5: 0,
+              highSpeed10: 0,
+              highSpeed20: 0,
             };
 
       dispatch({

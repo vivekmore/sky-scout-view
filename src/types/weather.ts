@@ -11,6 +11,9 @@ export interface WindAverages {
   avgDirection5: number;
   avgDirection10: number;
   avgDirection20: number;
+  highSpeed5: number;
+  highSpeed10: number;
+  highSpeed20: number;
 }
 
 export interface WindState extends WindAverages {

@@ -16,6 +16,9 @@ export default function SimpleView() {
     avgDirection5,
     avgDirection10,
     avgDirection20,
+    highSpeed5,
+    highSpeed10,
+    highSpeed20,
     usingRealData,
     error,
     isLoading,
@@ -51,6 +54,8 @@ export default function SimpleView() {
             variant="panel"
             direction={currentDirection}
             speed={currentSpeed}
+            minorTickAngle={5}
+            majorTickAngle={30}
             jumpRun={jumpRun}
           />
         </div>
@@ -65,6 +70,9 @@ export default function SimpleView() {
             avgDirection5={avgDirection5}
             avgDirection10={avgDirection10}
             avgDirection20={avgDirection20}
+            highSpeed5={highSpeed5}
+            highSpeed10={highSpeed10}
+            highSpeed20={highSpeed20}
           />
         </div>
       </div>
