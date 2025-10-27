@@ -7,6 +7,7 @@ interface WindCompassProps {
   minorTickAngle: number;
   majorTickAngle: number;
   speed: number;
+  jumpRun?: number | null;
   className?: string;
   variant?: "default" | "panel";
 }
@@ -22,17 +23,11 @@ export const WindCompass = ({
   speed,
   minorTickAngle = 5,
   majorTickAngle = 30,
+  jumpRun,
   className = "",
   variant = "default",
 }: Readonly<WindCompassProps>) => {
   const effectiveVariant = variant;
-
-  // Geometry constants tied to base size (w-80 / h-80). We scale the whole thing down on small screens.
-  const OUTER_SIZE = 320; // w-80
-  const INSET = 12; // inset-3 => 0.75rem default = 12px
-  const INNER_DIAMETER = OUTER_SIZE - INSET * 2; // 296
-  const RADIUS = INNER_DIAMETER / 2; // 148
-  const GAP = 6; // gap from outer edge so ticks sit well inside circle
 
   const compass = (
     <div
@@ -209,16 +204,15 @@ export const WindCompass = ({
     >
       <div className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl 3xl:text-9xl 4xl:text-[10rem] 5xl:text-[13rem] font-bold text-foreground mb-2 sm:mb-3 3xl:mb-4 4xl:mb-6 5xl:mb-8">
         <span className={"text-transparent"}>°</span>
-        {direction}°
-        {/* text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl 3xl:text-8xl 4xl:text-9xl 5xl:text-[10rem] font-bold text-accent mb-2 sm:mb-3 lg:mb-4 3xl:mb-6 4xl:mb-8 5xl:mb-10 */}
-        <span className="text-accent"> {directionLabel(direction)}</span>
+        {direction}°<span className="text-accent"> {directionLabel(direction)}</span>
       </div>
 
-      {/*
-      <div className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl 3xl:text-7xl 4xl:text-8xl 5xl:text-9xl font-bold text-success mb-2 sm:mb-3 lg:mb-4 3xl:mb-6 4xl:mb-8 5xl:mb-10">
-        Jump Run: {direction}° <span className="text-accent"> {directionLabel(direction)}</span>
-      </div>
- */}
+      {jumpRun !== null && jumpRun !== undefined && (
+        <div className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl 3xl:text-6xl 4xl:text-7xl 5xl:text-8xl font-semibold text-pretty mb-2 sm:mb-3 3xl:mb-4 4xl:mb-6 5xl:mb-8">
+          <span className="text-muted-foreground">Jump Run:</span> {jumpRun}°{" "}
+          <span className="text-accent">{directionLabel(jumpRun)}</span>
+        </div>
+      )}
 
       <div className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl 3xl:text-7xl 4xl:text-8xl 5xl:text-9xl text-muted-foreground">
         {speed.toFixed(0)}
