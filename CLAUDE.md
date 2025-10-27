@@ -81,17 +81,20 @@ src/
 ### Routing and Deployment
 
 **Base URL Handling**: The app uses dynamic base path configuration (see `vite.config.ts` and `src/App.tsx`):
+
 - Dev mode: `/`
 - Local builds: `./` (relative paths)
 - GitHub Pages: `/<repo-name>/` (auto-detected from `GITHUB_REPOSITORY` env var)
 - Root GitHub Pages sites (`*.github.io`): `/`
 
 **Routes**:
+
 - `/` - SimpleView (primary view)
 - `/dashboard` - Full dashboard with charts
 - `*` - 404 page
 
 To test routing locally after build:
+
 ```bash
 npm run build
 npx serve -s dist
@@ -102,6 +105,7 @@ npx serve -s dist
 ### WebSocket Connection
 
 The Ambient Weather WebSocket API requires:
+
 - API Key and Application Key (stored in localStorage)
 - MAC address of the weather station
 - Connection established via `src/services/ambientWeatherWebSocket.ts`
@@ -111,13 +115,14 @@ The Ambient Weather WebSocket API requires:
 ### Wind Calculations
 
 Wind averaging uses circular mean for direction (handles 359° → 1° wrap-around correctly):
+
 ```typescript
 // See src/hooks/useWebSocketWindData.ts
 function calculateCircularMean(angles: number[]): number {
-  const radians = angles.map(a => a * Math.PI / 180);
+  const radians = angles.map((a) => (a * Math.PI) / 180);
   const sinSum = radians.reduce((sum, r) => sum + Math.sin(r), 0);
   const cosSum = radians.reduce((sum, r) => sum + Math.cos(r), 0);
-  return (Math.atan2(sinSum, cosSum) * 180 / Math.PI + 360) % 360;
+  return ((Math.atan2(sinSum, cosSum) * 180) / Math.PI + 360) % 360;
 }
 ```
 
@@ -131,6 +136,7 @@ function calculateCircularMean(angles: number[]): number {
 ### Styling
 
 Uses **shadcn/ui** with Tailwind CSS:
+
 - Theme colors defined in `src/index.css` using CSS variables
 - Custom breakpoints: `xs` (400px), `3xl` (1920px), `4xl` (2560px), `5xl` (3840px)
 - Dark mode support via `darkMode: ["class"]`
@@ -139,11 +145,13 @@ Uses **shadcn/ui** with Tailwind CSS:
 ## Git Workflow
 
 **Pre-commit hooks** (via lefthook):
+
 1. Prettier formats all staged files
 2. ESLint auto-fixes staged files
 3. Both automatically stage the fixed files
 
 To bypass hooks (not recommended):
+
 ```bash
 git commit --no-verify
 ```
@@ -153,6 +161,7 @@ git commit --no-verify
 No `.env` file needed for basic operation. API credentials are stored in localStorage.
 
 For development with custom API endpoints, you can use:
+
 ```bash
 # Not currently used, but available for future needs
 VITE_API_BASE_URL=https://custom-api.example.com
@@ -176,10 +185,11 @@ VITE_API_BASE_URL=https://custom-api.example.com
 ### Changing API Configuration
 
 API config is hardcoded with fallback in `weatherService.getConfig()`:
+
 ```typescript
-apiKey: "0116a8e2bd0e41acb8df02b2821eedbbad89280a712f425b9b47809ee61bf5b2"
-applicationKey: "dd3dd1d0c9de43afb0a08324da83706dbe4fe8b4852349b88bddc2793ed14732"
-macAddress: "EC:64:C9:F1:82:EA"
+apiKey: "0116a8e2bd0e41acb8df02b2821eedbbad89280a712f425b9b47809ee61bf5b2";
+applicationKey: "dd3dd1d0c9de43afb0a08324da83706dbe4fe8b4852349b88bddc2793ed14732";
+macAddress: "EC:64:C9:F1:82:EA";
 ```
 
 To change: Either update localStorage or modify the fallback values in `weatherService.ts:50-53`.
