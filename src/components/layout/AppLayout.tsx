@@ -54,13 +54,13 @@ export function AppLayout({
     setOpen(false);
   };
   return (
-    <div className={cn("h-screen flex flex-col overflow-hidden bg-[var(--gradient-sky)]", className)}>
-      <header className="shrink-0 px-2 py-1.5 sm:px-3 sm:py-2 border-b border-border/40 bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/40">
-        <div className="flex flex-wrap gap-2 items-center justify-between">
+    <div className={cn("min-h-screen flex flex-col bg-[var(--gradient-sky)]", className)}>
+      <header className="shrink-0 px-3 py-2 md:px-6 md:py-4 border-b border-border/40 bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/40">
+        <div className="flex flex-wrap gap-3 items-center justify-between">
           <div className="flex items-center gap-4 flex-wrap">
             <Link
               to="/"
-              className="font-bold text-base sm:text-lg md:text-xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent tracking-tight"
+              className="font-bold text-lg sm:text-xl md:text-2xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent tracking-tight"
             >
               Weather Station
             </Link>
@@ -134,18 +134,18 @@ export function AppLayout({
           </div>
         </div>
       </header>
-      <main className="flex-1 min-h-0 overflow-hidden p-1.5 sm:p-2 md:p-3 flex flex-col">{children}</main>
+      <main className="flex-1 min-h-0 p-2 sm:p-3 md:p-4 flex flex-col">{children}</main>
       {/* Footer */}
-      <footer className="shrink-0 py-1.5 px-2 sm:px-4 text-[10px] sm:text-xs text-muted-foreground border-t border-border/40 bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/40 flex items-center justify-center pb-[calc(env(safe-area-inset-bottom)+0.25rem)]">
-        <div className="flex items-center gap-1 flex-wrap justify-center text-center">
+      <footer className="shrink-0 py-3 px-3 sm:px-6 text-xs sm:text-sm text-muted-foreground border-t border-border/40 bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/40 flex flex-col sm:flex-row gap-1.5 sm:gap-2 items-center justify-center pb-[calc(env(safe-area-inset-bottom)+0.5rem)]">
+        <div className="flex items-center gap-1.5 flex-wrap justify-center text-center">
           <span className="font-medium text-foreground/80">Made with ❤️ by</span>
           <a
             href="https://instagram.com/maverick_skysurfer"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-0.5 font-semibold text-foreground hover:text-accent transition-colors"
+            className="inline-flex items-center gap-1 font-semibold text-foreground hover:text-accent transition-colors"
           >
-            <Instagram className="w-3 h-3 sm:w-4 sm:h-4" aria-hidden="true" />
+            <Instagram className="w-4 h-4" aria-hidden="true" />
             @maverick_skysurfer
             <span className="sr-only"> (opens in a new tab)</span>
           </a>
