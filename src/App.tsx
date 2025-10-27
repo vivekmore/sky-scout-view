@@ -16,13 +16,13 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-      <HashRouter>
+        <HashRouter>
           <Routes>
             <Route path="/" element={<SimpleView />} />
             <Route path="/dashboard" element={<Index />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-      </HashRouter>
+        </HashRouter>
       </TooltipProvider>
     </WeatherWebSocketProvider>
   </QueryClientProvider>

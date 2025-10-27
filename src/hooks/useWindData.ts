@@ -61,11 +61,11 @@ export function computeAverages(
     // Convert to radians and calculate x/y components
     let sumX = 0;
     let sumY = 0;
-    arr.forEach((d) => {
+    for (const d of arr) {
       const rad = (d.windDirection * Math.PI) / 180;
       sumX += Math.cos(rad);
       sumY += Math.sin(rad);
-    });
+    }
 
     const avgX = sumX / arr.length;
     const avgY = sumY / arr.length;
@@ -118,8 +118,17 @@ export function useWindData(options: UseWindDataOptions = {}): WindDataHook {
       const processed = weatherService.processWeatherData(raw);
       const now = new Date();
 
-      const { avgSpeed5, avgSpeed10, avgSpeed20, avgDirection5, avgDirection10, avgDirection20, highSpeed5, highSpeed10, highSpeed20 } =
-        computeAverages(processed, now);
+      const {
+        avgSpeed5,
+        avgSpeed10,
+        avgSpeed20,
+        avgDirection5,
+        avgDirection10,
+        avgDirection20,
+        highSpeed5,
+        highSpeed10,
+        highSpeed20,
+      } = computeAverages(processed, now);
 
       dispatch({
         type: "SUCCESS",

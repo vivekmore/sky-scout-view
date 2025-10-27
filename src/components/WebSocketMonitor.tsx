@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useRef } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -29,7 +29,10 @@ export const WebSocketMonitor = () => {
     const newMessage: MessageLog = {
       id: `${Date.now()}-${Math.random()}`,
       timestamp: new Date(),
-      data: { event: "subscribed", ...(typeof data === 'object' && data !== null ? data : {}) } as WebSocketMessage,
+      data: {
+        event: "subscribed",
+        ...(typeof data === "object" && data !== null ? data : {}),
+      } as WebSocketMessage,
     };
     setMessages((prev) => [newMessage, ...prev].slice(0, 100));
   }, []);
@@ -118,7 +121,7 @@ export const WebSocketMonitor = () => {
           )}
         </ScrollArea>
         <div className="mt-2 text-xs text-muted-foreground text-right">
-          {messages.length > 0 && `${messages.length} message${messages.length !== 1 ? "s" : ""}`}
+          {messages.length > 0 && `${messages.length} message${messages.length === 1 ? "" : "s"}`}
         </div>
       </CardContent>
     </Card>
