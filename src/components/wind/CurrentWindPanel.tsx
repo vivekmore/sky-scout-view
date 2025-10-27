@@ -11,6 +11,9 @@ interface CurrentWindPanelProps {
   avgDirection5: number;
   avgDirection10: number;
   avgDirection20: number;
+  highSpeed5: number;
+  highSpeed10: number;
+  highSpeed20: number;
   className?: string;
 }
 
@@ -29,6 +32,9 @@ export const CurrentWindPanel: React.FC<CurrentWindPanelProps> = ({
   avgDirection5,
   avgDirection10,
   avgDirection20,
+  highSpeed5,
+  highSpeed10,
+  highSpeed20,
   className,
 }) => {
   return (
@@ -66,9 +72,9 @@ export const CurrentWindPanel: React.FC<CurrentWindPanelProps> = ({
           </div>
 
           {/* Average Wind Data Grid */}
-          <div className="grid gap-6 xs:gap-7 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16 2xl:gap-20 3xl:gap-24 4xl:gap-32 5xl:gap-40 grid-cols-1 sm:grid-cols-3 text-center">
+          <div className="grid gap-4 xs:gap-5 sm:gap-6 md:gap-7 lg:gap-8 xl:gap-10 2xl:gap-12 3xl:gap-16 4xl:gap-20 5xl:gap-24 grid-cols-1 sm:grid-cols-3 text-center">
             {/* 5 min average */}
-            <div className="space-y-2 xs:space-y-2.5 sm:space-y-3 md:space-y-4 lg:space-y-5 xl:space-y-6 2xl:space-y-7 3xl:space-y-8 4xl:space-y-10 5xl:space-y-12">
+            <div className="space-y-1.5 xs:space-y-2 sm:space-y-2.5 md:space-y-3 lg:space-y-3.5 xl:space-y-4 2xl:space-y-5 3xl:space-y-6 4xl:space-y-7 5xl:space-y-8">
               <div className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl 3xl:text-4xl 4xl:text-5xl 5xl:text-6xl text-muted-foreground">
                 last 5 min
               </div>
@@ -82,10 +88,13 @@ export const CurrentWindPanel: React.FC<CurrentWindPanelProps> = ({
               <div className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl 3xl:text-8xl 4xl:text-9xl 5xl:text-[10rem] text-accent font-bold bg-[var(--gradient-wind)] bg-clip-text">
                 {directionLabel(avgDirection5)}
               </div>
+              <div className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl 3xl:text-4xl 4xl:text-5xl 5xl:text-6xl text-muted-foreground/70 font-medium">
+                High: {highSpeed5.toFixed(0)} mph
+              </div>
             </div>
 
             {/* 10 min average */}
-            <div className="space-y-2 xs:space-y-2.5 sm:space-y-3 md:space-y-4 lg:space-y-5 xl:space-y-6 2xl:space-y-7 3xl:space-y-8 4xl:space-y-10 5xl:space-y-12">
+            <div className="space-y-1.5 xs:space-y-2 sm:space-y-2.5 md:space-y-3 lg:space-y-3.5 xl:space-y-4 2xl:space-y-5 3xl:space-y-6 4xl:space-y-7 5xl:space-y-8">
               <div className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl 3xl:text-4xl 4xl:text-5xl 5xl:text-6xl text-muted-foreground">
                 last 10 min
               </div>
@@ -99,10 +108,13 @@ export const CurrentWindPanel: React.FC<CurrentWindPanelProps> = ({
               <div className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl 3xl:text-8xl 4xl:text-9xl 5xl:text-[10rem] text-accent font-bold bg-[var(--gradient-wind)] bg-clip-text">
                 {directionLabel(avgDirection10)}
               </div>
+              <div className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl 3xl:text-4xl 4xl:text-5xl 5xl:text-6xl text-muted-foreground/70 font-medium">
+                High: {highSpeed10.toFixed(0)} mph
+              </div>
             </div>
 
             {/* 20 min average */}
-            <div className="space-y-2 xs:space-y-2.5 sm:space-y-3 md:space-y-4 lg:space-y-5 xl:space-y-6 2xl:space-y-7 3xl:space-y-8 4xl:space-y-10 5xl:space-y-12">
+            <div className="space-y-1.5 xs:space-y-2 sm:space-y-2.5 md:space-y-3 lg:space-y-3.5 xl:space-y-4 2xl:space-y-5 3xl:space-y-6 4xl:space-y-7 5xl:space-y-8">
               <div className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl 3xl:text-4xl 4xl:text-5xl 5xl:text-6xl text-muted-foreground">
                 last 20 min
               </div>
@@ -115,6 +127,9 @@ export const CurrentWindPanel: React.FC<CurrentWindPanelProps> = ({
               </div>
               <div className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl 3xl:text-8xl 4xl:text-9xl 5xl:text-[10rem] text-accent font-bold bg-[var(--gradient-wind)] bg-clip-text">
                 {directionLabel(avgDirection20)}
+              </div>
+              <div className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl 3xl:text-4xl 4xl:text-5xl 5xl:text-6xl text-muted-foreground/70 font-medium">
+                High: {highSpeed20.toFixed(0)} mph
               </div>
             </div>
           </div>

@@ -29,7 +29,7 @@ export const WebSocketMonitor = () => {
     const newMessage: MessageLog = {
       id: `${Date.now()}-${Math.random()}`,
       timestamp: new Date(),
-      data: { event: "subscribed", ...data } as WebSocketMessage,
+      data: { event: "subscribed", ...(typeof data === 'object' && data !== null ? data : {}) } as WebSocketMessage,
     };
     setMessages((prev) => [newMessage, ...prev].slice(0, 100));
   }, []);

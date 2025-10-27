@@ -59,6 +59,8 @@ export const WeatherContent = ({ weatherData, currentData, chartData }: WeatherC
           <WindCompass
             direction={currentData?.windDirection || 0}
             speed={currentData?.windSpeed || 0}
+            minorTickAngle={5}
+            majorTickAngle={30}
           />
         </div>
         <div className="xl:col-span-2 order-1 xl:order-2">
