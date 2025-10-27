@@ -199,24 +199,24 @@ export const WindCompass = ({
 
   const infoPanel = (
     <div
-      className="text-center mt-8 sm:mt-10 md:mt-12 lg:mt-16 xl:mt-20 3xl:mt-24 4xl:mt-32 5xl:mt-40"
+      className="text-center mt-3 xs:mt-4 sm:mt-5 md:mt-6 lg:mt-8"
       aria-live="polite"
     >
-      <div className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl 3xl:text-9xl 4xl:text-[10rem] 5xl:text-[13rem] font-bold text-foreground mb-2 sm:mb-3 3xl:mb-4 4xl:mb-6 5xl:mb-8">
+      <div className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-foreground mb-1 sm:mb-2">
         <span className={"text-transparent"}>°</span>
         {direction}°<span className="text-accent"> {directionLabel(direction)}</span>
       </div>
 
       {jumpRun !== null && jumpRun !== undefined && (
-        <div className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl 3xl:text-6xl 4xl:text-7xl 5xl:text-8xl font-semibold text-pretty mb-2 sm:mb-3 3xl:mb-4 4xl:mb-6 5xl:mb-8">
+        <div className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-semibold text-pretty mb-1 sm:mb-2">
           <span className="text-muted-foreground">Jump Run:</span> {jumpRun}°{" "}
           <span className="text-accent">{directionLabel(jumpRun)}</span>
         </div>
       )}
 
-      <div className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl 3xl:text-7xl 4xl:text-8xl 5xl:text-9xl text-muted-foreground">
+      <div className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl text-muted-foreground">
         {speed.toFixed(0)}
-        <span className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl 5xl:text-6xl">
+        <span className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl">
           {" "}
           mph
         </span>
@@ -225,7 +225,7 @@ export const WindCompass = ({
   );
 
   const content = (
-    <div className="flex flex-col items-center justify-center flex-1 w-full px-2 py-4 sm:px-4 sm:py-6 md:px-6 md:py-8 lg:px-8 lg:py-10 3xl:px-12 3xl:py-16 4xl:px-16 4xl:py-20 5xl:px-20 5xl:py-24">
+    <div className="flex flex-col items-center justify-center flex-1 w-full px-1 py-2 xs:px-2 xs:py-3 sm:px-3 sm:py-4 md:px-4 md:py-5 lg:px-5 lg:py-6 overflow-auto">
       {compass}
       {infoPanel}
     </div>
