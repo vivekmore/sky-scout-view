@@ -4,9 +4,11 @@ import { cn } from "@/lib/utils"; // added for merging classes
 
 interface WindCompassProps {
   direction: number;
+  minorTickAngle: number;
+  majorTickAngle: number;
   speed: number;
   className?: string;
-  variant?: "default" | "unstyled" | "panel"; // keep 'unstyled' variant string for API flexibility if needed
+  variant?: "default" | "panel";
 }
 
 function directionLabel(deg: number) {
@@ -18,9 +20,11 @@ function directionLabel(deg: number) {
 export const WindCompass = ({
   direction,
   speed,
+  minorTickAngle = 5,
+  majorTickAngle = 30,
   className = "",
   variant = "default",
-}: WindCompassProps) => {
+}: Readonly<WindCompassProps>) => {
   const effectiveVariant = variant;
 
   // Geometry constants tied to base size (w-80 / h-80). We scale the whole thing down on small screens.
@@ -81,9 +85,10 @@ export const WindCompass = ({
           }}
         />
         {/* Degree markings - positioned using Tailwind for consistency */}
-        {Array.from({ length: 36 }).map((_, i) => {
-          const angle = i * 10;
-          const isMajor = angle % 30 === 0;
+        {Array.from({ length: 360 / minorTickAngle }).map((_, i) => {
+          const angle = i * minorTickAngle;
+          const isMajor = angle % majorTickAngle === 0;
+          const displayAngle = (angle + 180) % 360;
 
           return (
             <div
@@ -93,6 +98,7 @@ export const WindCompass = ({
                 transform: `translate(-50%, -50%) rotate(${angle}deg)`,
               }}
             >
+              {/* Tick mark */}
               <div
                 className={`absolute left-1/2 -translate-x-1/2 bg-muted-foreground rounded-sm
                   ${
@@ -101,6 +107,20 @@ export const WindCompass = ({
                       : "w-[1.5px] h-[8px] xs:w-[1.5px] xs:h-[10px] sm:w-[2px] sm:h-[11px] md:w-[2px] md:h-[13px] lg:w-[2.5px] lg:h-[16px] xl:w-[2.5px] xl:h-[19px] 2xl:w-[3px] 2xl:h-[22px] 3xl:w-[3.5px] 3xl:h-[29px] 4xl:w-[4.5px] 4xl:h-[36px] 5xl:w-[5.5px] 5xl:h-[48px] opacity-35 top-[84px] xs:top-[102px] sm:top-[119px] md:top-[147px] lg:top-[172px] xl:top-[209px] 2xl:top-[246px] 3xl:top-[315px] 4xl:top-[394px] 5xl:top-[528px]"
                   }`}
               />
+
+              {/* Degree numbers - only on major marks */}
+              {isMajor && (
+                <div
+                  className="absolute left-1/2 -translate-x-1/2 text-center font-bold text-muted-foreground
+                    text-[7px] xs:text-[8px] sm:text-[9px] md:text-[11px] lg:text-[13px] xl:text-[15px] 2xl:text-[18px] 3xl:text-[23px] 4xl:text-[29px] 5xl:text-[38px]
+                    top-[62px] xs:top-[76px] sm:top-[88px] md:top-[109px] lg:top-[128px] xl:top-[156px] 2xl:top-[183px] 3xl:top-[235px] 4xl:top-[294px] 5xl:top-[394px]"
+                  style={{
+                    transform: `translateX(-50%) rotate(-${angle}deg)`,
+                  }}
+                >
+                  {displayAngle == 0 ? 360 : displayAngle}°
+                </div>
+              )}
             </div>
           );
         })}
@@ -216,10 +236,6 @@ export const WindCompass = ({
       {infoPanel}
     </div>
   );
-
-  if (effectiveVariant === "unstyled") {
-    return <div className={cn("h-full w-full flex justify-center", className)}>{content}</div>;
-  }
 
   if (effectiveVariant === "panel") {
     return (
