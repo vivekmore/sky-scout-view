@@ -39,7 +39,7 @@ export const CurrentWindPanel: React.FC<CurrentWindPanelProps> = ({
 }) => {
   return (
     <PanelContainer center noPadding className={cn("h-full", className)}>
-      <div className="flex flex-col items-center justify-between h-full w-full px-4 py-6 xs:px-5 xs:py-7 sm:px-6 sm:py-8 md:px-8 md:py-10 lg:px-10 lg:py-12 xl:px-12 xl:py-14 2xl:px-16 2xl:py-16 3xl:px-20 3xl:py-20 4xl:px-24 4xl:py-24 5xl:px-32 5xl:py-32">
+      <div className="flex flex-col items-center justify-center h-full w-full px-4 py-6 xs:px-5 xs:py-7 sm:px-6 sm:py-8 md:px-8 md:py-10 lg:px-10 lg:py-12 xl:px-12 xl:py-14 2xl:px-16 2xl:py-16 3xl:px-20 3xl:py-20 4xl:px-24 4xl:py-24 5xl:px-32 5xl:py-32">
         {/* Current Winds Section */}
         <div className="flex flex-col items-center justify-center w-full space-y-3 xs:space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-7 xl:space-y-8 2xl:space-y-10 3xl:space-y-12 4xl:space-y-16 5xl:space-y-20">
           {/* Section Label */}
