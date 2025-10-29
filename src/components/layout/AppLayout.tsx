@@ -32,7 +32,6 @@ export function AppLayout({
   usingRealData,
   isLoading,
   lastUpdated,
-  onRefresh,
   jumpRun,
   onJumpRunChange,
   className,
@@ -74,17 +73,6 @@ export function AppLayout({
                 isLoading={!!isLoading}
                 lastUpdated={lastUpdated ?? null}
               />
-            )}
-            {onRefresh && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={onRefresh}
-                disabled={isLoading}
-                className="order-2 md:order-none"
-              >
-                {isLoading ? "Refreshing..." : "Refresh"}
-              </Button>
             )}
             {onJumpRunChange && (
               <Dialog open={open} onOpenChange={setOpen}>
