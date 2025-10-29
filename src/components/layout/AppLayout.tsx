@@ -22,8 +22,8 @@ interface AppLayoutProps {
   isLoading?: boolean;
   lastUpdated?: Date | null;
   onRefresh?: () => void;
-  jumpRun?: number | null;
-  onJumpRunChange?: (value: number | null) => void;
+  jumpRun?: string | null;
+  onJumpRunChange?: (value: string | null) => void;
   className?: string;
 }
 
@@ -37,14 +37,11 @@ export function AppLayout({
   className,
 }: Readonly<AppLayoutProps>) {
   const [open, setOpen] = useState(false);
-  const [inputValue, setInputValue] = useState(jumpRun?.toString() || "");
+  const [inputValue, setInputValue] = useState(jumpRun || "");
 
   const handleSave = () => {
-    const value = Number.parseInt(inputValue);
-    if (!Number.isNaN(value) && value >= 0 && value <= 360) {
-      onJumpRunChange?.(value);
-      setOpen(false);
-    }
+    onJumpRunChange?.(inputValue);
+    setOpen(false);
   };
 
   const handleClear = () => {
@@ -84,28 +81,24 @@ export function AppLayout({
                   >
                     <Target className="w-4 h-4" />
                     {jumpRun !== null && jumpRun !== undefined
-                      ? `Jump Run: ${jumpRun}°`
+                      ? `Jump Run: ${jumpRun}`
                       : "Set Jump Run"}
                   </Button>
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Set Jump Run</DialogTitle>
-                    <DialogDescription>
-                      Enter the jump run direction (0-360 degrees)
-                    </DialogDescription>
+                    <DialogDescription>Enter the jump run</DialogDescription>
                   </DialogHeader>
                   <div className="space-y-4 py-4">
                     <div className="space-y-2">
                       <Label htmlFor="jumpRun">Direction (degrees)</Label>
                       <Input
                         id="jumpRun"
-                        type="number"
-                        min="0"
-                        max="360"
+                        type="text"
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
-                        placeholder="0-360"
+                        placeholder="90 (0.5 Prior)"
                       />
                     </div>
                     <div className="flex gap-2 justify-end">

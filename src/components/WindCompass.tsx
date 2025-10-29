@@ -209,7 +209,7 @@ export const WindCompass = ({
 
       {jumpRun !== null && jumpRun !== undefined && (
         <div className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl 3xl:text-6xl 4xl:text-7xl 5xl:text-8xl font-semibold text-pretty mb-2 sm:mb-3 3xl:mb-4 4xl:mb-6 5xl:mb-8">
-          <span className="text-muted-foreground">Jump Run:</span> {jumpRun}°{" "}
+          <span className="text-muted-foreground">Jump Run:</span> {jumpRun}{" "}
           <span className="text-accent">{directionLabel(jumpRun)}</span>
         </div>
       )}
